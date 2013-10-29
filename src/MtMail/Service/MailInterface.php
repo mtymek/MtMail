@@ -11,10 +11,11 @@ interface MailInterface
 
     /**
      * @param TemplateInterface $template
+     * @param array $mailHeaders
      * @param ModelInterface $viewModel
      * @return Message
      */
-    public function compose(TemplateInterface $template, ModelInterface $viewModel = null);
+    public function compose(TemplateInterface $template, array $mailHeaders, ModelInterface $viewModel = null);
 
     /**
      * @param Message $message

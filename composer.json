@@ -4,7 +4,8 @@
         "zendframework/zend-view": "2.2.*",
         "zendframework/zend-escaper": "2.2.*",
         "zendframework/zend-mail": "2.2.*",
-        "zendframework/zend-filter": "2.2.*"
+        "zendframework/zend-filter": "2.2.*",
+        "zendframework/zend-validator": "2.2.*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"

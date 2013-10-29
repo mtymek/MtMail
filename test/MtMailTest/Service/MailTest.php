@@ -21,15 +21,12 @@ class MailTest extends \PHPUnit_Framework_TestCase
 
         $service = new MailService($renderer, $transport);
         $message = $service->compose($template);
-        $this->assertEquals('MAIL_BODY', $message->getBody());
+        $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
     }
 
     public function testComposeRendersViewModelAndAssignsSubjectIfProvidedByViewModel()
     {
         $template = new Template();
-        $viewModel = new ViewModel(array(
-            'subject' => 'MAIL_SUBJECT',
-        ));
 
         $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
@@ -38,8 +35,8 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
 
         $service = new MailService($renderer, $transport);
-        $message = $service->compose($template, $viewModel);
-        $this->assertEquals('MAIL_BODY', $message->getBody());
+        $message = $service->compose($template, array('subject' => 'MAIL_SUBJECT'));
+        $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
 

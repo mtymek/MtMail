@@ -22,7 +22,7 @@ class Template implements TemplateInterface
      */
     public function getName()
     {
-        // TODO: Implement getName() method.
+        return "";
     }
 
     /**
@@ -30,7 +30,7 @@ class Template implements TemplateInterface
      */
     public function getDescription()
     {
-        // TODO: Implement getDescription() method.
+        return "";
     }
 
     /**

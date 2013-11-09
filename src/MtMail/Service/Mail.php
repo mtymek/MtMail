@@ -24,6 +24,12 @@ class Mail implements MailInterface
      */
     protected $transport;
 
+    /**
+     * Class constructor
+     *
+     * @param RendererInterface $renderer
+     * @param TransportInterface $transport
+     */
     public function __construct(RendererInterface $renderer, TransportInterface $transport)
     {
         $this->renderer = $renderer;
@@ -34,11 +40,20 @@ class Mail implements MailInterface
      * Create mail message with HTML mime part
      *
      * @param $html
+     * @param array $headers
      * @return Message
      */
-    private function createHtmlMessage($html)
+    private function createHtmlMessage($html, array $headers = null)
     {
         $message = new Message();
+
+        if (null !== $headers) {
+            $mailHeaders = new Headers();
+            $mailHeaders->addHeaders($headers);
+            $message->setHeaders($mailHeaders);
+        }
+
+        $message->setEncoding('UTF-8');
         $body = new MimePart($html);
         $body->type = 'text/html';
         $mimeMessage = new MimeMessage();
@@ -49,6 +64,8 @@ class Mail implements MailInterface
     }
 
     /**
+     * Build e-mail message
+     *
      * @param TemplateInterface $template
      * @param array $headers
      * @param ModelInterface $viewModel
@@ -62,17 +79,14 @@ class Mail implements MailInterface
         }
 
         $html = $this->renderer->render($composedViewModel);
-        $message = $this->createHtmlMessage($html);
+        $message = $this->createHtmlMessage($html, $headers);
 
-        if (null !== $headers) {
-            $mailHeaders = new Headers();
-            $mailHeaders->addHeaders($headers);
-            $message->setHeaders($mailHeaders);
-        }
         return $message;
     }
 
     /**
+     * Send message
+     *
      * @param Message $message
      * @return void
      */

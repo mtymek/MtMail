@@ -3,7 +3,7 @@
 namespace MtMail\Service;
 
 
-use MtMail\Event\MailEvent;
+use MtMail\Event\ComposerEvent;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Template\TemplateInterface;
 use Zend\EventManager\EventManager;
@@ -67,11 +67,11 @@ class MailComposer implements EventManagerAwareInterface
     /**
      * Create and return event used by compose and send methods
      *
-     * @return MailEvent
+     * @return ComposerEvent
      */
     protected function getEvent()
     {
-        $event = new MailEvent();
+        $event = new ComposerEvent();
         $event->setTarget($this);
         return $event;
     }
@@ -113,13 +113,21 @@ class MailComposer implements EventManagerAwareInterface
      */
     public function compose(TemplateInterface $template, array $headers = null, ModelInterface $viewModel = null)
     {
+        $em = $this->getEventManager();
+        $event = $this->getEvent();
+        $event->setTarget($this);
+
         $composedViewModel = $template->getDefaultViewModel();
         if (null !== $viewModel) {
             $composedViewModel->setVariables($viewModel->getVariables());
         }
 
+        $event->setViewModel($composedViewModel);
+        $em->trigger(ComposerEvent::EVENT_RENDER_PRE, $event);
         $html = $this->renderer->render($composedViewModel);
         $message = $this->createHtmlMessage($html, $headers);
+        $event->setMessage($message);
+        $em->trigger(ComposerEvent::EVENT_RENDER_POST, $event);
 
         return $message;
     }

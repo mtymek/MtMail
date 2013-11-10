@@ -2,6 +2,8 @@
 
 namespace MtMailTest\Service;
 
+use MtMail\Event\ComposerEvent;
+use MtMail\Factory\MailComposerFactory;
 use MtMail\Service\MailComposer;
 use MtMailTest\Test\Template;
 use Zend\EventManager\EventManager;
@@ -51,6 +53,22 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
         $em = new EventManager();
         $this->service->setEventManager($em);
         $this->assertEquals($em, $this->service->getEventManager());
+    }
+
+    public function testComposeTriggersEvents()
+    {
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
+            ->will($this->returnValue('MAIL_BODY'));
+
+        $em = $this->getMock('Zend\EventManager\EventManager', array('trigger'));
+        $em->expects($this->at(0))->method('trigger')->with(ComposerEvent::EVENT_RENDER_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(1))->method('trigger')->with(ComposerEvent::EVENT_RENDER_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+
+        $service = new MailComposer($renderer);
+        $service->setEventManager($em);
+        $template = new Template();
+        $service->compose($template);
     }
 
 }

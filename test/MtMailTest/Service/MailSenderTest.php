@@ -2,7 +2,7 @@
 
 namespace MtMailTest\Service;
 
-use MtMail\Event\MailEvent;
+use MtMail\Event\SenderEvent;
 use MtMail\Service\MailSender;
 use Zend\EventManager\EventManager;
 use Zend\Mail\Message;
@@ -44,8 +44,8 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
             ->with($this->isInstanceOf('Zend\Mail\Message'));
 
         $em = $this->getMock('Zend\EventManager\EventManager', array('trigger'));
-        $em->expects($this->at(0))->method('trigger')->with(MailEvent::EVENT_SEND_PRE, $this->isInstanceOf('MtMail\Event\MailEvent'));
-        $em->expects($this->at(1))->method('trigger')->with(MailEvent::EVENT_SEND_POST, $this->isInstanceOf('MtMail\Event\MailEvent'));
+        $em->expects($this->at(0))->method('trigger')->with(SenderEvent::EVENT_SEND_PRE, $this->isInstanceOf('MtMail\Event\SenderEvent'));
+        $em->expects($this->at(1))->method('trigger')->with(SenderEvent::EVENT_SEND_POST, $this->isInstanceOf('MtMail\Event\SenderEvent'));
 
         $service = new MailSender($transport);
         $service->setEventManager($em);

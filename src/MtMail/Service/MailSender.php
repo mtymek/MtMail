@@ -3,7 +3,7 @@
 namespace MtMail\Service;
 
 
-use MtMail\Event\MailEvent;
+use MtMail\Event\SenderEvent;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
@@ -63,11 +63,11 @@ class MailSender implements EventManagerAwareInterface
     /**
      * Create and return event used by compose and send methods
      *
-     * @return MailEvent
+     * @return SenderEvent
      */
     protected function getEvent()
     {
-        $event = new MailEvent();
+        $event = new SenderEvent();
         $event->setTarget($this);
         return $event;
     }
@@ -83,9 +83,9 @@ class MailSender implements EventManagerAwareInterface
         $em = $this->getEventManager();
         $event = $this->getEvent();
         $event->setMessage($message);
-        $em->trigger(MailEvent::EVENT_SEND_PRE, $event);
+        $em->trigger(SenderEvent::EVENT_SEND_PRE, $event);
         $this->transport->send($message);
-        $em->trigger(MailEvent::EVENT_SEND_POST, $event);
+        $em->trigger(SenderEvent::EVENT_SEND_POST, $event);
     }
 
 }

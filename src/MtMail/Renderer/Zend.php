@@ -3,31 +3,51 @@
 namespace MtMail\Renderer;
 
 
-use MtMail\Template\TemplateInterface;
 use Zend\View\Model\ModelInterface;
-use Zend\View\Renderer\RendererInterface as ZendRendererInterface;
+use Zend\View\View;
+use Zend\View\ViewEvent;
 
-class Zend implements RendererInterface
+/**
+ * Re-use Zend\View in order to render template with children
+ */
+class Zend extends View implements RendererInterface
 {
     /**
-     * @var ZendRendererInterface
+     * @var string
      */
-    protected $renderer;
+    protected $output;
 
     /**
-     * @param ZendRendererInterface $renderer
+     * @param string $output
+     * @return self
      */
-    public function __construct(ZendRendererInterface $renderer)
+    public function setOutput($output)
     {
-        $this->renderer = $renderer;
+        $this->output = $output;
+        return $this;
     }
 
     /**
-     * @param ModelInterface $viewModel
-     * @return string
+     * Class constructor
+     *
+     * Ensures output from Zend\View is captured
      */
-    public function render(ModelInterface $viewModel)
+    public function __construct()
     {
-        return $this->renderer->render($viewModel);
+        $self = $this;
+        $this->getEventManager()->attach(ViewEvent::EVENT_RESPONSE, function (ViewEvent $event) use ($self) {
+                $self->setOutput($event->getResult());
+            });
+    }
+
+    /**
+     *
+     * @param ModelInterface $model
+     * @return mixed|string|void
+     */
+    public function render(ModelInterface $model)
+    {
+        parent::render($model);
+        return $this->output;
     }
 }

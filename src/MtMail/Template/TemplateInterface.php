@@ -16,13 +16,4 @@ interface TemplateInterface
      */
     public function getDefaultHeaders();
 
-    /**
-     * @return string
-     */
-    public function getName();
-
-    /**
-     * @return string
-     */
-    public function getDescription();
 }

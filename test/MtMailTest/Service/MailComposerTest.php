@@ -2,13 +2,23 @@
 
 namespace MtMailTest\Service;
 
-use MtMail\Service\Mail as MailService;
+use MtMail\Service\MailComposer;
 use MtMailTest\Test\Template;
-use Zend\Mail\Message;
-use Zend\View\Model\ViewModel;
+use Zend\EventManager\EventManager;
 
-class MailTest extends \PHPUnit_Framework_TestCase
+class MailComposerTest extends \PHPUnit_Framework_TestCase
 {
+    /**
+     * @var MailComposer
+     */
+    protected $service;
+
+    public function setUp()
+    {
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface');
+        $this->service = new MailComposer($renderer);
+    }
+
     public function testComposeRendersViewModelAndAssignsResultToMailBody()
     {
         $template = new Template();
@@ -17,9 +27,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
-
-        $service = new MailService($renderer, $transport);
+        $service = new MailComposer($renderer);
         $message = $service->compose($template);
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
     }
@@ -32,22 +40,17 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
-
-        $service = new MailService($renderer, $transport);
+        $service = new MailComposer($renderer);
         $message = $service->compose($template, array('subject' => 'MAIL_SUBJECT'));
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
 
-    public function testSendPassesMessageToTransportObject()
+    public function testServiceIsEventManagerAware()
     {
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface');
-        $message = new Message();
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', array('send'));
-        $transport->expects($this->once())->method('send')
-            ->with($message);
-        $service = new MailService($renderer, $transport);
-        $service->send($message);
+        $em = new EventManager();
+        $this->service->setEventManager($em);
+        $this->assertEquals($em, $this->service->getEventManager());
     }
+
 }

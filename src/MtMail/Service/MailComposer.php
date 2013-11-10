@@ -3,16 +3,19 @@
 namespace MtMail\Service;
 
 
+use MtMail\Event\MailEvent;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Template\TemplateInterface;
+use Zend\EventManager\EventManager;
+use Zend\EventManager\EventManagerAwareInterface;
+use Zend\EventManager\EventManagerInterface;
 use Zend\Mail\Headers;
 use Zend\Mail\Message;
-use Zend\Mail\Transport\TransportInterface;
 use Zend\View\Model\ModelInterface;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
 
-class Mail implements MailInterface
+class MailComposer implements EventManagerAwareInterface
 {
     /**
      * @var RendererInterface
@@ -20,20 +23,57 @@ class Mail implements MailInterface
     protected $renderer;
 
     /**
-     * @var TransportInterface
+     * @var EventManagerInterface
      */
-    protected $transport;
+    protected $eventManager;
 
     /**
      * Class constructor
      *
      * @param RendererInterface $renderer
-     * @param TransportInterface $transport
      */
-    public function __construct(RendererInterface $renderer, TransportInterface $transport)
+    public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
-        $this->transport = $transport;
+    }
+
+    /**
+     * Inject an EventManager instance
+     *
+     * @param  EventManagerInterface $eventManager
+     * @return self
+     */
+    public function setEventManager(EventManagerInterface $eventManager)
+    {
+        $this->eventManager = $eventManager;
+        return $this;
+    }
+
+    /**
+     * Retrieve the event manager
+     *
+     * Lazy-loads an EventManager instance if none registered.
+     *
+     * @return EventManagerInterface
+     */
+    public function getEventManager()
+    {
+        if (null === $this->eventManager) {
+            $this->eventManager = new EventManager();
+        }
+        return $this->eventManager;
+    }
+
+    /**
+     * Create and return event used by compose and send methods
+     *
+     * @return MailEvent
+     */
+    protected function getEvent()
+    {
+        $event = new MailEvent();
+        $event->setTarget($this);
+        return $event;
     }
 
     /**
@@ -84,14 +124,4 @@ class Mail implements MailInterface
         return $message;
     }
 
-    /**
-     * Send message
-     *
-     * @param Message $message
-     * @return void
-     */
-    public function send(Message $message)
-    {
-        $this->transport->send($message);
-    }
 }

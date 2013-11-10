@@ -3,25 +3,25 @@
 namespace MtMail\Factory;
 
 
-use MtMail\Service\Mail;
+use MtMail\Service\MailComposer;
+use MtMail\Service\MailSender;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MailFactory implements FactoryInterface
+class MailSenderFactory implements FactoryInterface
 {
 
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return Mail
+     * @return MailComposer
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
-        $rendererName = $configuration['mt_mail']['renderer'];
         $transportName = $configuration['mt_mail']['transport'];
-        $service = new Mail($serviceLocator->get($rendererName), $serviceLocator->get($transportName));
+        $service = new MailSender($serviceLocator->get($transportName));
         return $service;
     }
 }

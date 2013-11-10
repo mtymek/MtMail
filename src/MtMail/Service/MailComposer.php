@@ -4,7 +4,9 @@ namespace MtMail\Service;
 
 
 use MtMail\Event\ComposerEvent;
+use MtMail\Exception\InvalidArgumentException;
 use MtMail\Renderer\RendererInterface;
+use MtMail\Template\Simple;
 use MtMail\Template\TemplateInterface;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
@@ -106,13 +108,20 @@ class MailComposer implements EventManagerAwareInterface
     /**
      * Build e-mail message
      *
-     * @param TemplateInterface $template
+     * @param TemplateInterface|string $template
      * @param array $headers
      * @param ModelInterface $viewModel
+     * @throws InvalidArgumentException if template is not string nor TemplateInterface
      * @return Message
      */
-    public function compose(TemplateInterface $template, array $headers = null, ModelInterface $viewModel = null)
+    public function compose($template, array $headers = null, ModelInterface $viewModel = null)
     {
+        if (is_string($template)) {
+            $template = new Simple($template);
+        } elseif (!$template instanceof TemplateInterface) {
+            throw new InvalidArgumentException("template should be either string, or object implementing TemplateInterface");
+        }
+
         $em = $this->getEventManager();
         $event = $this->getEvent();
         $event->setTarget($this);

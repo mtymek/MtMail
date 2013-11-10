@@ -9,10 +9,11 @@ from templates, and sending them through transport adapters.
 MtMail features
 ---------------
 * factory for creating e-mail messages
-* rendering temples from `phtml` files, using `Zend\View` and `PhpRenderer`
 * factory for e-mail transport adapters, service for one-line dispatch
+* rendering templates from `phtml` files, using `Zend\View` and `PhpRenderer`
+* rendering templates with layouts
 * plugin support
 
-TO DO
------
-* e-mail layouts
+TODO
+----
+* plugin manager, configurable plugins

@@ -133,7 +133,7 @@ class MailComposer implements EventManagerAwareInterface
 
         $event->setViewModel($composedViewModel);
         $em->trigger(ComposerEvent::EVENT_RENDER_PRE, $event);
-        $html = $this->renderer->render($composedViewModel);
+        $html = $this->renderer->render($event->getViewModel());
         $message = $this->createHtmlMessage($html, $headers);
         $event->setMessage($message);
         $em->trigger(ComposerEvent::EVENT_RENDER_POST, $event);

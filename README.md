@@ -1,5 +1,7 @@
-MtMail - e-mail module for Zend Framework 2
-===========================================
+E-mail module for Zend Framework 2
+==================================
+
+[![Build Status](https://travis-ci.org/mtymek/MtMail.png?branch=master)](https://travis-ci.org/mtymek/MtMail)
 
 Introduction
 ------------

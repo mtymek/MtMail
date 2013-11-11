@@ -22,6 +22,9 @@
         "psr-0": {
             "MtMail": "src/",
             "MtMailTest": "test/"
-        }
+        },
+        "classmap": [
+            "./Module.php"
+        ]
     }
 }

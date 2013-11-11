@@ -1,5 +1,18 @@
 <?php
 
-chdir(dirname(__DIR__));
+chdir(__DIR__);
 
-include 'vendor/autoload.php';
+$loader = null;
+if (file_exists('../vendor/autoload.php')) {
+    $loader = include '../vendor/autoload.php';
+} else if (file_exists('../../../autoload.php')) {
+    $loader = include '../../../autoload.php';
+} else {
+    throw new RuntimeException('vendor/autoload.php could not be found. Did you run `php composer.phar install`?');
+}
+
+$loader->add('ZfcTwigTest', __DIR__);
+
+if (!$config = @include 'configuration.php') {
+    $config = require 'configuration.php.dist';
+}

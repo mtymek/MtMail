@@ -10,7 +10,7 @@
     "require-dev": {
         "phpunit/phpunit": "*"
     },
-    "license": "BSD 3-Clause",
+    "license": "BSD 2-Clause",
     "authors": [
         {
             "name": "Mateusz Tymek",

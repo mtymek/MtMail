@@ -7,6 +7,9 @@ return array(
                 'Layout' => 'MtMail\Factory\LayoutPluginFactory',
             ),
         ),
+        'plugins' => array(
+
+        ),
         'layout_plugin' => array(
             'layout' => 'mail/layout.phtml'
         ),

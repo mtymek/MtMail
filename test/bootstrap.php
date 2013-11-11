@@ -12,7 +12,3 @@ if (file_exists('../vendor/autoload.php')) {
 }
 
 $loader->add('ZfcTwigTest', __DIR__);
-
-if (!$config = @include 'configuration.php') {
-    $config = require 'configuration.php.dist';
-}

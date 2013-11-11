@@ -1,5 +1,6 @@
 {
     "name": "mtymek/mt-mail",
+    "version": "1.0.0-dev",
     "require": {
         "zendframework/zend-view": "2.2.*",
         "zendframework/zend-escaper": "2.2.*",

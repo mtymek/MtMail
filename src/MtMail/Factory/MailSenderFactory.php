@@ -22,6 +22,14 @@ class MailSenderFactory implements FactoryInterface
         $configuration = $serviceLocator->get('Configuration');
         $transportName = $configuration['mt_mail']['transport'];
         $service = new MailSender($serviceLocator->get($transportName));
+
+        if (is_array($configuration['mt_mail']['plugins'])) {
+            $pluginManager = $serviceLocator->get('MtMail\Plugin\Manager');
+            foreach ($configuration['mt_mail']['plugins'] as $plugin) {
+                $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
+            }
+        }
+
         return $service;
     }
 }

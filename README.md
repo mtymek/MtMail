@@ -12,8 +12,4 @@ MtMail features
 * factory for e-mail transport adapters, service for one-line dispatch
 * rendering templates from `phtml` files, using `Zend\View` and `PhpRenderer`
 * rendering templates with layouts
-* plugin support
-
-TODO
-----
-* plugin manager, configurable plugins
+* plugin support via dedicated plugin manager

@@ -50,4 +50,23 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_RENDER_PRE, array($this, 'injectLayoutViewModel'));
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_RENDER_POST, array($this, 'addEmailLayout'));
     }
+
+    /**
+     * @param string $layoutTemplate
+     * @return self
+     */
+    public function setLayoutTemplate($layoutTemplate)
+    {
+        $this->layoutTemplate = $layoutTemplate;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLayoutTemplate()
+    {
+        return $this->layoutTemplate;
+    }
+
 }

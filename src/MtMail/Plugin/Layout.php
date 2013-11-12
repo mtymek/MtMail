@@ -21,18 +21,15 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
      */
     public function injectLayoutViewModel(ComposerEvent $event)
     {
+        $currentViewModel = $event->getViewModel();
+        // don't render layout if ViewModel says so
+        if ($currentViewModel->terminate()) {
+            return;
+        }
         $layoutModel = new ViewModel();
-        $layoutModel->addChild($event->getViewModel());
+        $layoutModel->addChild($currentViewModel);
         $layoutModel->setTemplate($this->layoutTemplate);
         $event->setViewModel($layoutModel);
-    }
-
-    /**
-     * @param ComposerEvent $event
-     */
-    public function addEmailLayout(ComposerEvent $event)
-    {
-
     }
 
     /**
@@ -48,7 +45,6 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
     public function attach(EventManagerInterface $events)
     {
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_RENDER_PRE, array($this, 'injectLayoutViewModel'));
-        $this->listeners[] = $events->attach(ComposerEvent::EVENT_RENDER_POST, array($this, 'addEmailLayout'));
     }
 
     /**

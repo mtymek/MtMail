@@ -15,7 +15,7 @@ class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue(
                     array(
                         'mt_mail' => array(
-                            'file_options' => array(
+                            'transport_options' => array(
                                 'path' => __DIR__, // directory must exist
                             )
                         ),

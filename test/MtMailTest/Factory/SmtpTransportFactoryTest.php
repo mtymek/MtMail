@@ -15,15 +15,15 @@ class SmtpTransportFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue(
                     array(
                         'mt_mail' => array(
-                            'smtp_options' => array(
+                            'transport_options' => array(
                                 'host' => 'some-host.com',
                                 'connection_class' => 'login',
                                 'connection_config' => array(
                                     'username' => 'user',
                                     'password' => 'pass',
                                     'ssl' => 'tls',
-                                )
-                            )
+                                ),
+                            ),
                         ),
                     )
                 )

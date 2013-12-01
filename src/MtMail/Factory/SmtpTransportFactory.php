@@ -19,7 +19,8 @@ class SmtpTransportFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
-        $serviceConfig = isset($configuration['mt_mail']['smtp_options']) ? $configuration['mt_mail']['smtp_options'] : array();
+        $serviceConfig = isset($configuration['mt_mail']['transport_options'])
+            ? $configuration['mt_mail']['transport_options'] : array();
         $options = new SmtpOptions($serviceConfig);
         $smtp = new Smtp($options);
         return $smtp;

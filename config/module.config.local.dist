@@ -1,0 +1,18 @@
+<?php
+
+return array(
+
+    'mt_mail' => array(
+        'transport' => 'Zend\Mail\Transport\Smtp',
+        'transport_options' => array(
+            'host' => 'some-host.com',
+            'connection_class' => 'login',
+            'connection_config' => array(
+                'username' => 'user',
+                'password' => 'pass',
+                'ssl' => 'tls',
+            ),
+        ),
+    ),
+
+);

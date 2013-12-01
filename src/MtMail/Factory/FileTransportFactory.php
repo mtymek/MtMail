@@ -19,7 +19,8 @@ class FileTransportFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
-        $serviceConfig = isset($configuration['mt_mail']['file_options']) ? $configuration['mt_mail']['file_options'] : array();
+        $serviceConfig = isset($configuration['mt_mail']['transport_options'])
+            ? $configuration['mt_mail']['transport_options'] : array();
         $options = new FileOptions($serviceConfig);
         $file = new File($options);
         return $file;

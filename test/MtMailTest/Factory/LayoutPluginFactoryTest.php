@@ -9,7 +9,7 @@ class LayoutPluginFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $locator = $this->getMock('MtMail\Plugin\Manager', array('get'));
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(

@@ -69,6 +69,24 @@ class MailComposer implements EventManagerAwareInterface
     }
 
     /**
+     * @param \MtMail\Renderer\RendererInterface $renderer
+     * @return self
+     */
+    public function setRenderer($renderer)
+    {
+        $this->renderer = $renderer;
+        return $this;
+    }
+
+    /**
+     * @return \MtMail\Renderer\RendererInterface
+     */
+    public function getRenderer()
+    {
+        return $this->renderer;
+    }
+
+    /**
      * Create and return event used by compose and send methods
      *
      * @return ComposerEvent

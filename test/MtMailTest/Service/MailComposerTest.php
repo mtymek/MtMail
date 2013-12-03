@@ -21,6 +21,12 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
         $this->service = new MailComposer($renderer);
     }
 
+    public function testRendererIsMutable()
+    {
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface');
+        $this->assertEquals($renderer, $this->service->setRenderer($renderer)->getRenderer());
+    }
+
     public function testComposeRendersViewModelAndAssignsResultToMailBody()
     {
         $template = new Template();

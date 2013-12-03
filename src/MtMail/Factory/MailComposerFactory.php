@@ -20,8 +20,8 @@ class MailComposerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
-        $transportName = $configuration['mt_mail']['renderer'];
-        $service = new MailComposer($serviceLocator->get($transportName));
+        $renderer = $configuration['mt_mail']['renderer'];
+        $service = new MailComposer($serviceLocator->get($renderer));
 
         if (is_array($configuration['mt_mail']['plugins'])) {
             $pluginManager = $serviceLocator->get('MtMail\Plugin\Manager');

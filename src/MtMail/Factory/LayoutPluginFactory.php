@@ -19,8 +19,8 @@ class LayoutPluginFactory implements FactoryInterface
     {
         $config = $serviceLocator->getServiceLocator()->get('Configuration');
         $plugin = new Layout();
-        if (isset($config['mt_mail']['layout_plugin']['layout_template'])) {
-            $plugin->setLayoutTemplate($config['mt_mail']['layout_plugin']['layout_template']);
+        if (isset($config['mt_mail']['layout'])) {
+            $plugin->setLayoutTemplate($config['mt_mail']['layout']);
         }
         return $plugin;
     }

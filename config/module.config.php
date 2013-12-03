@@ -11,9 +11,7 @@ return array(
         'plugins' => array(
 
         ),
-        'layout_plugin' => array(
-            'layout' => 'mail/layout.phtml'
-        ),
+        'layout' => 'mail/layout.phtml',
     ),
     'service_manager' => array(
         'factories' => array(

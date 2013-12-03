@@ -5,20 +5,32 @@ namespace MtMail\Event;
 use Zend\EventManager\Event;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
+use Zend\Mime\Message as MimeMessage;
 
 class ComposerEvent extends Event
 {
     /**#@+
      * Mail events
      */
-    const EVENT_RENDER_PRE = 'render.pre';
-    const EVENT_RENDER_POST = 'render.post';
+    const EVENT_COMPOSE_PRE = 'compose.pre';
+    const EVENT_COMPOSE_POST = 'compose.post';
+    const EVENT_HEADERS_PRE = 'headers.pre';
+    const EVENT_HEADERS_POST = 'headers.post';
+    const EVENT_HTML_BODY_PRE = 'html_body.pre';
+    const EVENT_HTML_BODY_POST = 'html_body.post';
+    const EVENT_TEXT_BODY_PRE = 'text_body.pre';
+    const EVENT_TEXT_BODY_POST = 'text_body.post';
     /**#@-*/
 
     /**
      * @var Message
      */
     protected $message;
+
+    /**
+     * @var MimeMessage
+     */
+    protected $body;
 
     /**
      * @var ViewModel
@@ -59,6 +71,24 @@ class ComposerEvent extends Event
     public function getViewModel()
     {
         return $this->viewModel;
+    }
+
+    /**
+     * @param \Zend\Mime\Message $body
+     * @return self
+     */
+    public function setBody($body)
+    {
+        $this->body = $body;
+        return $this;
+    }
+
+    /**
+     * @return \Zend\Mime\Message
+     */
+    public function getBody()
+    {
+        return $this->body;
     }
 
 }

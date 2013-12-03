@@ -43,7 +43,7 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new MailComposer($renderer);
-        $message = $service->compose($template, array('subject' => 'MAIL_SUBJECT'));
+        $message = $service->compose($template, null, array('subject' => 'MAIL_SUBJECT'));
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
@@ -62,13 +62,22 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('MAIL_BODY'));
 
         $em = $this->getMock('Zend\EventManager\EventManager', array('trigger'));
-        $em->expects($this->at(0))->method('trigger')->with(ComposerEvent::EVENT_RENDER_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(1))->method('trigger')->with(ComposerEvent::EVENT_RENDER_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(0))->method('trigger')->with(ComposerEvent::EVENT_COMPOSE_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(1))->method('trigger')->with(ComposerEvent::EVENT_HEADERS_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(2))->method('trigger')->with(ComposerEvent::EVENT_HEADERS_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(3))->method('trigger')->with(ComposerEvent::EVENT_HTML_BODY_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(4))->method('trigger')->with(ComposerEvent::EVENT_HTML_BODY_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(5))->method('trigger')->with(ComposerEvent::EVENT_COMPOSE_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
 
         $service = new MailComposer($renderer);
         $service->setEventManager($em);
         $template = new Template();
         $service->compose($template);
+    }
+
+    public function testTest()
+    {
+
     }
 
 }

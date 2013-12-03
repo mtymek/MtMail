@@ -4,6 +4,7 @@ namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
 use MtMail\Plugin\Layout;
+use MtMail\Service\MailComposer;
 use Zend\View\Model\ViewModel;
 
 class LayoutTest extends \PHPUnit_Framework_TestCase

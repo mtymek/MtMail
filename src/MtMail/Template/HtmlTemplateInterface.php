@@ -2,8 +2,14 @@
 
 namespace MtMail\Template;
 
-interface TemplateInterface
+
+interface HtmlTemplateInterface
 {
+    /**
+     * @return string
+     */
+    public function getHtmlTemplateName();
+
 
     /**
      * @return array

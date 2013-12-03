@@ -2,36 +2,13 @@
 
 namespace MtMailTest\Test;
 
+use MtMail\Template\HtmlTemplateInterface;
 use MtMail\Template\TemplateInterface;
 use Zend\View\Model\ViewModel;
 
-class Template implements TemplateInterface
+class Template implements TemplateInterface, HtmlTemplateInterface
 {
 
-    /**
-     * @return ViewModel
-     */
-    public function getDefaultViewModel()
-    {
-        $vm = new ViewModel();
-        return $vm;
-    }
-
-    /**
-     * @return string
-     */
-    public function getName()
-    {
-        return "";
-    }
-
-    /**
-     * @return string
-     */
-    public function getDescription()
-    {
-        return "";
-    }
 
     /**
      * @return array
@@ -39,5 +16,13 @@ class Template implements TemplateInterface
     public function getDefaultHeaders()
     {
         return array();
+    }
+
+    /**
+     * @return string
+     */
+    public function getHtmlTemplateName()
+    {
+        return 'template';
     }
 }

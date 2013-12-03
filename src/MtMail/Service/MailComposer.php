@@ -6,16 +6,18 @@ namespace MtMail\Service;
 use MtMail\Event\ComposerEvent;
 use MtMail\Exception\InvalidArgumentException;
 use MtMail\Renderer\RendererInterface;
+use MtMail\Template\HtmlTemplateInterface;
 use MtMail\Template\Simple;
 use MtMail\Template\TemplateInterface;
+use MtMail\Template\TextTemplateInterface;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
-use Zend\Mail\Headers;
 use Zend\Mail\Message;
 use Zend\View\Model\ModelInterface;
 use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
+use Zend\View\Model\ViewModel;
 
 class MailComposer implements EventManagerAwareInterface
 {
@@ -79,33 +81,6 @@ class MailComposer implements EventManagerAwareInterface
     }
 
     /**
-     * Create mail message with HTML mime part
-     *
-     * @param $html
-     * @param array $headers
-     * @return Message
-     */
-    private function createHtmlMessage($html, array $headers = null)
-    {
-        $message = new Message();
-
-        if (null !== $headers) {
-            $mailHeaders = new Headers();
-            $mailHeaders->addHeaders($headers);
-            $message->setHeaders($mailHeaders);
-        }
-
-        $message->setEncoding('UTF-8');
-        $body = new MimePart($html);
-        $body->type = 'text/html';
-        $mimeMessage = new MimeMessage();
-        $mimeMessage->addPart($body);
-
-        $message->setBody($mimeMessage);
-        return $message;
-    }
-
-    /**
      * Build e-mail message
      *
      * @param TemplateInterface|string $template
@@ -114,30 +89,72 @@ class MailComposer implements EventManagerAwareInterface
      * @throws InvalidArgumentException if template is not string nor TemplateInterface
      * @return Message
      */
-    public function compose($template, array $headers = null, ModelInterface $viewModel = null)
+    public function compose($template, ModelInterface $viewModel = null, array $headers = array())
     {
+        // TODO: move resolving to Mail service
         if (is_string($template)) {
             $template = new Simple($template);
         } elseif (!$template instanceof TemplateInterface) {
             throw new InvalidArgumentException("template should be either string, or object implementing TemplateInterface");
         }
 
-        $em = $this->getEventManager();
-        $event = $this->getEvent();
-        $event->setTarget($this);
-
-        $composedViewModel = $template->getDefaultViewModel();
-        if (null !== $viewModel) {
-            $composedViewModel->setVariables($viewModel->getVariables());
+        if (null == $viewModel) {
+            $viewModel = new ViewModel();
         }
 
-        $event->setViewModel($composedViewModel);
-        $em->trigger(ComposerEvent::EVENT_RENDER_PRE, $event);
-        $html = $this->renderer->render($event->getViewModel());
-        $message = $this->createHtmlMessage($html, $headers);
-        $event->setMessage($message);
-        $em->trigger(ComposerEvent::EVENT_RENDER_POST, $event);
+        $event = $this->getEvent();
+        $em = $this->getEventManager();
+        $em->trigger(ComposerEvent::EVENT_COMPOSE_PRE, $event);
 
+        // 1. create message
+        $message = new Message();
+        $event->setMessage($message);
+
+        // 2. inject headers
+        $em->trigger(ComposerEvent::EVENT_HEADERS_PRE, $event);
+        foreach ($headers as $name => $value) {
+            $message->getHeaders()->addHeaderLine($name, $value);
+        }
+        $em->trigger(ComposerEvent::EVENT_HEADERS_POST, $event);
+
+        // prepare placeholder for message body
+        $body = new MimeMessage();
+
+        // 3. Render HTML template
+        if ($template instanceof HtmlTemplateInterface) {
+            $htmlViewModel = clone $viewModel;
+            $htmlViewModel->setTemplate($template->getHtmlTemplateName());
+            $event->setViewModel($htmlViewModel);
+
+            $em->trigger(ComposerEvent::EVENT_HTML_BODY_PRE, $event);
+
+            $html = new MimePart($this->renderer->render($htmlViewModel));
+            $html->type = 'text/html';
+            $body->addPart($html);
+
+            $em->trigger(ComposerEvent::EVENT_HTML_BODY_POST, $event);
+        }
+
+        // 4. Render plain text template
+        if ($template instanceof TextTemplateInterface) {
+            $textViewModel = clone $viewModel;
+            $textViewModel->setTemplate($template->getTextTemplateName());
+            $event->setViewModel($textViewModel);
+
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);
+
+            $text = new MimePart($this->renderer->render($textViewModel));
+            $text->type = 'text/plain';
+            $body->addPart($text);
+
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);
+        }
+
+        // 5. inject body into message
+        $event->setBody($body);
+        $message->setBody($body);
+
+        $em->trigger(ComposerEvent::EVENT_COMPOSE_POST, $event);
         return $message;
     }
 

@@ -22,7 +22,7 @@ class Manager extends ServiceManager implements ServiceLocatorAwareInterface
      * Set the main service locator so factories can have access to it to pull deps
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return AbstractPluginManager
+     * @return self
      */
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {

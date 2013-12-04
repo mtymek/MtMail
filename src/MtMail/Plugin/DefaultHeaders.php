@@ -2,34 +2,27 @@
 
 namespace MtMail\Plugin;
 
-
 use MtMail\Event\ComposerEvent;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
-use Zend\View\Model\ViewModel;
 
-class Layout extends AbstractListenerAggregate implements PluginInterface
+class DefaultHeaders extends AbstractListenerAggregate implements PluginInterface
 {
 
     /**
-     * @var string
+     * @var array
      */
-    protected $layoutTemplate = 'mail/layout.phtml';
+    protected $headers = array();
 
     /**
      * @param ComposerEvent $event
      */
-    public function injectLayoutViewModel(ComposerEvent $event)
+    public function injectDefaultHeaders(ComposerEvent $event)
     {
-        $currentViewModel = $event->getViewModel();
-        // don't render layout if ViewModel says so
-        if ($currentViewModel->terminate()) {
-            return;
+        $message = $event->getMessage();
+        foreach ($this->headers as $header => $value) {
+            $message->getHeaders()->addHeaderLine($header, $value);
         }
-        $layoutModel = new ViewModel();
-        $layoutModel->addChild($currentViewModel);
-        $layoutModel->setTemplate($this->layoutTemplate);
-        $event->setViewModel($layoutModel);
     }
 
     /**
@@ -44,25 +37,25 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(ComposerEvent::EVENT_HTML_BODY_PRE, array($this, 'injectLayoutViewModel'));
+        $this->listeners[] = $events->attach(ComposerEvent::EVENT_HEADERS_PRE, array($this, 'injectDefaultHeaders'));
     }
 
     /**
-     * @param string $layoutTemplate
+     * @param array $headers
      * @return self
      */
-    public function setLayoutTemplate($layoutTemplate)
+    public function setHeaders(array $headers)
     {
-        $this->layoutTemplate = $layoutTemplate;
+        $this->headers = $headers;
         return $this;
     }
 
     /**
      * @return string
      */
-    public function getLayoutTemplate()
+    public function getHeaders()
     {
-        return $this->layoutTemplate;
+        return $this->headers;
     }
 
 }

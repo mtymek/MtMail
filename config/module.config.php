@@ -6,6 +6,7 @@ return array(
         'plugin_manager' => array(
             'factories' => array(
                 'Layout' => 'MtMail\Factory\LayoutPluginFactory',
+                'DefaultHeaders' => 'MtMail\Factory\DefaultHeadersPluginFactory',
             ),
         ),
         'plugins' => array(

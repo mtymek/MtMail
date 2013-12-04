@@ -7,6 +7,7 @@ use MtMail\Factory\MailComposerFactory;
 use MtMail\Service\MailComposer;
 use MtMailTest\Test\Template;
 use Zend\EventManager\EventManager;
+use Zend\View\Model\ViewModel;
 
 class MailComposerTest extends \PHPUnit_Framework_TestCase
 {
@@ -81,9 +82,22 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
         $service->compose($template);
     }
 
-    public function testTest()
+    public function testHtmlBodyPreEventAllowsReplacingViewModel()
     {
+        $replacement = new ViewModel();
+        $replacement->setTemplate('some_template.phtml');
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer->expects($this->once())->method('render')->with($this->equalTo($replacement))
+            ->will($this->returnValue('MAIL_BODY'));
 
+        $service = new MailComposer($renderer);
+        $template = new Template();
+
+        $service->getEventManager()->attach(ComposerEvent::EVENT_HTML_BODY_PRE, function ($event) use ($replacement) {
+                $event->setViewModel($replacement);
+            });
+
+        $service->compose($template);
     }
 
 }

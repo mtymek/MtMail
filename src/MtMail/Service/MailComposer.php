@@ -7,7 +7,7 @@ use MtMail\Event\ComposerEvent;
 use MtMail\Exception\InvalidArgumentException;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Template\HtmlTemplateInterface;
-use MtMail\Template\Simple;
+use MtMail\Template\SimpleHtml;
 use MtMail\Template\TemplateInterface;
 use MtMail\Template\TextTemplateInterface;
 use Zend\EventManager\EventManager;
@@ -111,7 +111,7 @@ class MailComposer implements EventManagerAwareInterface
     {
         // TODO: move resolving to Mail service
         if (is_string($template)) {
-            $template = new Simple($template);
+            $template = new SimpleHtml($template);
         } elseif (!$template instanceof TemplateInterface) {
             throw new InvalidArgumentException("template should be either string, or object implementing TemplateInterface");
         }
@@ -146,7 +146,7 @@ class MailComposer implements EventManagerAwareInterface
 
             $em->trigger(ComposerEvent::EVENT_HTML_BODY_PRE, $event);
 
-            $html = new MimePart($this->renderer->render($htmlViewModel));
+            $html = new MimePart($this->renderer->render($event->getViewModel()));
             $html->type = 'text/html';
             $body->addPart($html);
 
@@ -161,7 +161,7 @@ class MailComposer implements EventManagerAwareInterface
 
             $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);
 
-            $text = new MimePart($this->renderer->render($textViewModel));
+            $text = new MimePart($this->renderer->render($event->getViewModel()));
             $text->type = 'text/plain';
             $body->addPart($text);
 

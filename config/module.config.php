@@ -18,6 +18,7 @@ return array(
         'factories' => array(
             'MtMail\Service\MailComposer' => 'MtMail\Factory\MailComposerFactory',
             'MtMail\Service\MailSender' => 'MtMail\Factory\MailSenderFactory',
+            'MtMail\Service\Mail' => 'MtMail\Factory\MailServiceFactory',
             'MtMail\Plugin\Manager' => 'MtMail\Factory\PluginManagerFactory',
             'MtMail\Renderer\ZendView' => 'MtMail\Factory\ZendViewRendererFactory',
             'Zend\Mail\Transport\Smtp' => 'MtMail\Factory\SmtpTransportFactory',

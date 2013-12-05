@@ -107,15 +107,8 @@ class MailComposer implements EventManagerAwareInterface
      * @throws InvalidArgumentException if template is not string nor TemplateInterface
      * @return Message
      */
-    public function compose($template, ModelInterface $viewModel = null, array $headers = array())
+    public function compose(TemplateInterface $template, ModelInterface $viewModel = null, array $headers = array())
     {
-        // TODO: move resolving to Mail service
-        if (is_string($template)) {
-            $template = new SimpleHtml($template);
-        } elseif (!$template instanceof TemplateInterface) {
-            throw new InvalidArgumentException("template should be either string, or object implementing TemplateInterface");
-        }
-
         if (null == $viewModel) {
             $viewModel = new ViewModel();
         }

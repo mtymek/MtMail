@@ -1,6 +1,8 @@
 {
     "name": "mtymek/mt-mail",
     "version": "1.0.0-dev",
+    "description": "ZF2 E-mail Module. With this modules, your can easily create e-mail messages from PHTML templates with layouts and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
+    "keywords": ["zf2", "module", "email", "e-mail", "mail transport", "mail template"],
     "require": {
         "zendframework/zend-view": "2.2.*",
         "zendframework/zend-escaper": "2.2.*",

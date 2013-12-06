@@ -23,14 +23,12 @@ Installation is supported via Composer:
 2. Add MtMail to your `config/application.config.php` file under the modules key.
 
 
-Configuration
--------------
+Sending e-mails
+---------------
 
-### E-mail transport
+### Configuration
 
-Before sending an e-mail, you need to tell MtMail which transport to use, and (optionally) configure it.
-MtMail provides factories for Zend Framework's built-in transport classes, allowing you to pass options
-using application configuration:
+Update your application config:
 
 ```php
 return array(
@@ -48,27 +46,20 @@ return array(
     ),
 ),
 ```
+### Usage
+---------
 
-`transport` can be any service that is accessible from `ServiceManager` and implements `Zend\Mail\Transport\TransportInterface`.
-You can use this if you want to benefit from non-standard transports (for instance those from [SlmMail](https://github.com/juriansluiman/SlmMail) module).
-
-
-Sending e-mails
----------------
-
-Once e-mail transport is configured, `MtMail\Service\MailSender` becomes ready to be pulled from `ServiceManager`.
-Usage:
-
+Add following code to your controller:
 
 ```php
-// inside controller
-
-// configure message
+// create and configure message
 $message = new Message();
 $message->addTo('johndoe@domain.com');
 // ...
 
 // send!
-$sender = $this->getServiceLocator()->get('MtMail\Service\MailSender');
+$sender = $this->getServiceLocator()->get('MtMail\Service\Mail');
 $sender->send($message);
 ```
+
+For more info on sending e-mails, check [the documentation](doc/Sending messages.md).

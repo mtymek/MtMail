@@ -7,6 +7,7 @@ use MtMail\Template\SimpleHtml;
 use MtMail\Template\TemplateInterface;
 use Zend\Mail\Message;
 use Zend\View\Model\ModelInterface;
+use Zend\View\Model\ViewModel;
 
 class Mail
 {
@@ -45,17 +46,19 @@ class Mail
 
     /**
      * @param $template
-     * @param ModelInterface $viewModel
+     * @param ModelInterface|array $viewModel
      * @param array $headers
      * @throws InvalidArgumentException
      * @return Message
      */
-    public function compose($template, ModelInterface $viewModel = null, array $headers = array())
+    public function compose($template, $viewModel = null, array $headers = array())
     {
+        if (is_array($viewModel)) {
+            $viewModel = new ViewModel($viewModel);
+        }
+
         if (is_string($template)) {
             $template = new SimpleHtml($template);
-        } elseif (!$template instanceof TemplateInterface) {
-            throw new InvalidArgumentException("template should be either string, or object implementing TemplateInterface");
         }
 
         return $this->composer->compose($template, $viewModel, $headers);

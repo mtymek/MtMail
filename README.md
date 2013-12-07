@@ -23,6 +23,36 @@ Installation is supported via Composer:
 2. Add MtMail to your `config/application.config.php` file under the modules key.
 
 
+Creating e-mails
+----------------
+
+### Configuration
+
+By default MtMail doesn't require any extra configuration. By default it will use `Zend\View` to render
+templates accessible by your application.
+
+### Usage
+
+```php
+$mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
+
+$variables = array(
+    'userName' => 'John Doe',
+);
+$headers = array(
+    'to' => 'johndoe@domain.com',
+    'from' => 'contact@mywebsite.com',
+);
+$message = $mailService->compose('application/mail/welcome.phtml', $variables, $headers);
+/** @var \Zend\Mail\Message $message */
+```
+
+This snippet will create a message, compose it with `$headers` and HTML body
+rendered from `welcome.phtml` template (injected with `$variables` array).
+
+For more info about composing e-mail messages, check [the documentation](doc/Composing messages.md).
+
+
 Sending e-mails
 ---------------
 
@@ -58,8 +88,8 @@ $message->addTo('johndoe@domain.com');
 // ...
 
 // send!
-$sender = $this->getServiceLocator()->get('MtMail\Service\Mail');
-$sender->send($message);
+$mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
+$mailService->send($message);
 ```
 
 For more info on sending e-mails, check [the documentation](doc/Sending messages.md).

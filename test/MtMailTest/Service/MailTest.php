@@ -19,7 +19,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
     public function testSendProxiesToSender()
     {
         $message = new Message();
-        $sender = $this->getMock('MtMail\Service\MailSender', array('send'), array(), '', false);
+        $sender = $this->getMock('MtMail\Service\Sender', array('send'), array(), '', false);
         $sender->expects($this->once())->method('send')->with($message);
         $composer = $this->getMock('MtMail\Service\Composer', array(), array(), '', false);
         $service = new Mail($composer, $sender);
@@ -28,7 +28,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
 
     public function testComposeProxiesToComposer()
     {
-        $sender = $this->getMock('MtMail\Service\MailSender', array(), array(), '', false);
+        $sender = $this->getMock('MtMail\Service\Sender', array(), array(), '', false);
         $template = $this->getMock('MtMail\Template\TemplateInterface');
         $composer = $this->getMock('MtMail\Service\Composer', array('compose'), array(), '', false);
         $composer->expects($this->once())->method('compose')

@@ -10,7 +10,7 @@ use Zend\EventManager\EventManagerInterface;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
 
-class MailSender implements EventManagerAwareInterface
+class Sender implements EventManagerAwareInterface
 {
 
     /**

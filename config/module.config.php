@@ -20,7 +20,7 @@ return array(
         ),
         'factories' => array(
             'MtMail\Service\Composer' => 'MtMail\Factory\ComposerServiceFactory',
-            'MtMail\Service\MailSender' => 'MtMail\Factory\MailSenderFactory',
+            'MtMail\Service\Sender' => 'MtMail\Factory\SenderServiceFactory',
             'MtMail\Service\Mail' => 'MtMail\Factory\MailServiceFactory',
             'MtMail\Plugin\Manager' => 'MtMail\Factory\PluginManagerFactory',
             'MtMail\Renderer\ZendView' => 'MtMail\Factory\ZendViewRendererFactory',

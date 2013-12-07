@@ -4,11 +4,11 @@ namespace MtMail\Factory;
 
 
 use MtMail\Service\Composer;
-use MtMail\Service\MailSender;
+use MtMail\Service\Sender;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MailSenderFactory implements FactoryInterface
+class SenderServiceFactory implements FactoryInterface
 {
 
     /**
@@ -21,7 +21,7 @@ class MailSenderFactory implements FactoryInterface
     {
         $configuration = $serviceLocator->get('Configuration');
         $transportName = $configuration['mt_mail']['transport'];
-        $service = new MailSender($serviceLocator->get($transportName));
+        $service = new Sender($serviceLocator->get($transportName));
 
         if (is_array($configuration['mt_mail']['plugins'])) {
             $pluginManager = $serviceLocator->get('MtMail\Plugin\Manager');

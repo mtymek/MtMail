@@ -18,7 +18,7 @@ class Mail
     protected $composer;
 
     /**
-     * @var MailSender
+     * @var Sender
      */
     protected $sender;
 
@@ -26,9 +26,9 @@ class Mail
      * Class constructor
      *
      * @param Composer $composer
-     * @param MailSender $sender
+     * @param Sender $sender
      */
-    public function __construct(Composer $composer, MailSender $sender)
+    public function __construct(Composer $composer, Sender $sender)
     {
         $this->composer = $composer;
         $this->sender = $sender;

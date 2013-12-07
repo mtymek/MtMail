@@ -19,7 +19,7 @@ class MailServiceFactory implements FactoryInterface
     {
         $service = new Mail(
             $serviceLocator->get('MtMail\Service\Composer'),
-            $serviceLocator->get('MtMail\Service\MailSender')
+            $serviceLocator->get('MtMail\Service\Sender')
         );
         return $service;
     }

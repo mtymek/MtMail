@@ -37,7 +37,7 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new MailComposer($renderer);
-        $message = $service->compose($template);
+        $message = $service->compose(array(), $template, new ViewModel());
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
     }
 
@@ -50,7 +50,7 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new MailComposer($renderer);
-        $message = $service->compose($template, null, array('subject' => 'MAIL_SUBJECT'));
+        $message = $service->compose(array('subject' => 'MAIL_SUBJECT'), $template, new ViewModel());
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
@@ -79,7 +79,7 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
         $service = new MailComposer($renderer);
         $service->setEventManager($em);
         $template = new Template();
-        $service->compose($template);
+        $service->compose(array(), $template, new ViewModel());
     }
 
     public function testHtmlBodyPreEventAllowsReplacingViewModel()
@@ -97,7 +97,7 @@ class MailComposerTest extends \PHPUnit_Framework_TestCase
                 $event->setViewModel($replacement);
             });
 
-        $service->compose($template);
+        $service->compose(array(), $template, new ViewModel());
     }
 
 }

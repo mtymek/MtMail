@@ -33,10 +33,10 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $composer = $this->getMock('MtMail\Service\MailComposer', array('compose'), array(), '', false);
         $composer->expects($this->once())->method('compose')
             ->with(
-                $template, null, array('to' => 'johndoe@domain.com')
+                array('to' => 'johndoe@domain.com'), $template, $this->isInstanceOf('Zend\View\Model\ModelInterface')
             );
         $service = new Mail($composer, $sender);
-        $service->compose($template, null, array('to' => 'johndoe@domain.com'));
+        $service->compose(array('to' => 'johndoe@domain.com'), $template);
     }
 
 }

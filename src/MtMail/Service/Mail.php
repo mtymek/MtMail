@@ -51,17 +51,19 @@ class Mail
      * @throws InvalidArgumentException
      * @return Message
      */
-    public function compose($template, $viewModel = null, array $headers = array())
+    public function compose(array $headers, $template, $viewModel = null)
     {
         if (is_array($viewModel)) {
             $viewModel = new ViewModel($viewModel);
+        } elseif (null == $viewModel) {
+            $viewModel = new ViewModel();
         }
 
         if (is_string($template)) {
             $template = new SimpleHtml($template);
         }
 
-        return $this->composer->compose($template, $viewModel, $headers);
+        return $this->composer->compose($headers, $template, $viewModel);
     }
 
 }

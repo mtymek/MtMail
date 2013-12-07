@@ -36,14 +36,14 @@ templates accessible by your application.
 ```php
 $mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
 
-$variables = array(
-    'userName' => 'John Doe',
-);
 $headers = array(
     'to' => 'johndoe@domain.com',
     'from' => 'contact@mywebsite.com',
 );
-$message = $mailService->compose('application/mail/welcome.phtml', $variables, $headers);
+$variables = array(
+    'userName' => 'John Doe',
+);
+$message = $mailService->compose($headers, 'application/mail/welcome.phtml', $variables);
 /** @var \Zend\Mail\Message $message */
 ```
 

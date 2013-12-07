@@ -10,9 +10,9 @@ return array(
             ),
         ),
         'plugins' => array(
-
+            'DefaultHeaders'
         ),
-        'layout' => 'mail/layout.phtml',
+        'default_headers' => array(),
     ),
     'service_manager' => array(
         'invokables' => array(

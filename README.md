@@ -50,8 +50,23 @@ $message = $mailService->compose($headers, 'application/mail/welcome.phtml', $va
 This snippet will create a message, compose it with `$headers` and HTML body
 rendered from `welcome.phtml` template (injected with `$variables` array).
 
-For more info about composing e-mail messages, check [the documentation](doc/Composing messages.md).
 
+### Layouts
+
+In order to give your e-mails common layout, you have to enable "Layout" plugin and tell it where
+to look for layout template:
+
+```php
+return array(
+    'mt_mail' => array(
+        'plugins' => array(
+            'Layout',
+        ),
+        'layout' => 'application/mail/layout.phtml',
+);
+```
+
+For more info about composing e-mail messages, check [the documentation](doc/Composing messages.md).
 
 Sending e-mails
 ---------------

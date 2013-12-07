@@ -15,6 +15,9 @@ return array(
         'layout' => 'mail/layout.phtml',
     ),
     'service_manager' => array(
+        'invokables' => array(
+            'Zend\Mail\Transport\Sendmail' => 'Zend\Mail\Transport\Sendmail',
+        ),
         'factories' => array(
             'MtMail\Service\MailComposer' => 'MtMail\Factory\MailComposerFactory',
             'MtMail\Service\MailSender' => 'MtMail\Factory\MailSenderFactory',

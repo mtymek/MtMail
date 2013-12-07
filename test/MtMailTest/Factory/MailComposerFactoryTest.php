@@ -2,10 +2,9 @@
 
 namespace MtMailTest\Factory;
 
-use MtMail\Factory\LayoutPluginFactory;
-use MtMail\Factory\MailComposerFactory;
+use MtMail\Factory\ComposerServiceFactory;
 
-class MailComposerFactoryTest extends \PHPUnit_Framework_TestCase
+class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testCreateService()
@@ -29,9 +28,9 @@ class MailComposerFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue($renderer)
             );
 
-        $factory = new MailComposerFactory();
+        $factory = new ComposerServiceFactory();
         $service = $factory->createService($locator);
-        $this->assertInstanceOf('MtMail\Service\MailComposer', $service);
+        $this->assertInstanceOf('MtMail\Service\Composer', $service);
         $this->assertEquals($renderer, $service->getRenderer());
     }
 
@@ -67,9 +66,9 @@ class MailComposerFactoryTest extends \PHPUnit_Framework_TestCase
             );
 
 
-        $factory = new MailComposerFactory();
+        $factory = new ComposerServiceFactory();
         $service = $factory->createService($locator);
-        $this->assertInstanceOf('MtMail\Service\MailComposer', $service);
+        $this->assertInstanceOf('MtMail\Service\Composer', $service);
         $this->assertEquals($renderer, $service->getRenderer());
     }
 

@@ -19,7 +19,7 @@ return array(
             'Zend\Mail\Transport\Sendmail' => 'Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
-            'MtMail\Service\MailComposer' => 'MtMail\Factory\MailComposerFactory',
+            'MtMail\Service\Composer' => 'MtMail\Factory\ComposerServiceFactory',
             'MtMail\Service\MailSender' => 'MtMail\Factory\MailSenderFactory',
             'MtMail\Service\Mail' => 'MtMail\Factory\MailServiceFactory',
             'MtMail\Plugin\Manager' => 'MtMail\Factory\PluginManagerFactory',

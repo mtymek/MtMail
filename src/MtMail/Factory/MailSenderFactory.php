@@ -3,7 +3,7 @@
 namespace MtMail\Factory;
 
 
-use MtMail\Service\MailComposer;
+use MtMail\Service\Composer;
 use MtMail\Service\MailSender;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -15,7 +15,7 @@ class MailSenderFactory implements FactoryInterface
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return MailComposer
+     * @return Composer
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {

@@ -4,24 +4,24 @@ namespace MtMail\Factory;
 
 
 use MtMail\Plugin\Layout;
-use MtMail\Service\MailComposer;
+use MtMail\Service\Composer;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MailComposerFactory implements FactoryInterface
+class ComposerServiceFactory implements FactoryInterface
 {
 
     /**
      * Create service
      *
      * @param ServiceLocatorInterface $serviceLocator
-     * @return MailComposer
+     * @return Composer
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
         $renderer = $configuration['mt_mail']['renderer'];
-        $service = new MailComposer($serviceLocator->get($renderer));
+        $service = new Composer($serviceLocator->get($renderer));
 
         if (is_array($configuration['mt_mail']['plugins'])) {
             $pluginManager = $serviceLocator->get('MtMail\Plugin\Manager');

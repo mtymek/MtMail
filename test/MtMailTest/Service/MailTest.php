@@ -21,7 +21,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $message = new Message();
         $sender = $this->getMock('MtMail\Service\MailSender', array('send'), array(), '', false);
         $sender->expects($this->once())->method('send')->with($message);
-        $composer = $this->getMock('MtMail\Service\MailComposer', array(), array(), '', false);
+        $composer = $this->getMock('MtMail\Service\Composer', array(), array(), '', false);
         $service = new Mail($composer, $sender);
         $service->send($message);
     }
@@ -30,7 +30,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
     {
         $sender = $this->getMock('MtMail\Service\MailSender', array(), array(), '', false);
         $template = $this->getMock('MtMail\Template\TemplateInterface');
-        $composer = $this->getMock('MtMail\Service\MailComposer', array('compose'), array(), '', false);
+        $composer = $this->getMock('MtMail\Service\Composer', array('compose'), array(), '', false);
         $composer->expects($this->once())->method('compose')
             ->with(
                 array('to' => 'johndoe@domain.com'), $template, $this->isInstanceOf('Zend\View\Model\ModelInterface')

@@ -18,7 +18,7 @@ class MailServiceFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $service = new Mail(
-            $serviceLocator->get('MtMail\Service\MailComposer'),
+            $serviceLocator->get('MtMail\Service\Composer'),
             $serviceLocator->get('MtMail\Service\MailSender')
         );
         return $service;

@@ -19,7 +19,7 @@ use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
 use Zend\View\Model\ViewModel;
 
-class MailComposer implements EventManagerAwareInterface
+class Composer implements EventManagerAwareInterface
 {
     /**
      * @var RendererInterface

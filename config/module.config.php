@@ -28,4 +28,9 @@ return array(
             'Zend\Mail\Transport\File' => 'MtMail\Factory\FileTransportFactory',
         ),
     ),
+    'controller_plugins' => array(
+        'factories' => array(
+            'MtMail' => 'MtMail\Factory\MtMailPlugin',
+        )
+    ),
 );

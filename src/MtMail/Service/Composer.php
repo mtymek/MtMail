@@ -115,11 +115,11 @@ class Composer implements EventManagerAwareInterface
 
         $event = $this->getEvent();
         $em = $this->getEventManager();
-        $em->trigger(ComposerEvent::EVENT_COMPOSE_PRE, $event);
 
         // 1. create message
         $message = new Message();
         $event->setMessage($message);
+        $em->trigger(ComposerEvent::EVENT_COMPOSE_PRE, $event);
 
         // 2. inject headers
         $em->trigger(ComposerEvent::EVENT_HEADERS_PRE, $event);

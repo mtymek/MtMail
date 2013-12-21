@@ -50,3 +50,9 @@ $sender->send($message);
 ```
 
 where `$message` is an instance of `Zend\Mail\Message`.
+
+`MtMail` also provides handy controller plugin that proxies to Mail service:
+
+```php
+$this->mtMail()->send($message);
+```

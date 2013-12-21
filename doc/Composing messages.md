@@ -22,6 +22,12 @@ $message = $mailService->compose($headers. 'application/mail/welcome.phtml', $va
 /** @var \Zend\Mail\Message $message */
 ```
 
+`MtMail` also provides handy controller plugin that proxies to Mail service:
+
+```php
+$message = $this->mtMail()->compose($headers. 'application/mail/welcome.phtml', $variables);
+```
+
 Default headers
 ---------------
 

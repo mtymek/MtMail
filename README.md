@@ -33,6 +33,8 @@ templates accessible by your application.
 
 ### Usage
 
+Creating message from controller:
+
 ```php
 $mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
 

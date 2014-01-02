@@ -7,6 +7,7 @@ return array(
             'factories' => array(
                 'Layout' => 'MtMail\Factory\LayoutPluginFactory',
                 'DefaultHeaders' => 'MtMail\Factory\DefaultHeadersPluginFactory',
+                'MessageEncoding' => 'MtMail\Factory\MessageEncodingPluginFactory',
             ),
         ),
         'plugins' => array(

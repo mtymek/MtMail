@@ -1,0 +1,49 @@
+<?php
+
+return array(
+
+    'mt_mail' => array(
+
+        /*
+         * Transport settings
+         */
+
+        'transport' => 'Zend\Mail\Transport\Smtp',
+        'transport_options' => array(
+            'host' => 'some-host.com',
+            'connection_class' => 'login',
+            'connection_config' => array(
+                'username' => 'user',
+                'password' => 'pass',
+                'ssl' => 'tls',
+            ),
+        ),
+
+        /*
+         * List of enabled plugins
+         * Uncomment name of plugin you want to enable, then uncomment and edit its options below
+         */
+        'plugins' => array(
+            // 'DefaultHeaders',
+            // 'Layout',
+            // 'MessageEncoding',
+        ),
+
+        /*
+         * Plugin configuration
+         */
+
+        // default header example
+        /*'default_headers' => array(
+            'From' => 'information-no-reply@yourwebsite.com',
+            'Reply-To' => 'Website Admin <admin@yourwebsite.com>',
+        ),*/
+
+        // message layout - path to view script
+        // 'layout' => 'application/mail/layout.phtml',
+
+        // example message encoding
+        // 'message_encoding' => 'UTF-8',
+    ),
+
+);

@@ -101,7 +101,7 @@ class Composer implements EventManagerAwareInterface
     /**
      * Build e-mail message
      *
-     * @param TemplateInterface|string $template
+     * @param TemplateInterface $template
      * @param array $headers
      * @param ModelInterface $viewModel
      * @throws InvalidArgumentException if template is not string nor TemplateInterface

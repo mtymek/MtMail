@@ -76,6 +76,21 @@ Our great sales team
 
 ```
 
+Message Encoding
+----------------
+
+When working with localized e-mails, you'll usually need to indicate that message and headers (especially subject)
+are encoded in UTF-8. Enable `MessageEncoding` plugin and configure it:
+
+```php
+return array(
+    'mt_mail' => array(
+        'plugins' => array(
+            'MessageEncoding',
+        ),
+        'message_encoding' => 'UTF-8',
+);
+```
 
 Events
 ------

@@ -4,6 +4,9 @@ return array(
     'mt_mail' => array(
         'renderer' => 'MtMail\Renderer\ZendView',
         'plugin_manager' => array(
+            'invokables' => array(
+                'PlaintextMessage' => 'MtMail\Plugin\PlaintextMessage',
+            ),
             'factories' => array(
                 'Layout' => 'MtMail\Factory\LayoutPluginFactory',
                 'DefaultHeaders' => 'MtMail\Factory\DefaultHeadersPluginFactory',

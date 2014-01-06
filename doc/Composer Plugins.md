@@ -23,6 +23,7 @@ Plugins included by default
 * [`DefaultHeaders`](#default-headers) - allows all your messages to share some headers, like `From:` or `Reply-To:`
 * [`Layout`](#layout) - gives common HTML layout for all messages
 * [`MessageEncoding`](#message-encoding) - applies encoding to message headers
+* [`PlaintextMessage`](#plaintext-message) - automatically generates plaintext version of HTML message
 
 ### Default headers
 
@@ -94,6 +95,26 @@ return array(
 ```
 
 `MessageEncoding` is hooked to `compose.pre` event.
+
+
+Plaintext message
+-----------------
+
+`PlaintextMessage` plugin generates text version from HTML message, by replacing <BR> tags with newline characters,
+and stripping remaining tags.
+
+It doesn't require any configuration options - simply enable it in in application config:
+
+```php
+return array(
+    'mt_mail' => array(
+        'plugins' => array(
+            'PlaintextMessage',
+        ),
+    ),
+);
+```
+
 
 Writing custom plugins
 ======================

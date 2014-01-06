@@ -7,7 +7,6 @@ use MtMail\Event\ComposerEvent;
 use MtMail\Exception\InvalidArgumentException;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Template\HtmlTemplateInterface;
-use MtMail\Template\SimpleHtml;
 use MtMail\Template\TemplateInterface;
 use MtMail\Template\TextTemplateInterface;
 use Zend\EventManager\EventManager;

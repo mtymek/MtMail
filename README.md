@@ -69,6 +69,7 @@ return array(
 ```
 
 For more info about composing e-mail messages, check [the documentation](doc/Composing messages.md).
+You can also check [documentation for plugins](doc/Composer Plugins.md).
 
 Sending e-mails
 ---------------

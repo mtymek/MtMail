@@ -65,6 +65,7 @@ return array(
             'Layout',
         ),
         'layout' => 'application/mail/layout.phtml',
+    ),
 );
 ```
 

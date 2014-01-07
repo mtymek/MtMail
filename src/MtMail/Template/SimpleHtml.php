@@ -23,14 +23,6 @@ class SimpleHtml implements TemplateInterface, HtmlTemplateInterface
     }
 
     /**
-     * @return array
-     */
-    public function getDefaultHeaders()
-    {
-        return array();
-    }
-
-    /**
      * @return string
      */
     public function getHtmlTemplateName()

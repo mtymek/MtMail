@@ -10,10 +10,4 @@ interface HtmlTemplateInterface
      */
     public function getHtmlTemplateName();
 
-
-    /**
-     * @return array
-     */
-    public function getDefaultHeaders();
-
 }

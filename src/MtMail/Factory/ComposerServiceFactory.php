@@ -30,7 +30,7 @@ class ComposerServiceFactory implements FactoryInterface
         if (isset($configuration['mt_mail']['plugins']) && is_array($configuration['mt_mail']['plugins'])) {
             trigger_error(
                 "'plugins' configuration key is now deprecated and should be replaced with 'composer_plugins'",
-                E_DEPRECATED
+                E_USER_DEPRECATED
             );
             $enabledPlugins = $configuration['mt_mail']['plugins'];
         }

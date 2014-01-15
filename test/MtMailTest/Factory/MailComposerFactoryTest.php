@@ -16,7 +16,6 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     array(
                         'mt_mail' => array(
                             'renderer' => 'Some\Mail\Renderer',
-                            'plugins' => array(),
                         ),
                     )
                 )
@@ -43,7 +42,7 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
                     array(
                         'mt_mail' => array(
                             'renderer' => 'Some\Mail\Renderer',
-                            'plugins' => array(
+                            'composer_plugins' => array(
                                 'SomeMailPlugin',
                             ),
                         ),

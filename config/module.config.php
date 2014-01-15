@@ -13,7 +13,7 @@ return array(
                 'MessageEncoding' => 'MtMail\Factory\MessageEncodingPluginFactory',
             ),
         ),
-        'plugins' => array(
+        'composer_plugins' => array(
             'DefaultHeaders'
         ),
         'default_headers' => array(),

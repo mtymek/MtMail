@@ -8,8 +8,8 @@ return array(
                 'PlaintextMessage' => 'MtMail\Plugin\PlaintextMessage',
             ),
             'factories' => array(
-                'Layout' => 'MtMail\Factory\LayoutPluginFactory',
-                'DefaultHeaders' => 'MtMail\Factory\DefaultHeadersPluginFactory',
+                'Layout'          => 'MtMail\Factory\LayoutPluginFactory',
+                'DefaultHeaders'  => 'MtMail\Factory\DefaultHeadersPluginFactory',
                 'MessageEncoding' => 'MtMail\Factory\MessageEncodingPluginFactory',
             ),
         ),
@@ -27,6 +27,7 @@ return array(
             'MtMail\Service\Sender'         => 'MtMail\Factory\SenderServiceFactory',
             'MtMail\Service\Mail'           => 'MtMail\Factory\MailServiceFactory',
             'MtMail\ComposerPlugin\Manager' => 'MtMail\Factory\ComposerPluginManagerFactory',
+            'MtMail\SenderPlugin\Manager'   => 'MtMail\Factory\SenderPluginManagerFactory',
             'MtMail\Renderer\ZendView'      => 'MtMail\Factory\ZendViewRendererFactory',
             'Zend\Mail\Transport\Smtp'      => 'MtMail\Factory\SmtpTransportFactory',
             'Zend\Mail\Transport\File'      => 'MtMail\Factory\FileTransportFactory',

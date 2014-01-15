@@ -1,6 +1,6 @@
 <?php
 
-namespace MtMail\Plugin;
+namespace MtMail\ComposerPlugin;
 
 use MtMail\Exception\RuntimeException;
 use Zend\ServiceManager\Exception;

@@ -3,7 +3,7 @@
 namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
-use MtMail\Plugin\DefaultHeaders;
+use MtMail\ComposerPlugin\DefaultHeaders;
 use Zend\Mail\Message;
 
 class DefaultHeadersTest extends \PHPUnit_Framework_TestCase

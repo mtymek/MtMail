@@ -24,7 +24,7 @@ class SenderServiceFactory implements FactoryInterface
         $service = new Sender($serviceLocator->get($transportName));
 
         if (is_array($configuration['mt_mail']['plugins'])) {
-            $pluginManager = $serviceLocator->get('MtMail\Plugin\Manager');
+            $pluginManager = $serviceLocator->get('MtMail\SenderPlugin\Manager');
             foreach ($configuration['mt_mail']['plugins'] as $plugin) {
                 $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
             }

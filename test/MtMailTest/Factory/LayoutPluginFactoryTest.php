@@ -9,7 +9,7 @@ class LayoutPluginFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('MtMail\Plugin\Manager', array('get'));
+        $locator = $this->getMock('MtMail\ComposerPlugin\Manager', array('get'));
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
@@ -25,7 +25,7 @@ class LayoutPluginFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new LayoutPluginFactory();
         $service = $factory->createService($pluginManager);
-        $this->assertInstanceOf('MtMail\Plugin\Layout', $service);
+        $this->assertInstanceOf('MtMail\ComposerPlugin\Layout', $service);
         $this->assertEquals('mail/layout.phtml', $service->getLayoutTemplate());
     }
 

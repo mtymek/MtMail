@@ -2,7 +2,7 @@
 
 namespace MtMail\Factory;
 
-use MtMail\Plugin\MessageEncoding;
+use MtMail\ComposerPlugin\MessageEncoding;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

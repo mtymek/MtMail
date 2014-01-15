@@ -56,12 +56,12 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue($renderer)
             );
 
-        $plugin = $this->getMock('MtMail\Plugin\PluginInterface');
-        $pluginManager = $this->getMock('MtMail\Plugin\Manager', array('get'));
+        $plugin = $this->getMock('MtMail\ComposerPlugin\PluginInterface');
+        $pluginManager = $this->getMock('MtMail\ComposerPlugin\Manager', array('get'));
         $pluginManager->expects($this->once())->method('get')->with('SomeMailPlugin')
             ->will($this->returnValue($plugin));
         $locator->expects($this->at(2))->method('get')
-            ->with('MtMail\Plugin\Manager')->will(
+            ->with('MtMail\ComposerPlugin\Manager')->will(
                 $this->returnValue($pluginManager)
             );
 

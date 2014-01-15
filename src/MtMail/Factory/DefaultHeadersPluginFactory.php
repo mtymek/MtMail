@@ -2,7 +2,7 @@
 
 namespace MtMail\Factory;
 
-use MtMail\Plugin\DefaultHeaders;
+use MtMail\ComposerPlugin\DefaultHeaders;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

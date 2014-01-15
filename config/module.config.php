@@ -3,7 +3,7 @@
 return array(
     'mt_mail' => array(
         'renderer' => 'MtMail\Renderer\ZendView',
-        'plugin_manager' => array(
+        'composer_plugin_manager' => array(
             'invokables' => array(
                 'PlaintextMessage' => 'MtMail\Plugin\PlaintextMessage',
             ),
@@ -23,13 +23,13 @@ return array(
             'Zend\Mail\Transport\Sendmail' => 'Zend\Mail\Transport\Sendmail',
         ),
         'factories' => array(
-            'MtMail\Service\Composer' => 'MtMail\Factory\ComposerServiceFactory',
-            'MtMail\Service\Sender' => 'MtMail\Factory\SenderServiceFactory',
-            'MtMail\Service\Mail' => 'MtMail\Factory\MailServiceFactory',
-            'MtMail\Plugin\Manager' => 'MtMail\Factory\PluginManagerFactory',
-            'MtMail\Renderer\ZendView' => 'MtMail\Factory\ZendViewRendererFactory',
-            'Zend\Mail\Transport\Smtp' => 'MtMail\Factory\SmtpTransportFactory',
-            'Zend\Mail\Transport\File' => 'MtMail\Factory\FileTransportFactory',
+            'MtMail\Service\Composer'       => 'MtMail\Factory\ComposerServiceFactory',
+            'MtMail\Service\Sender'         => 'MtMail\Factory\SenderServiceFactory',
+            'MtMail\Service\Mail'           => 'MtMail\Factory\MailServiceFactory',
+            'MtMail\ComposerPlugin\Manager' => 'MtMail\Factory\ComposerPluginManagerFactory',
+            'MtMail\Renderer\ZendView'      => 'MtMail\Factory\ZendViewRendererFactory',
+            'Zend\Mail\Transport\Smtp'      => 'MtMail\Factory\SmtpTransportFactory',
+            'Zend\Mail\Transport\File'      => 'MtMail\Factory\FileTransportFactory',
         ),
     ),
     'controller_plugins' => array(

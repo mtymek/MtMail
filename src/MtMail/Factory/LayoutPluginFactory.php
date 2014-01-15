@@ -2,7 +2,7 @@
 
 namespace MtMail\Factory;
 
-use MtMail\Plugin\Layout;
+use MtMail\ComposerPlugin\Layout;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

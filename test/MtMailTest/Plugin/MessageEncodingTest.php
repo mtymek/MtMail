@@ -3,7 +3,7 @@
 namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
-use MtMail\Plugin\MessageEncoding;
+use MtMail\ComposerPlugin\MessageEncoding;
 
 class MessageEncodingTest extends \PHPUnit_Framework_TestCase
 {

@@ -3,7 +3,7 @@
 namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
-use MtMail\Plugin\Layout;
+use MtMail\ComposerPlugin\Layout;
 use MtMail\Service\Composer;
 use Zend\View\Model\ViewModel;
 

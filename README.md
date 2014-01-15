@@ -13,7 +13,8 @@ from templates, and sending them through transport adapters.
 * factory for e-mail transport adapters, service for one-line dispatch
 * rendering templates from `phtml` files, using `Zend\View` and `PhpRenderer`
 * rendering templates with layouts
-* plugin support via dedicated plugin manager
+* plugins for various common tasks: from setting default headers to generating plaintext version of HTML message
+* plugin support via dedicated plugin managers
 
 Installation
 ------------

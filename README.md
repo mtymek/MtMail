@@ -62,7 +62,7 @@ to look for layout template:
 ```php
 return array(
     'mt_mail' => array(
-        'plugins' => array(
+        'composer_plugins' => array(
             'Layout',
         ),
         'layout' => 'application/mail/layout.phtml',

@@ -53,7 +53,7 @@ and specify layout template to be used:
 ```php
 return array(
     'mt_mail' => array(
-        'plugins' => array(
+        'composer_plugins' => array(
             'Layout',
         ),
         'layout' => 'application/mail/layout.phtml',
@@ -86,7 +86,7 @@ are encoded in UTF-8. Enable `MessageEncoding` plugin and configure it:
 ```php
 return array(
     'mt_mail' => array(
-        'plugins' => array(
+        'composer_plugins' => array(
             'MessageEncoding',
         ),
         'message_encoding' => 'UTF-8',
@@ -108,7 +108,7 @@ It doesn't require any configuration options - simply enable it in in applicatio
 ```php
 return array(
     'mt_mail' => array(
-        'plugins' => array(
+        'composer_plugins' => array(
             'PlaintextMessage',
         ),
     ),
@@ -157,11 +157,11 @@ Finally, you can enable it:
 ```php
 return array(
     'mt_mail' => array(
-        'plugins' => array(
+        'composer_plugins' => array(
             'MyPlugin'
         ),
     ),
 );
 ```
 
-For some examples please look at `src/MtMail/Plugin` directory.
+For some examples please look at `src/MtMail/ComposerPlugin` directory.

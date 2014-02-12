@@ -1,9 +1,9 @@
 Mail Composer plugins
 =====================
 
-`MtMail` allows to use plugins that extend its basic functionality. During message creation
+`MtMail` supports plugins that extend its basic functionality. During message creation
 [`Composer`](Composing messages.md) service will trigger various events, allowing you to update message
- and its headers.
+body and headers.
 
 Following events are triggered during message composition:
 
@@ -20,9 +20,9 @@ Following events are triggered during message composition:
 Plugins included by default
 ---------------------------
 
-* [`DefaultHeaders`](#default-headers) - allows all your messages to share some headers, like `From:` or `Reply-To:`
+* [`DefaultHeaders`](#default-headers) - allows adding common headers to all your messages. Useful to set `From:` or `Reply-To:`.
 * [`Layout`](#layout) - gives common HTML layout for all messages
-* [`MessageEncoding`](#message-encoding) - applies encoding to message headers
+* [`MessageEncoding`](#message-encoding) - applies specyfic encoding to message headers
 * [`PlaintextMessage`](#plaintext-message) - automatically generates plaintext version of HTML message
 
 ### Default headers
@@ -46,9 +46,9 @@ return array(
 
 ### Layout
 
-An often requirement for all application's outgoing e-mails is a layout shared between all messages.
-MtMail supports this feature via `Zend\Mail` and `Layout` plugin. You have to enable it in configuration,
-and specify layout template to be used:
+A common requirement for e-mail system is a layout shared between all messages.
+MtMail supports this feature via `Layout` plugin. You have to enable it in configuration, and specify layout
+template to be used:
 
 ```php
 return array(
@@ -69,9 +69,10 @@ Here's an example of layout template that adds short footer:
 ```php
 <?php echo $this->content ?>
 
---
-Kind regards,
-Our great sales team
+<br /><br />
+--<br />
+Kind regards,<br />
+Sales Team
 
 ```
 Layout plugin only works for HTML templates.

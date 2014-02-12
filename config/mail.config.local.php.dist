@@ -26,7 +26,7 @@ return array(
         'plugins' => array(
             // 'DefaultHeaders',
             // 'Layout',
-            // 'MessageEncoding',
+            'MessageEncoding',
         ),
 
         /*
@@ -43,7 +43,7 @@ return array(
         // 'layout' => 'application/mail/layout.phtml',
 
         // example message encoding
-        // 'message_encoding' => 'UTF-8',
+        'message_encoding' => 'UTF-8',
     ),
 
 );

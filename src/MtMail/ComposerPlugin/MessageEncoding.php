@@ -1,12 +1,17 @@
 <?php
+/**
+ * MtMail - e-mail module for Zend Framework 2
+ *
+ * @link      http://github.com/mtymek/MtMail
+ * @copyright Copyright (c) 2013-2014 Mateusz Tymek
+ * @license   BSD 2-Clause
+ */
 
 namespace MtMail\ComposerPlugin;
-
 
 use MtMail\Event\ComposerEvent;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
-use Zend\View\Model\ViewModel;
 
 class MessageEncoding extends AbstractListenerAggregate implements PluginInterface
 {

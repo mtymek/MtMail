@@ -1,11 +1,16 @@
 <?php
+/**
+ * MtMail - e-mail module for Zend Framework 2
+ *
+ * @link      http://github.com/mtymek/MtMail
+ * @copyright Copyright (c) 2013-2014 Mateusz Tymek
+ * @license   BSD 2-Clause
+ */
 
 namespace MtMail\Renderer;
 
-
 use Zend\View\Model\ModelInterface;
 use Zend\View\View;
-use Zend\View\ViewEvent;
 
 /**
  * Re-use Zend\View in order to render template with children

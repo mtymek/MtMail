@@ -23,7 +23,8 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-0": {
-            "MtMail": "src/"
+            "MtMail": "src/",
+            "MtMailTest": "test/"
         },
         "classmap": [
             "./Module.php"

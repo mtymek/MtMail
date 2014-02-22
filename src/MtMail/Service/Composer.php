@@ -113,6 +113,7 @@ class Composer implements EventManagerAwareInterface
         }
 
         $event = $this->getEvent();
+        $event->setTemplate($template);
         $em = $this->getEventManager();
 
         // 1. create message

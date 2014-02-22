@@ -2,6 +2,7 @@
 
 namespace MtMail\Event;
 
+use MtMail\Template\TemplateInterface;
 use Zend\EventManager\Event;
 use Zend\Mail\Message;
 use Zend\View\Model\ViewModel;
@@ -21,6 +22,11 @@ class ComposerEvent extends Event
     const EVENT_TEXT_BODY_PRE = 'text_body.pre';
     const EVENT_TEXT_BODY_POST = 'text_body.post';
     /**#@-*/
+
+    /**
+     * @var TemplateInterface
+     */
+    protected $template;
 
     /**
      * @var Message
@@ -89,6 +95,22 @@ class ComposerEvent extends Event
     public function getBody()
     {
         return $this->body;
+    }
+
+    /**
+     * @param TemplateInterface $template
+     */
+    public function setTemplate(TemplateInterface $template)
+    {
+        $this->template = $template;
+    }
+
+    /**
+     * @return TemplateInterface
+     */
+    public function getTemplate()
+    {
+        return $this->template;
     }
 
 }

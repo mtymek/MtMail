@@ -4,6 +4,7 @@ namespace MtMail\ComposerPlugin;
 
 
 use MtMail\Event\ComposerEvent;
+use MtMail\Template\LayoutProviderInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\View\Model\ViewModel;
@@ -28,7 +29,14 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
         }
         $layoutModel = new ViewModel();
         $layoutModel->addChild($currentViewModel);
-        $layoutModel->setTemplate($this->layoutTemplate);
+
+        if ($event->getTemplate() instanceof LayoutProviderInterface) {
+            $layout = $event->getTemplate()->getLayout();
+        } else {
+            $layout = $this->layoutTemplate;
+        }
+
+        $layoutModel->setTemplate($layout);
         $event->setViewModel($layoutModel);
     }
 

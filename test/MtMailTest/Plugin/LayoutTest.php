@@ -5,6 +5,7 @@ namespace MtMailTest\Plugin;
 use MtMail\Event\ComposerEvent;
 use MtMail\ComposerPlugin\Layout;
 use MtMail\Service\Composer;
+use MtMailTest\Test\LayoutProviderTemplate;
 use Zend\View\Model\ViewModel;
 
 class LayoutTest extends \PHPUnit_Framework_TestCase
@@ -43,6 +44,19 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $this->plugin->injectLayoutViewModel($event);
         $this->assertEquals(array(), $event->getViewModel()->getChildren());
         $this->assertEquals($viewModel, $event->getViewModel());
+    }
+
+    public function testPluginCanInjectTemplateSpecyficLayout()
+    {
+        $template = new LayoutProviderTemplate;
+        $viewModel = new ViewModel();
+
+        $event = new ComposerEvent();
+        $event->setTemplate($template);
+        $event->setViewModel($viewModel);
+
+        $this->plugin->injectLayoutViewModel($event);
+        $this->assertEquals($template->getLayout(), $event->getViewModel()->getTemplate());
     }
 
 }

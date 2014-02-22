@@ -4,6 +4,7 @@ namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
 use MtMail\ComposerPlugin\DefaultHeaders;
+use MtMailTest\Test\HeadersProviderTemplate;
 use Zend\Mail\Message;
 
 class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
@@ -40,4 +41,16 @@ class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
         $this->plugin->injectDefaultHeaders($event);
     }
 
+    public function testPluginCanInjectTemplateSpecificHeaders()
+    {
+        $headers = $this->getMock('Zend\Mail\Headers', array('addHeaderLine'));
+        $headers->expects($this->at(0))->method('addHeaderLine')->with('subject', 'Default subject');
+        $template = new HeadersProviderTemplate();
+        $message = new Message();
+        $message->setHeaders($headers);
+        $event = new ComposerEvent();
+        $event->setMessage($message);
+        $event->setTemplate($template);
+        $this->plugin->injectDefaultHeaders($event);
+    }
 }

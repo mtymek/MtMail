@@ -5,7 +5,7 @@ return array(
         'renderer' => 'MtMail\Renderer\ZendView',
         'composer_plugin_manager' => array(
             'invokables' => array(
-                'PlaintextMessage' => 'MtMail\Plugin\PlaintextMessage',
+                'PlaintextMessage' => 'MtMail\ComposerPlugin\PlaintextMessage',
             ),
             'factories' => array(
                 'Layout'          => 'MtMail\Factory\LayoutPluginFactory',

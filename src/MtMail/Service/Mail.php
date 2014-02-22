@@ -4,7 +4,7 @@ namespace MtMail\Service;
 
 use MtMail\Exception\InvalidArgumentException;
 use MtMail\Template\SimpleHtml;
-use MtMail\Template\TemplateInterface;
+use MtMail\Template\Manager as TemplateManager;
 use Zend\Mail\Message;
 use Zend\View\Model\ModelInterface;
 use Zend\View\Model\ViewModel;
@@ -23,15 +23,22 @@ class Mail
     protected $sender;
 
     /**
+     * @var TemplateManager
+     */
+    protected $templateManager;
+
+    /**
      * Class constructor
      *
      * @param Composer $composer
      * @param Sender $sender
+     * @param TemplateManager $templateManager
      */
-    public function __construct(Composer $composer, Sender $sender)
+    public function __construct(Composer $composer, Sender $sender, TemplateManager $templateManager)
     {
         $this->composer = $composer;
         $this->sender = $sender;
+        $this->templateManager = $templateManager;
     }
 
     /**
@@ -60,7 +67,11 @@ class Mail
         }
 
         if (is_string($template)) {
-            $template = new SimpleHtml($template);
+            if ($this->templateManager->has($template)) {
+                $template = $this->templateManager->get($template);
+            } else {
+                $template = new SimpleHtml($template);
+            }
         }
 
         return $this->composer->compose($headers, $template, $viewModel);

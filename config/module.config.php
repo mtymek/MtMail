@@ -29,6 +29,7 @@ return array(
             'MtMail\ComposerPlugin\Manager' => 'MtMail\Factory\ComposerPluginManagerFactory',
             'MtMail\SenderPlugin\Manager'   => 'MtMail\Factory\SenderPluginManagerFactory',
             'MtMail\Renderer\ZendView'      => 'MtMail\Factory\ZendViewRendererFactory',
+            'MtMail\Template\Manager'       => 'MtMail\Factory\TemplateManagerFactory',
             'Zend\Mail\Transport\Smtp'      => 'MtMail\Factory\SmtpTransportFactory',
             'Zend\Mail\Transport\File'      => 'MtMail\Factory\FileTransportFactory',
         ),

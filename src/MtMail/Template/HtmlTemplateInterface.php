@@ -3,7 +3,7 @@
 namespace MtMail\Template;
 
 
-interface HtmlTemplateInterface
+interface HtmlTemplateInterface extends TemplateInterface
 {
     /**
      * @return string

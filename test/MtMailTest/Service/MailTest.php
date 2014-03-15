@@ -25,7 +25,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $sender = $this->getMock('MtMail\Service\Sender', array('send'), array(), '', false);
         $sender->expects($this->once())->method('send')->with($message);
         $composer = $this->getMock('MtMail\Service\Composer', array(), array(), '', false);
-        $templateManager = $this->getMock('MtMail\Template\Manager');
+        $templateManager = $this->getMock('MtMail\Service\TemplateManager');
         $service = new Mail($composer, $sender, $templateManager);
         $service->send($message);
     }
@@ -39,7 +39,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
             ->with(
                 array('to' => 'johndoe@domain.com'), $template, $this->isInstanceOf('Zend\View\Model\ModelInterface')
             );
-        $templateManager = $this->getMock('MtMail\Template\Manager');
+        $templateManager = $this->getMock('MtMail\Service\TemplateManager');
         $service = new Mail($composer, $sender, $templateManager);
         $service->compose(array('to' => 'johndoe@domain.com'), $template);
     }
@@ -48,7 +48,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
     {
         $sender = $this->getMock('MtMail\Service\Sender', array(), array(), '', false);
         $composer = $this->getMock('MtMail\Service\Composer', array(), array(), '', false);
-        $templateManager = $this->getMock('MtMail\Template\Manager', array('has', 'get'));
+        $templateManager = $this->getMock('MtMail\Service\TemplateManager', array('has', 'get'));
         $templateManager->expects($this->once())->method('has')
             ->with('FooTemplate')->will($this->returnValue(true));
         $templateManager->expects($this->once())->method('get')
@@ -65,7 +65,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
             ->with(
                 array('to' => 'johndoe@domain.com'), $this->isInstanceOf('MtMail\Template\SimpleHtml'), $this->isInstanceOf('Zend\View\Model\ModelInterface')
             );
-        $templateManager = $this->getMock('MtMail\Template\Manager', array('has'));
+        $templateManager = $this->getMock('MtMail\Service\TemplateManager', array('has'));
         $templateManager->expects($this->once())->method('has')
             ->with('FooTemplate')->will($this->returnValue(false));
         $service = new Mail($composer, $sender, $templateManager);

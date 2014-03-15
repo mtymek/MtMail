@@ -55,6 +55,7 @@ class Composer implements EventManagerAwareInterface
     public function setEventManager(EventManagerInterface $eventManager)
     {
         $this->eventManager = $eventManager;
+
         return $this;
     }
 
@@ -70,16 +71,18 @@ class Composer implements EventManagerAwareInterface
         if (null === $this->eventManager) {
             $this->eventManager = new EventManager();
         }
+
         return $this->eventManager;
     }
 
     /**
-     * @param \MtMail\Renderer\RendererInterface $renderer
+     * @param  \MtMail\Renderer\RendererInterface $renderer
      * @return self
      */
     public function setRenderer($renderer)
     {
         $this->renderer = $renderer;
+
         return $this;
     }
 
@@ -100,15 +103,16 @@ class Composer implements EventManagerAwareInterface
     {
         $event = new ComposerEvent();
         $event->setTarget($this);
+
         return $event;
     }
 
     /**
      * Build e-mail message
      *
-     * @param TemplateInterface $template
-     * @param array $headers
-     * @param ModelInterface $viewModel
+     * @param  TemplateInterface        $template
+     * @param  array                    $headers
+     * @param  ModelInterface           $viewModel
      * @throws InvalidArgumentException if template is not string nor TemplateInterface
      * @return Message
      */
@@ -172,6 +176,7 @@ class Composer implements EventManagerAwareInterface
         $message->setBody($body);
 
         $em->trigger(ComposerEvent::EVENT_COMPOSE_POST, $event);
+
         return $message;
     }
 

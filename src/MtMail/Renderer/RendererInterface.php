@@ -14,7 +14,7 @@ use Zend\View\Model\ModelInterface;
 interface RendererInterface
 {
     /**
-     * @param ModelInterface $viewModel
+     * @param  ModelInterface $viewModel
      * @return string
      */
     public function render(ModelInterface $viewModel);

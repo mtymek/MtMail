@@ -21,7 +21,6 @@ class MessageEncoding extends AbstractListenerAggregate implements PluginInterfa
      */
     protected $encoding;
 
-
     /**
      * Set encoding of message inside event
      *
@@ -48,12 +47,13 @@ class MessageEncoding extends AbstractListenerAggregate implements PluginInterfa
     }
 
     /**
-     * @param string $encoding
+     * @param  string $encoding
      * @return self
      */
     public function setEncoding($encoding)
     {
         $this->encoding = $encoding;
+
         return $this;
     }
 

@@ -51,12 +51,13 @@ class ComposerEvent extends Event
     protected $viewModel;
 
     /**
-     * @param \Zend\Mail\Message $message
+     * @param  \Zend\Mail\Message $message
      * @return self
      */
     public function setMessage(Message $message)
     {
         $this->message = $message;
+
         return $this;
     }
 
@@ -69,12 +70,13 @@ class ComposerEvent extends Event
     }
 
     /**
-     * @param \Zend\View\Model\ViewModel $viewModel
+     * @param  \Zend\View\Model\ViewModel $viewModel
      * @return self
      */
     public function setViewModel($viewModel)
     {
         $this->viewModel = $viewModel;
+
         return $this;
     }
 
@@ -87,12 +89,13 @@ class ComposerEvent extends Event
     }
 
     /**
-     * @param \Zend\Mime\Message $body
+     * @param  \Zend\Mime\Message $body
      * @return self
      */
     public function setBody($body)
     {
         $this->body = $body;
+
         return $this;
     }
 

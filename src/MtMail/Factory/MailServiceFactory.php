@@ -19,7 +19,7 @@ class MailServiceFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return Mail
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -29,6 +29,7 @@ class MailServiceFactory implements FactoryInterface
             $serviceLocator->get('MtMail\Service\Sender'),
             $serviceLocator->get('MtMail\Service\TemplateManager')
         );
+
         return $service;
     }
 }

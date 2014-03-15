@@ -19,7 +19,7 @@ class MtMailPlugin implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return MtMail
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -27,6 +27,7 @@ class MtMailPlugin implements FactoryInterface
         $service = new MtMail(
             $serviceLocator->getServiceLocator()->get('MtMail\Service\Mail')
         );
+
         return $service;
     }
 }

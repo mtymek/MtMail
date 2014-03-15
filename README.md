@@ -2,6 +2,7 @@ E-mail module for Zend Framework 2
 ==================================
 
 [![Build Status](https://travis-ci.org/mtymek/MtMail.png?branch=master)](https://travis-ci.org/mtymek/MtMail)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mtymek/MtMail/badges/quality-score.png?s=f03d22161755c845d0ce06ab90a67cf4e3e340e0)](https://scrutinizer-ci.com/g/mtymek/MtMail/)
 
 Introduction
 ------------

@@ -19,13 +19,14 @@ class ZendViewRendererFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $view = $serviceLocator->get('ViewManager')->getView();
         $service = new ZendView($view);
+
         return $service;
     }
 }

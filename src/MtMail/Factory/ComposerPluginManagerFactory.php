@@ -23,6 +23,7 @@ class ComposerPluginManagerFactory implements FactoryInterface
         $serviceConfig = new Config($config['mt_mail']['composer_plugin_manager']);
         $service = new ComposerPluginManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);
+
         return $service;
     }
 }

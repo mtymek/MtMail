@@ -23,7 +23,7 @@ class TemplateManager extends AbstractPluginManager
      * Checks that the filter loaded is either a valid callback or an instance
      * of FilterInterface.
      *
-     * @param  mixed $plugin
+     * @param  mixed            $plugin
      * @throws RuntimeException
      * @return void
      */

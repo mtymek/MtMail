@@ -19,7 +19,7 @@ class MessageEncodingPluginFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return MessageEncoding
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -29,6 +29,7 @@ class MessageEncodingPluginFactory implements FactoryInterface
         if (isset($config['mt_mail']['message_encoding'])) {
             $plugin->setEncoding($config['mt_mail']['message_encoding']);
         }
+
         return $plugin;
     }
 }

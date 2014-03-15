@@ -20,7 +20,7 @@ class FileTransportFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return File
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -30,6 +30,7 @@ class FileTransportFactory implements FactoryInterface
             ? $configuration['mt_mail']['transport_options'] : array();
         $options = new FileOptions($serviceConfig);
         $file = new File($options);
+
         return $file;
     }
 }

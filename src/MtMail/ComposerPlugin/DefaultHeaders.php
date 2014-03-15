@@ -55,12 +55,13 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     }
 
     /**
-     * @param array $headers
+     * @param  array $headers
      * @return self
      */
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
+
         return $this;
     }
 
@@ -71,5 +72,4 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     {
         return $this->headers;
     }
-
 }

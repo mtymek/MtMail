@@ -33,7 +33,7 @@ class ZendView extends View implements RendererInterface
     }
 
     /**
-     * @param ModelInterface $model
+     * @param  ModelInterface $model
      * @return string
      */
     public function render(ModelInterface $model)
@@ -41,8 +41,8 @@ class ZendView extends View implements RendererInterface
         // quirk - setting has_parent to true will force
         // View::render to return output
         $model->setOption('has_parent', true);
+
         return $this->view->render($model);
     }
-
 
 }

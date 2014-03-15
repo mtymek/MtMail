@@ -20,7 +20,7 @@ class ComposerServiceFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return Composer
      */
     public function createService(ServiceLocatorInterface $serviceLocator)

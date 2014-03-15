@@ -25,6 +25,7 @@ class SenderPluginManagerFactory implements FactoryInterface
         );
         $service = new SenderPluginManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);
+
         return $service;
     }
 }

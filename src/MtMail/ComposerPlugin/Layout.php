@@ -62,12 +62,13 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
     }
 
     /**
-     * @param string $layoutTemplate
+     * @param  string $layoutTemplate
      * @return self
      */
     public function setLayoutTemplate($layoutTemplate)
     {
         $this->layoutTemplate = $layoutTemplate;
+
         return $this;
     }
 

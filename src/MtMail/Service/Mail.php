@@ -36,8 +36,8 @@ class Mail
     /**
      * Class constructor
      *
-     * @param Composer $composer
-     * @param Sender $sender
+     * @param Composer        $composer
+     * @param Sender          $sender
      * @param TemplateManager $templateManager
      */
     public function __construct(Composer $composer, Sender $sender, TemplateManager $templateManager)
@@ -59,8 +59,8 @@ class Mail
 
     /**
      * @param $template
-     * @param ModelInterface|array $viewModel
-     * @param array $headers
+     * @param  ModelInterface|array     $viewModel
+     * @param  array                    $headers
      * @throws InvalidArgumentException
      * @return Message
      */

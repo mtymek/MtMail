@@ -48,6 +48,7 @@ class Sender implements EventManagerAwareInterface
     public function setEventManager(EventManagerInterface $eventManager)
     {
         $this->eventManager = $eventManager;
+
         return $this;
     }
 
@@ -63,6 +64,7 @@ class Sender implements EventManagerAwareInterface
         if (null === $this->eventManager) {
             $this->eventManager = new EventManager();
         }
+
         return $this->eventManager;
     }
 
@@ -75,13 +77,14 @@ class Sender implements EventManagerAwareInterface
     {
         $event = new SenderEvent();
         $event->setTarget($this);
+
         return $event;
     }
 
     /**
      * Send message
      *
-     * @param Message $message
+     * @param  Message $message
      * @return void
      */
     public function send(Message $message)

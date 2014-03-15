@@ -19,7 +19,7 @@ class DefaultHeadersPluginFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -29,6 +29,7 @@ class DefaultHeadersPluginFactory implements FactoryInterface
         if (isset($config['mt_mail']['default_headers'])) {
             $plugin->setHeaders($config['mt_mail']['default_headers']);
         }
+
         return $plugin;
     }
 }

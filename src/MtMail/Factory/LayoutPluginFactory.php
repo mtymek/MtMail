@@ -19,7 +19,7 @@ class LayoutPluginFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return mixed
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -29,6 +29,7 @@ class LayoutPluginFactory implements FactoryInterface
         if (isset($config['mt_mail']['layout'])) {
             $plugin->setLayoutTemplate($config['mt_mail']['layout']);
         }
+
         return $plugin;
     }
 }

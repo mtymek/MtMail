@@ -20,7 +20,7 @@ class SmtpTransportFactory implements FactoryInterface
     /**
      * Create service
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return Smtp
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
@@ -30,6 +30,7 @@ class SmtpTransportFactory implements FactoryInterface
             ? $configuration['mt_mail']['transport_options'] : array();
         $options = new SmtpOptions($serviceConfig);
         $smtp = new Smtp($options);
+
         return $smtp;
     }
 }

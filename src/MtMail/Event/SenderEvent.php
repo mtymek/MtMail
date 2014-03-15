@@ -27,12 +27,13 @@ class SenderEvent extends Event
     protected $message;
 
     /**
-     * @param \Zend\Mail\Message $message
+     * @param  \Zend\Mail\Message $message
      * @return self
      */
     public function setMessage(Message $message)
     {
         $this->message = $message;
+
         return $this;
     }
 

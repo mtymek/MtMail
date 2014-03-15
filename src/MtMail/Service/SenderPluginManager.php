@@ -29,12 +29,13 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
     /**
      * Set the main service locator so factories can have access to it to pull deps
      *
-     * @param ServiceLocatorInterface $serviceLocator
+     * @param  ServiceLocatorInterface $serviceLocator
      * @return self
      */
     public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
     {
         $this->serviceLocator = $serviceLocator;
+
         return $this;
     }
 
@@ -52,7 +53,7 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
      * Validate the plugin
      *
      *
-     * @param  mixed $plugin
+     * @param  mixed            $plugin
      * @throws RuntimeException
      * @return void
      */
@@ -68,14 +69,15 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
     }
 
     /**
-     * @param string $name
-     * @param bool $usePeeringServiceManagers
+     * @param  string            $name
+     * @param  bool              $usePeeringServiceManagers
      * @return array|object|void
      */
     public function get($name, $usePeeringServiceManagers = true)
     {
         $instance = parent::get($name, $usePeeringServiceManagers);
         $this->validatePlugin($instance);
+
         return $instance;
     }
 

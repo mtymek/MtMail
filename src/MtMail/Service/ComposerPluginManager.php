@@ -43,5 +43,4 @@ class ComposerPluginManager extends AbstractPluginManager
             ));
         }
     }
-
 }

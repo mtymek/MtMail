@@ -69,6 +69,6 @@ class MailTest extends \PHPUnit_Framework_TestCase
         $templateManager->expects($this->once())->method('has')
             ->with('FooTemplate')->will($this->returnValue(false));
         $service = new Mail($composer, $sender, $templateManager);
-        $service->compose(array('to' => 'johndoe@domain.com'), 'FooTemplate');
+        $service->compose(array('to' => 'johndoe@domain.com'), 'FooTemplate', array());
     }
 }

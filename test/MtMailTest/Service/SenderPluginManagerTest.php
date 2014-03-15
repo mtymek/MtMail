@@ -40,5 +40,4 @@ class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
         $mock = $this->getMock('MtMail\SenderPlugin\PluginInterface');
         $this->pluginManager->validatePlugin($mock);
     }
-
 }

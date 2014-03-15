@@ -45,5 +45,4 @@ class SenderPluginManager extends AbstractPluginManager
             ));
         }
     }
-
 }

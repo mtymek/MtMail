@@ -80,5 +80,4 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
 
         return $instance;
     }
-
 }

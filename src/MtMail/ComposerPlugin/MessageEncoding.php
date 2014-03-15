@@ -64,5 +64,4 @@ class MessageEncoding extends AbstractListenerAggregate implements PluginInterfa
     {
         return $this->encoding;
     }
-
 }

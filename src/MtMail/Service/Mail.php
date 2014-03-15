@@ -82,5 +82,4 @@ class Mail
 
         return $this->composer->compose($headers, $template, $viewModel);
     }
-
 }

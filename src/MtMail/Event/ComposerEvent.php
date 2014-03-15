@@ -122,5 +122,4 @@ class ComposerEvent extends Event
     {
         return $this->template;
     }
-
 }

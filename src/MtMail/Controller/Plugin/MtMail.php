@@ -28,5 +28,4 @@ class MtMail extends AbstractPlugin
     {
         return $this->mailService;
     }
-
 }

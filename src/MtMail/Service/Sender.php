@@ -96,5 +96,4 @@ class Sender implements EventManagerAwareInterface
         $this->transport->send($message);
         $em->trigger(SenderEvent::EVENT_SEND_POST, $event);
     }
-
 }

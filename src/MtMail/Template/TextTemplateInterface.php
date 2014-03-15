@@ -16,5 +16,4 @@ interface TextTemplateInterface extends TemplateInterface
      * @return string|null
      */
     public function getTextTemplateName();
-
 }

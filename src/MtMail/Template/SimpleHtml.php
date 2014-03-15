@@ -36,5 +36,4 @@ class SimpleHtml implements HtmlTemplateInterface
     {
         return $this->htmlTemplateName;
     }
-
 }

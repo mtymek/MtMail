@@ -16,7 +16,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class FileTransportFactory implements FactoryInterface
 {
-
     /**
      * Create service
      *

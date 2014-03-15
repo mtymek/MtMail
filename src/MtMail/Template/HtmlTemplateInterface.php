@@ -15,5 +15,4 @@ interface HtmlTemplateInterface extends TemplateInterface
      * @return string
      */
     public function getHtmlTemplateName();
-
 }

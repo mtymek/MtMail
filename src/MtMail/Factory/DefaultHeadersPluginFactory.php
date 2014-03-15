@@ -15,7 +15,6 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class DefaultHeadersPluginFactory implements FactoryInterface
 {
-
     /**
      * Create service
      *

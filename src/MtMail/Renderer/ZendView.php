@@ -44,5 +44,4 @@ class ZendView extends View implements RendererInterface
 
         return $this->view->render($model);
     }
-
 }

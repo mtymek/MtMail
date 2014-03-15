@@ -16,5 +16,4 @@ interface HeadersProviderInterface
      * @return array
      */
     public function getHeaders();
-
 }

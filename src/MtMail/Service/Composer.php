@@ -179,5 +179,4 @@ class Composer implements EventManagerAwareInterface
 
         return $message;
     }
-
 }

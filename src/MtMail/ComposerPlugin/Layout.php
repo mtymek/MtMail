@@ -79,5 +79,4 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
     {
         return $this->layoutTemplate;
     }
-
 }

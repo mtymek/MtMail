@@ -16,7 +16,10 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ComposerPluginManagerFactory implements FactoryInterface
 {
-
+    /**
+     * @param ServiceLocatorInterface $serviceLocator
+     * @return mixed|ComposerPluginManager
+     */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Configuration');

@@ -44,5 +44,4 @@ class SenderEvent extends Event
     {
         return $this->message;
     }
-
 }

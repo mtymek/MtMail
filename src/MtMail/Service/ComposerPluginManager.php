@@ -80,5 +80,4 @@ class ComposerPluginManager extends ServiceManager implements ServiceLocatorAwar
 
         return $instance;
     }
-
 }

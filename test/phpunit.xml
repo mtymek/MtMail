@@ -2,4 +2,9 @@
     <testsuite name="MtMailTest">
         <directory>MtMailTest</directory>
     </testsuite>
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./src</directory>
+        </whitelist>
+    </filter>
 </phpunit>

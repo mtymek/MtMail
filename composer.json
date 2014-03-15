@@ -4,11 +4,11 @@
     "description": "ZF2 e-mail module. Using this library can easily create e-mail messages from PHTML templates (with optional layouts) and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
     "keywords": ["zf2", "module", "email", "e-mail", "mail transport", "mail template"],
     "require": {
-        "zendframework/zend-view": "2.2.*",
-        "zendframework/zend-escaper": "2.2.*",
-        "zendframework/zend-mail": "2.2.*",
-        "zendframework/zend-filter": "2.2.*",
-        "zendframework/zend-validator": "2.2.*"
+        "zendframework/zend-view": "2.*",
+        "zendframework/zend-escaper": "2.*",
+        "zendframework/zend-mail": "2.*",
+        "zendframework/zend-filter": "2.*",
+        "zendframework/zend-validator": "2.*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"

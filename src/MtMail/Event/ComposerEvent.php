@@ -12,7 +12,7 @@ namespace MtMail\Event;
 use MtMail\Template\TemplateInterface;
 use Zend\EventManager\Event;
 use Zend\Mail\Message;
-use Zend\View\Model\ViewModel;
+use Zend\View\Model\ModelInterface;
 use Zend\Mime\Message as MimeMessage;
 
 class ComposerEvent extends Event
@@ -46,7 +46,7 @@ class ComposerEvent extends Event
     protected $body;
 
     /**
-     * @var ViewModel
+     * @var ModelInterface
      */
     protected $viewModel;
 
@@ -70,10 +70,10 @@ class ComposerEvent extends Event
     }
 
     /**
-     * @param  \Zend\View\Model\ViewModel $viewModel
+     * @param  ModelInterface $viewModel
      * @return self
      */
-    public function setViewModel($viewModel)
+    public function setViewModel(ModelInterface $viewModel)
     {
         $this->viewModel = $viewModel;
 
@@ -81,7 +81,7 @@ class ComposerEvent extends Event
     }
 
     /**
-     * @return \Zend\View\Model\ViewModel
+     * @return ModelInterface
      */
     public function getViewModel()
     {

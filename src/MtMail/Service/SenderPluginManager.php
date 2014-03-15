@@ -11,12 +11,13 @@ namespace MtMail\Service;
 
 use MtMail\Exception\RuntimeException;
 use MtMail\SenderPlugin\PluginInterface;
+use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareInterface
+class SenderPluginManager extends AbstractPluginManager
 {
 
     /**
@@ -25,29 +26,6 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
      * @var ServiceLocatorInterface
      */
     protected $serviceLocator;
-
-    /**
-     * Set the main service locator so factories can have access to it to pull deps
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return self
-     */
-    public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
-    {
-        $this->serviceLocator = $serviceLocator;
-
-        return $this;
-    }
-
-    /**
-     * Get the main plugin manager. Useful for fetching dependencies from within factories.
-     *
-     * @return mixed
-     */
-    public function getServiceLocator()
-    {
-        return $this->serviceLocator;
-    }
 
     /**
      * Validate the plugin
@@ -68,16 +46,4 @@ class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareI
         }
     }
 
-    /**
-     * @param  string            $name
-     * @param  bool              $usePeeringServiceManagers
-     * @return array|object|void
-     */
-    public function get($name, $usePeeringServiceManagers = true)
-    {
-        $instance = parent::get($name, $usePeeringServiceManagers);
-        $this->validatePlugin($instance);
-
-        return $instance;
-    }
 }

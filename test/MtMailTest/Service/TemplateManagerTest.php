@@ -32,4 +32,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $this->manager->validatePlugin(new \stdClass());
     }
 
+    public function testValidatePluginDoesNothingIfPluginIsValid()
+    {
+        $mock = $this->getMock('MtMail\Template\TemplateInterface');
+        $this->manager->validatePlugin($mock);
+    }
 }

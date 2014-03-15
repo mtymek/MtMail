@@ -9,7 +9,7 @@
 
 namespace MtMail\Factory;
 
-use MtMail\Template\Manager;
+use MtMail\Service\TemplateManager;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -21,7 +21,7 @@ class TemplateManagerFactory implements FactoryInterface
     {
         $config = $serviceLocator->get('Configuration');
         $serviceConfig = new Config(isset($config['mt_mail']['template_manager'])?$config['mt_mail']['template_manager']:array());
-        $service = new Manager($serviceConfig);
+        $service = new TemplateManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);
         return $service;
     }

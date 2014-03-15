@@ -7,15 +7,16 @@
  * @license   BSD 2-Clause
  */
 
-namespace MtMail\ComposerPlugin;
+namespace MtMail\Service;
 
 use MtMail\Exception\RuntimeException;
+use MtMail\SenderPlugin\PluginInterface;
 use Zend\ServiceManager\Exception;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class Manager extends ServiceManager implements ServiceLocatorAwareInterface
+class SenderPluginManager extends ServiceManager implements ServiceLocatorAwareInterface
 {
 
     /**

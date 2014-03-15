@@ -10,18 +10,18 @@
 namespace MtMailTest\Template;
 
 use MtMail\Exception\RuntimeException;
-use MtMail\Template\Manager;
+use MtMail\Service\TemplateManager;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var Manager
+     * @var TemplateManager
      */
     protected $manager;
 
     public function setUp()
     {
-        $this->manager = new Manager();
+        $this->manager = new TemplateManager();
     }
 
     /**

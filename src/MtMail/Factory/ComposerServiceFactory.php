@@ -46,7 +46,7 @@ class ComposerServiceFactory implements FactoryInterface
             $enabledPlugins = array_merge($enabledPlugins, $configuration['mt_mail']['composer_plugins']);
         }
 
-        $pluginManager = $serviceLocator->get('MtMail\ComposerPlugin\Manager');
+        $pluginManager = $serviceLocator->get('MtMail\Service\ComposerPluginManager');
 
         foreach ($enabledPlugins as $plugin) {
             $service->getEventManager()->attachAggregate($pluginManager->get($plugin));

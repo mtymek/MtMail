@@ -7,13 +7,14 @@
  * @license   BSD 2-Clause
  */
 
-namespace MtMail\Template;
+namespace MtMail\Service;
 
 use MtMail\Exception\RuntimeException;
+use MtMail\Template\TemplateInterface;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
 
-class Manager extends AbstractPluginManager
+class TemplateManager extends AbstractPluginManager
 {
 
     /**

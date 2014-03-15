@@ -9,7 +9,7 @@
 
 namespace MtMail\Factory;
 
-use MtMail\SenderPlugin\Manager;
+use MtMail\Service\SenderPluginManager;
 use Zend\ServiceManager\Config;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
@@ -23,7 +23,7 @@ class SenderPluginManagerFactory implements FactoryInterface
         $serviceConfig = new Config(
             isset($config['mt_mail']['sender_plugin_manager'])?$config['mt_mail']['sender_plugin_manager']:array()
         );
-        $service = new Manager($serviceConfig);
+        $service = new SenderPluginManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);
         return $service;
     }

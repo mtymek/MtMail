@@ -11,7 +11,6 @@ namespace MtMail\Service;
 
 use MtMail\Exception\InvalidArgumentException;
 use MtMail\Template\SimpleHtml;
-use MtMail\Template\Manager as TemplateManager;
 use Zend\Mail\Message;
 use Zend\View\Model\ModelInterface;
 use Zend\View\Model\ViewModel;

@@ -15,6 +15,7 @@ use MtMail\Renderer\RendererInterface;
 use MtMail\Template\HtmlTemplateInterface;
 use MtMail\Template\TemplateInterface;
 use MtMail\Template\TextTemplateInterface;
+use MtMail\Template\TextProviderInterface;
 use Zend\EventManager\EventManager;
 use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
@@ -157,19 +158,22 @@ class Composer implements EventManagerAwareInterface
         }
 
         // 4. Render plain text template
-        if ($template instanceof TextTemplateInterface) {
-            $textViewModel = clone $viewModel;
-            $textViewModel->setTemplate($template->getTextTemplateName());
-            $event->setViewModel($textViewModel);
-
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);
-
-            $text = new MimePart($this->renderer->render($event->getViewModel()));
+        if ($template instanceof TextTemplateInterface || $template instanceof TextProviderInterface) {
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);     
+            if ($template instanceof TextTemplateInterface) {
+                $textViewModel = clone $viewModel;
+                $textViewModel->setTemplate($template->getTextTemplateName());
+                $event->setViewModel($textViewModel);
+                $text = $this->renderer->render($event->getViewModel());
+            } else {
+                $text = $template->getText();
+            }
+            $text = new MimePart($text);                       
             $text->type = 'text/plain';
             $body->addPart($text);
-
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);           
         }
+        
 
         // 5. inject body into message
         $event->setBody($body);

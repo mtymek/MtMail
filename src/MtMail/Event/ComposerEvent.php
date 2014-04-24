@@ -51,7 +51,7 @@ class ComposerEvent extends Event
     protected $viewModel;
 
     /**
-     * @param  \Zend\Mail\Message $message
+     * @param  Message $message
      * @return self
      */
     public function setMessage(Message $message)
@@ -62,10 +62,14 @@ class ComposerEvent extends Event
     }
 
     /**
-     * @return \Zend\Mail\Message
+     * @return Message
      */
     public function getMessage()
     {
+        if (!$this->message instanceof Message) {
+            $this->setMessage(new Message);
+        }
+
         return $this->message;
     }
 

@@ -13,5 +13,5 @@ interface TextProviderInterface
     /**
      * @return string
      */
-    public function getText();    
+    public function getText();
 }

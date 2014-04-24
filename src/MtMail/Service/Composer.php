@@ -159,7 +159,7 @@ class Composer implements EventManagerAwareInterface
 
         // 4. Render plain text template
         if ($template instanceof TextTemplateInterface || $template instanceof TextProviderInterface) {
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);     
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);
             if ($template instanceof TextTemplateInterface) {
                 $textViewModel = clone $viewModel;
                 $textViewModel->setTemplate($template->getTextTemplateName());
@@ -168,12 +168,11 @@ class Composer implements EventManagerAwareInterface
             } else {
                 $text = $template->getText();
             }
-            $text = new MimePart($text);                       
+            $text = new MimePart($text);
             $text->type = 'text/plain';
             $body->addPart($text);
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);           
+            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);
         }
-        
 
         // 5. inject body into message
         $event->setBody($body);

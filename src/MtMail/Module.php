@@ -9,12 +9,29 @@
 
 namespace MtMail;
 
-class Module
+use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
+
+class Module implements
+    AutoloaderProviderInterface,
+    ConfigProviderInterface
 {
     /**
-     * Retrieve module configuration
-     *
-     * @return array
+     * {@inheritDoc}
+     */
+    public function getAutoloaderConfig()
+    {
+        return array(
+            'Zend\Loader\StandardAutoloader' => array(
+                'namespaces' => array(
+                    __NAMESPACE__ => __DIR__,
+                ),
+            ),
+        );
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function getConfig()
     {

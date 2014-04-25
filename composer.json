@@ -11,7 +11,8 @@
         "zendframework/zend-validator": ">=2.2.1"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "zendframework/zend-modulemanager": ">=2.2.1"
     },
     "license": "BSD 2-Clause",
     "authors": [

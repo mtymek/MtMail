@@ -23,8 +23,10 @@
     ],
     "minimum-stability": "stable",
     "autoload": {
+        "psr-4": {
+            "MtMail\\": "src/"
+        },
         "psr-0": {
-            "MtMail": "src/",
             "MtMailTest": "test/"
         },
         "classmap": [

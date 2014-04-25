@@ -25,6 +25,7 @@ return array(
             'DefaultHeaders'
         ),
         'default_headers' => array(),
+        'transport' => 'Zend\Mail\Transport\Sendmail',
     ),
     'service_manager' => array(
         'invokables' => array(

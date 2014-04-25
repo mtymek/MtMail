@@ -24,7 +24,7 @@
     "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
-            "MtMail\\": "src/",
+            "MtMail\\": "src/"
         },
         "psr-0": {
             "MtMailTest": "test/"

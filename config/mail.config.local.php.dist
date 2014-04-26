@@ -20,10 +20,10 @@ return array(
         ),
 
         /*
-         * List of enabled plugins
+         * List of enabled composer plugins
          * Uncomment name of plugin you want to enable, then uncomment and edit its options below
          */
-        'plugins' => array(
+        'composer_plugins' => array(
             // 'DefaultHeaders',
             // 'Layout',
             'MessageEncoding',

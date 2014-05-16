@@ -62,6 +62,9 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
         $text = new MimePart($textBody);
         $text->type = 'text/plain';
         $event->getBody()->addPart($text);
+
+        // force multiplart/alternative content type
+        $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
     }
 
     /**

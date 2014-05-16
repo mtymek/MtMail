@@ -139,22 +139,7 @@ class Composer implements EventManagerAwareInterface
         // prepare placeholder for message body
         $body = new MimeMessage();
 
-        // 3. Render HTML template
-        if ($template instanceof HtmlTemplateInterface) {
-            $htmlViewModel = clone $viewModel;
-            $htmlViewModel->setTemplate($template->getHtmlTemplateName());
-            $event->setViewModel($htmlViewModel);
-
-            $em->trigger(ComposerEvent::EVENT_HTML_BODY_PRE, $event);
-
-            $html = new MimePart($this->renderer->render($event->getViewModel()));
-            $html->type = 'text/html';
-            $body->addPart($html);
-
-            $em->trigger(ComposerEvent::EVENT_HTML_BODY_POST, $event);
-        }
-
-        // 4. Render plain text template
+        // 3. Render plain text template
         if ($template instanceof TextTemplateInterface) {
             $textViewModel = clone $viewModel;
             $textViewModel->setTemplate($template->getTextTemplateName());
@@ -169,9 +154,30 @@ class Composer implements EventManagerAwareInterface
             $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);
         }
 
+        // 4. Render HTML template
+        if ($template instanceof HtmlTemplateInterface) {
+            $htmlViewModel = clone $viewModel;
+            $htmlViewModel->setTemplate($template->getHtmlTemplateName());
+            $event->setViewModel($htmlViewModel);
+
+            $em->trigger(ComposerEvent::EVENT_HTML_BODY_PRE, $event);
+
+            $html = new MimePart($this->renderer->render($event->getViewModel()));
+            $html->type = 'text/html';
+            $body->addPart($html);
+
+            $em->trigger(ComposerEvent::EVENT_HTML_BODY_POST, $event);
+        }
+
+
         // 5. inject body into message
         $event->setBody($body);
         $event->getMessage()->setBody($body);
+
+        // 6. set multiplart/alternative when both versions are available
+        if ($template instanceof TextTemplateInterface && $template instanceof HtmlTemplateInterface) {
+            $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
+        }
 
         $em->trigger(ComposerEvent::EVENT_COMPOSE_POST, $event);
 

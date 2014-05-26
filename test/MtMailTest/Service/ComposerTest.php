@@ -11,7 +11,8 @@ namespace MtMailTest\Service;
 
 use MtMail\Event\ComposerEvent;
 use MtMail\Service\Composer;
-use MtMailTest\Test\Template;
+use MtMailTest\Test\HtmlTemplate;
+use MtMailTest\Test\TextTemplate;
 use Zend\EventManager\EventManager;
 use Zend\View\Model\ViewModel;
 
@@ -36,7 +37,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
     public function testComposeRendersViewModelAndAssignsResultToMailBody()
     {
-        $template = new Template();
+        $template = new TextTemplate();
 
         $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
@@ -49,7 +50,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
     public function testComposeRendersViewModelAndAssignsSubjectIfProvidedByViewModel()
     {
-        $template = new Template();
+        $template = new HtmlTemplate();
 
         $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
@@ -84,7 +85,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
         $service = new Composer($renderer);
         $service->setEventManager($em);
-        $template = new Template();
+        $template = new HtmlTemplate();
         $service->compose(array(), $template, new ViewModel());
     }
 
@@ -97,7 +98,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new Composer($renderer);
-        $template = new Template();
+        $template = new HtmlTemplate();
 
         $service->getEventManager()->attach(ComposerEvent::EVENT_HTML_BODY_PRE, function ($event) use ($replacement) {
                 $event->setViewModel($replacement);

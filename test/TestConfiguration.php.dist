@@ -1,0 +1,11 @@
+<?php
+
+return array(
+    'modules' => array(
+        'MtMail',
+    ),
+    'module_listener_options' => array(
+        'config_glob_paths' => array(),
+        'module_paths' => array(),
+    ),
+);

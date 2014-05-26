@@ -34,4 +34,10 @@ class MessageEncodingTest extends \PHPUnit_Framework_TestCase
         $this->plugin->setMessageEncoding($event);
     }
 
+    public function testEncodingIsMutable()
+    {
+        $this->plugin->setEncoding('UTF-8');
+        $this->assertEquals('UTF-8', $this->plugin->getEncoding());
+    }
+
 }

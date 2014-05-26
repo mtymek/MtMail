@@ -12,7 +12,7 @@ namespace MtMailTest\Test;
 use MtMail\Template\HtmlTemplateInterface;
 use MtMail\Template\TemplateInterface;
 
-class Template implements TemplateInterface, HtmlTemplateInterface
+class HtmlTemplate implements TemplateInterface, HtmlTemplateInterface
 {
 
     /**

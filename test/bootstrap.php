@@ -54,12 +54,6 @@ class Bootstrap
         static::$serviceManager = $serviceManager;
     }
 
-    public static function chroot()
-    {
-        $rootPath = dirname(static::findParentPath('module'));
-        chdir($rootPath);
-    }
-
     public static function getServiceManager()
     {
         return static::$serviceManager;
@@ -118,4 +112,3 @@ class Bootstrap
 }
 
 Bootstrap::init();
-Bootstrap::chroot();

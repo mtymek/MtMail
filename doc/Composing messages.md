@@ -18,14 +18,14 @@ $headers = array(
 $variables = array(
     'userName' => 'John Doe',
 );
-$message = $mailService->compose($headers. 'application/mail/welcome.phtml', $variables);
+$message = $mailService->compose($headers, 'application/mail/welcome.phtml', $variables);
 /** @var \Zend\Mail\Message $message */
 ```
 
 `MtMail` also provides handy controller plugin that proxies to Mail service:
 
 ```php
-$message = $this->mtMail()->compose($headers. 'application/mail/welcome.phtml', $variables);
+$message = $this->mtMail()->compose($headers, 'application/mail/welcome.phtml', $variables);
 ```
 
 Theory of operation

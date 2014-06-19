@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.1-dev
--------
+1.1.0 (2014-06-19)
+------------------
 * added autoload config in module class (ojhaujjwal)
 * Sendmail is now default transport (ojhaujjwal)
 * allow replacing Message object during e-mail composition (ojhaujjwal)

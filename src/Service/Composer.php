@@ -170,14 +170,14 @@ class Composer implements EventManagerAwareInterface
             $em->trigger(ComposerEvent::EVENT_HTML_BODY_POST, $event);
         }
 
-
         // 5. inject body into message
         $event->setBody($body);
         $event->getMessage()->setBody($body);
 
-        // 6. set multiplart/alternative when both versions are available
+        // 6. set multipart/alternative when both versions are available
         if ($template instanceof TextTemplateInterface && $template instanceof HtmlTemplateInterface) {
-            $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
+            $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative')
+                ->addParameter('boundary', $body->getMime()->boundary());
         }
 
         $em->trigger(ComposerEvent::EVENT_COMPOSE_POST, $event);

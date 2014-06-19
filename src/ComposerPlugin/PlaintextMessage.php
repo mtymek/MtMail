@@ -13,6 +13,7 @@ use MtMail\Event\ComposerEvent;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mime\Part as MimePart;
+use Zend\Mail\Header\ContentType;
 
 class PlaintextMessage extends AbstractListenerAggregate implements PluginInterface
 {
@@ -64,7 +65,22 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
         $event->getBody()->addPart($text);
 
         // force multiplart/alternative content type
-        $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
+        //$event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
+
+        /** @var /Zend/Mail/Message $message */
+        $message = $event->getMessage();
+
+        //TODO: better solution to remove all content-type headers
+        $message->getHeaders()->removeHeader('Content-Type');
+        $message->getHeaders()->removeHeader('Content-Type');
+
+        $contentTypeHeader = new ContentType();
+        $contentTypeHeader->setType('multipart/alternative');
+        $contentTypeHeader->addParameter('boundary',$event->getBody()->getMime()->boundary());
+
+        $message->getHeaders()->addHeader($contentTypeHeader);
+
+        $event->setMessage($message);
     }
 
     /**

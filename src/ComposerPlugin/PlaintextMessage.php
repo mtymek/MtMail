@@ -39,12 +39,14 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
         $parts = $event->getBody()->getParts();
 
         $htmlBody = null;
+        $htmlPart = null;
         $textBody = null;
 
         // locate HTML body
         foreach ($parts as $part) {
             foreach ($part->getHeadersArray() as $header) {
                 if ($header[0] == 'Content-Type' && strpos($header[1], 'text/html') === 0) {
+                    $htmlPart = $part;
                     $htmlBody = $part->getRawContent();
                 } elseif ($header[0] == 'Content-Type' && strpos($header[1], 'text/plain') === 0) {
                     $textBody = $part->getRawContent();
@@ -59,12 +61,13 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
 
         // create and insert text body
         $textBody = strip_tags($this->br2nl($htmlBody));
-        $text = new MimePart($textBody);
-        $text->type = 'text/plain';
-        $event->getBody()->addPart($text);
+        $textPart = new MimePart($textBody);
+        $textPart->type = 'text/plain';
+        $event->getBody()->setParts(array($textPart, $htmlPart));
 
-        // force multiplart/alternative content type
-        $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative');
+        // force multipart/alternative content type
+        $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative')
+            ->addParameter('boundary', $event->getBody()->getMime()->boundary());
     }
 
     /**

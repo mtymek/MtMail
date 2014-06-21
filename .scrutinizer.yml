@@ -1,5 +1,5 @@
 before_commands:
-    - "composer update"
+    - "composer install --prefer-dist"
 
 tools:
     php_code_coverage:

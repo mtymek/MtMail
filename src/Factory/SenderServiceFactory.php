@@ -21,7 +21,7 @@ class SenderServiceFactory implements FactoryInterface
      * Create service
      *
      * @param  ServiceLocatorInterface $serviceLocator
-     * @return Composer
+     * @return Sender
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
@@ -33,7 +33,15 @@ class SenderServiceFactory implements FactoryInterface
             && is_array($configuration['mt_mail']['sender_plugins'])
         ) {
             $pluginManager = $serviceLocator->get('MtMail\Service\SenderPluginManager');
-            foreach ($configuration['mt_mail']['sender_plugins'] as $plugin) {
+
+            $canonicalizeName = function ($name) {
+                $canonicalNamesReplacements = array('-' => '', '_' => '', ' ' => '', '\\' => '', '/' => '');
+                return strtolower(strtr($name, $canonicalNamesReplacements));
+            };
+
+            $plugins = array_unique(array_map($canonicalizeName, $configuration['mt_mail']['sender_plugins']));
+
+            foreach ($plugins as $plugin) {
                 $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
             }
         }

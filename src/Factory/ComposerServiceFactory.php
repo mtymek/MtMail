@@ -11,12 +11,12 @@ namespace MtMail\Factory;
 
 use MtMail\Renderer\RendererInterface;
 use MtMail\Service\Composer;
+use MtMail\Service\ComposerPluginManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ComposerServiceFactory implements FactoryInterface
 {
-
     /**
      * Create service
      *
@@ -30,12 +30,21 @@ class ComposerServiceFactory implements FactoryInterface
         $renderer = $serviceLocator->get($configuration['mt_mail']['renderer']);
         $service = new Composer($renderer);
 
-        $pluginManager = $serviceLocator->get('MtMail\Service\ComposerPluginManager');
 
         if (isset($configuration['mt_mail']['composer_plugins'])
             && is_array($configuration['mt_mail']['composer_plugins'])
         ) {
-            foreach ($configuration['mt_mail']['composer_plugins'] as $plugin) {
+            /** @var ComposerPluginManager $pluginManager */
+            $pluginManager = $serviceLocator->get('MtMail\Service\ComposerPluginManager');
+
+            $canonicalizeName = function ($name) {
+                $canonicalNamesReplacements = array('-' => '', '_' => '', ' ' => '', '\\' => '', '/' => '');
+                return strtolower(strtr($name, $canonicalNamesReplacements));
+            };
+
+            $plugins = array_unique(array_map($canonicalizeName, $configuration['mt_mail']['composer_plugins']));
+
+            foreach ($plugins as $plugin) {
                 $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
             }
         }

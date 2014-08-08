@@ -9,9 +9,9 @@
 
 namespace MtMailTest\Factory;
 
-use MtMail\Factory\ComposerServiceFactory;
+use MtMail\Factory\SenderServiceFactory;
 
-class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class SenderFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testCreateService()
@@ -22,22 +22,21 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue(
                     array(
                         'mt_mail' => array(
-                            'renderer' => 'Some\Mail\Renderer',
+                            'transport' => 'Some\Mail\Transport',
                         ),
                     )
                 )
             );
 
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
         $locator->expects($this->at(1))->method('get')
-            ->with('Some\Mail\Renderer')->will(
-                $this->returnValue($renderer)
+            ->with('Some\Mail\Transport')->will(
+                $this->returnValue($transport)
             );
 
-        $factory = new ComposerServiceFactory();
+        $factory = new SenderServiceFactory();
         $service = $factory->createService($locator);
-        $this->assertInstanceOf('MtMail\Service\Composer', $service);
-        $this->assertEquals($renderer, $service->getRenderer());
+        $this->assertInstanceOf('MtMail\Service\Sender', $service);
     }
 
     public function testCreateServiceCanInjectPlugins()
@@ -48,34 +47,33 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
                 $this->returnValue(
                     array(
                         'mt_mail' => array(
-                            'renderer' => 'Some\Mail\Renderer',
-                            'composer_plugins' => array(
-                                'SomeMailPlugin',
+                            'transport' => 'Some\Mail\Transport',
+                            'sender_plugins' => array(
+                                'SomeSenderPlugin',
                             ),
                         ),
                     )
                 )
             );
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+
+        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
         $locator->expects($this->at(1))->method('get')
-            ->with('Some\Mail\Renderer')->will(
-                $this->returnValue($renderer)
+            ->with('Some\Mail\Transport')->will(
+                $this->returnValue($transport)
             );
 
-        $plugin = $this->getMock('MtMail\ComposerPlugin\PluginInterface');
-        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', array('get'));
-        $pluginManager->expects($this->once())->method('get')->with('SomeMailPlugin')
+        $plugin = $this->getMock('MtMail\SenderPlugin\PluginInterface');
+        $pluginManager = $this->getMock('MtMail\Service\SenderPluginManager', array('get'));
+        $pluginManager->expects($this->once())->method('get')->with('somesenderplugin')
             ->will($this->returnValue($plugin));
         $locator->expects($this->at(2))->method('get')
-            ->with('MtMail\Service\ComposerPluginManager')->will(
+            ->with('MtMail\Service\SenderPluginManager')->will(
                 $this->returnValue($pluginManager)
             );
 
-
-        $factory = new ComposerServiceFactory();
+        $factory = new SenderServiceFactory();
         $service = $factory->createService($locator);
-        $this->assertInstanceOf('MtMail\Service\Composer', $service);
-        $this->assertEquals($renderer, $service->getRenderer());
+        $this->assertInstanceOf('MtMail\Service\Sender', $service);
     }
 
 }

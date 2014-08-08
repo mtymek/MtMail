@@ -33,7 +33,7 @@ class SenderServiceFactory implements FactoryInterface
             && is_array($configuration['mt_mail']['sender_plugins'])
         ) {
             $pluginManager = $serviceLocator->get('MtMail\Service\SenderPluginManager');
-            foreach ($configuration['mt_mail']['sender_plugins'] as $plugin) {
+            foreach (array_unique($configuration['mt_mail']['sender_plugins']) as $plugin) {
                 $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
             }
         }

@@ -35,7 +35,7 @@ class ComposerServiceFactory implements FactoryInterface
         if (isset($configuration['mt_mail']['composer_plugins'])
             && is_array($configuration['mt_mail']['composer_plugins'])
         ) {
-            foreach ($configuration['mt_mail']['composer_plugins'] as $plugin) {
+            foreach (array_unique($configuration['mt_mail']['composer_plugins']) as $plugin) {
                 $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
             }
         }

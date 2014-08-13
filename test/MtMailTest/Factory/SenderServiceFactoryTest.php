@@ -20,7 +20,7 @@ class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $serviceLocator->expects($this->at(0))
             ->method('get')
             ->with('Configuration')
-            ->will($this->returnValue(['mt_mail' => ['sender_plugins' => ['DefaultHeaders', 'DefaultHeaders'], 'transport' => 'transport.file']]));
+            ->will($this->returnValue(array('mt_mail' => array('sender_plugins' => array('DefaultHeaders', 'DefaultHeaders'), 'transport' => 'transport.file'))));
 
         $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
         $serviceLocator->expects($this->at(1))

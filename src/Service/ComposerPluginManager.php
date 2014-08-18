@@ -43,4 +43,15 @@ class ComposerPluginManager extends AbstractPluginManager
             ));
         }
     }
+
+    /**
+     * Canonicalize name
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function canonicalizeName($name)
+    {
+        return $name;
+    }
 }

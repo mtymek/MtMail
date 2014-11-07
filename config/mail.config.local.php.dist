@@ -24,7 +24,6 @@ return array(
          * Uncomment name of plugin you want to enable, then uncomment and edit its options below
          */
         'composer_plugins' => array(
-            // 'DefaultHeaders',
             // 'Layout',
             'MessageEncoding',
         ),

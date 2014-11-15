@@ -22,7 +22,7 @@ Installation
 ------------
 Installation is supported via Composer:
 
-1. Add `"mtymek/mt-mail":"1.0.*"` to your `composer.json` file and run `php composer.phar update`.
+1. Add `"mtymek/mt-mail":"1.1.*"` to your `composer.json` file and run `php composer.phar update`.
 2. Add MtMail to your `config/application.config.php` file under the modules key.
 
 

@@ -107,4 +107,17 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
         $service->compose(array(), $template, new ViewModel());
     }
 
+    public function testTextTemplateHasCorrectCharset()
+    {
+        $template = new TextTemplate();
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $service = new Composer($renderer);
+
+        $message = $service->compose(array(), $template, new ViewModel());
+
+        $parts = $message->getBody()->getParts();
+        $textPart = $parts[0];
+        $this->assertTrue(isset($textPart->charset));
+        $this->assertSame($message->getHeaders()->getEncoding(), $textPart->charset);
+    }
 }

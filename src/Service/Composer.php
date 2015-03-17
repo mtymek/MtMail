@@ -149,6 +149,7 @@ class Composer implements EventManagerAwareInterface
 
             $text = new MimePart($this->renderer->render($event->getViewModel()));
             $text->type = 'text/plain';
+            $text->charset = $event->getMessage()->getHeaders()->getEncoding();
             $body->addPart($text);
 
             $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);

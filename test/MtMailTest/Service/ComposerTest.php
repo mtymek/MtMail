@@ -13,6 +13,7 @@ use MtMail\Event\ComposerEvent;
 use MtMail\Service\Composer;
 use MtMailTest\Test\HtmlTemplate;
 use MtMailTest\Test\TextTemplate;
+use Prophecy\Argument;
 use Zend\EventManager\EventManager;
 use Zend\View\Model\ViewModel;
 
@@ -109,11 +110,13 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
     public function testTextTemplateHasCorrectCharset()
     {
+        $viewModel = new ViewModel();
         $template = new TextTemplate();
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
-        $service = new Composer($renderer);
+        $renderer = $this->prophesize('MtMail\Renderer\RendererInterface');
+        $renderer->render(Argument::type('Zend\View\Model\ViewModel'))->willReturn('BODY');
+        $service = new Composer($renderer->reveal());
 
-        $message = $service->compose(array(), $template, new ViewModel());
+        $message = $service->compose(array(), $template, $viewModel);
 
         $parts = $message->getBody()->getParts();
         $textPart = $parts[0];

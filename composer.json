@@ -3,21 +3,21 @@
     "description": "ZF2 e-mail module. Using this library can easily create e-mail messages from PHTML templates (with optional layouts) and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
     "keywords": ["zf2", "module", "email", "e-mail", "mail transport", "mail template"],
     "require": {
-        "zendframework/zend-view": ">=2.2.1",
-        "zendframework/zend-escaper": ">=2.2.1",
-        "zendframework/zend-mail": ">=2.2.1",
-        "zendframework/zend-filter": ">=2.2.1",
-        "zendframework/zend-validator": ">=2.2.1",
-        "zendframework/zend-modulemanager": ">=2.2.1"
+        "zendframework/zend-view": "~2.2.1",
+        "zendframework/zend-escaper": "~2.2.1",
+        "zendframework/zend-mail": "~2.2.1",
+        "zendframework/zend-filter": "~2.2.1",
+        "zendframework/zend-validator": "~2.2.1",
+        "zendframework/zend-modulemanager": "~2.2.1"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8",
-        "zendframework/zend-mvc": ">=2.2.1",
-        "zendframework/zend-serializer": ">=2.2.1",
-        "zendframework/zend-log": ">=2.2.1",
-        "zendframework/zend-i18n": ">=2.2.1",
-        "zendframework/zend-console": ">=2.2.1",
-        "zendframework/zend-http": ">=2.2.1"
+        "zendframework/zend-mvc": "~2.2.1",
+        "zendframework/zend-serializer": "~2.2.1",
+        "zendframework/zend-log": "~2.2.1",
+        "zendframework/zend-i18n": "~2.2.1",
+        "zendframework/zend-console": "~2.2.1",
+        "zendframework/zend-http": "~2.2.1"
     },
     "license": "BSD 2-Clause",
     "authors": [

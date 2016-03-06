@@ -41,7 +41,7 @@ class MailTest extends \PHPUnit_Framework_TestCase
                 $template,
                 $this->isInstanceOf('Zend\View\Model\ModelInterface')
             );
-        $templateManager = $this->getMock('MtMail\Service\TemplateManager', [],[], '', false);
+        $templateManager = $this->getMock('MtMail\Service\TemplateManager', [], [], '', false);
         $service = new Mail($composer, $sender, $templateManager);
         $service->compose(['to' => 'johndoe@domain.com'], $template);
     }

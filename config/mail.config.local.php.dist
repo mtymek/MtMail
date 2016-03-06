@@ -1,32 +1,32 @@
 <?php
 
-return array(
+return [
 
-    'mt_mail' => array(
+    'mt_mail' => [
 
         /*
          * Transport settings
          */
 
         'transport' => 'Zend\Mail\Transport\Smtp',
-        'transport_options' => array(
+        'transport_options' => [
             'host' => 'some-host.com',
             'connection_class' => 'login',
-            'connection_config' => array(
+            'connection_config' => [
                 'username' => 'user',
                 'password' => 'pass',
                 'ssl' => 'tls',
-            ),
-        ),
+            ],
+        ],
 
         /*
          * List of enabled composer plugins
          * Uncomment name of plugin you want to enable, then uncomment and edit its options below
          */
-        'composer_plugins' => array(
+        'composer_plugins' => [
             // 'Layout',
             'MessageEncoding',
-        ),
+        ],
 
         /*
          * Plugin configuration
@@ -43,6 +43,6 @@ return array(
 
         // example message encoding
         'message_encoding' => 'UTF-8',
-    ),
+    ],
 
-);
+];

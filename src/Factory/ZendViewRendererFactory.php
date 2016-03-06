@@ -9,20 +9,12 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Renderer\ZendView;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ZendViewRendererFactory implements FactoryInterface
+class ZendViewRendererFactory
 {
-
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
         $view = $serviceLocator->get('ViewManager')->getView();
         $service = new ZendView($view);

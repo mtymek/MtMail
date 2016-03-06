@@ -9,20 +9,12 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Service\Mail;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MailServiceFactory implements FactoryInterface
+class MailServiceFactory
 {
-
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return Mail
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
         $service = new Mail(
             $serviceLocator->get('MtMail\Service\Composer'),

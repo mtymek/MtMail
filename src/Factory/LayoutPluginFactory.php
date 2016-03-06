@@ -9,22 +9,17 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\ComposerPlugin\Layout;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class LayoutPluginFactory implements FactoryInterface
+class LayoutPluginFactory
 {
-
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
-        $config = $serviceLocator->getServiceLocator()->get('Configuration');
+        if (!method_exists($serviceLocator, 'configure')) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+        $config = $serviceLocator->get('Configuration');
         $plugin = new Layout();
         if (isset($config['mt_mail']['layout'])) {
             $plugin->setLayoutTemplate($config['mt_mail']['layout']);

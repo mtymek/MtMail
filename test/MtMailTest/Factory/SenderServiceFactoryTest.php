@@ -9,13 +9,15 @@
 
 namespace MtMailTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Factory\SenderServiceFactory;
+use MtMail\Service\Sender;
 
 class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $serviceLocator = $this->getMock(ContainerInterface::class, ['get', 'has']);
 
         $serviceLocator->expects($this->at(0))
             ->method('get')
@@ -36,7 +38,7 @@ class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ->with('transport.file')
             ->will($this->returnValue($transport));
 
-        $pluginManager = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $pluginManager = $this->getMock(ContainerInterface::class, ['get', 'has']);
 
         $serviceLocator->expects($this->at(2))
             ->method('get')
@@ -52,6 +54,6 @@ class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
         $factory = new SenderServiceFactory;
 
-        $this->assertInstanceOf('MtMail\Service\Sender', $factory->createService($serviceLocator));
+        $this->assertInstanceOf(Sender::class, $factory($serviceLocator));
     }
 }

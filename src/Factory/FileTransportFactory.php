@@ -9,20 +9,13 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use Zend\Mail\Transport\File;
 use Zend\Mail\Transport\FileOptions;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class FileTransportFactory implements FactoryInterface
+class FileTransportFactory
 {
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return File
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
         $serviceConfig = isset($configuration['mt_mail']['transport_options'])

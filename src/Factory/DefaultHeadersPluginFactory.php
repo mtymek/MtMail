@@ -9,21 +9,17 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\ComposerPlugin\DefaultHeaders;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class DefaultHeadersPluginFactory implements FactoryInterface
+class DefaultHeadersPluginFactory
 {
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return mixed
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
-        $config = $serviceLocator->getServiceLocator()->get('Configuration');
+        if (!method_exists($serviceLocator, 'configure')) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+        $config = $serviceLocator->get('Configuration');
         $plugin = new DefaultHeaders();
         if (isset($config['mt_mail']['default_headers'])) {
             $plugin->setHeaders($config['mt_mail']['default_headers']);

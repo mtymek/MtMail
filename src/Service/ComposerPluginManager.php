@@ -13,34 +13,46 @@ use MtMail\ComposerPlugin\PluginInterface;
 use MtMail\Exception\RuntimeException;
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use Zend\ServiceManager\Exception\InvalidServiceException;
 
 class ComposerPluginManager extends AbstractPluginManager
 {
+    protected $instanceOf = PluginInterface::class;
 
     /**
-     * The main service locator
+     * Validate the plugin is of the expected type (v3).
      *
-     * @var ServiceLocatorInterface
+     * Validates against `$instanceOf`.
+     *
+     * @param mixed $instance
+     * @throws InvalidServiceException
      */
-    protected $serviceLocator;
-
-    /**
-     * Validate the plugin
-     *
-     *
-     * @param  mixed            $plugin
-     * @throws RuntimeException
-     * @return void
-     */
-    public function validatePlugin($plugin)
+    public function validate($instance)
     {
-        if (!$plugin instanceof PluginInterface) {
-            throw new RuntimeException(sprintf(
-                'Plugin of type %s is invalid; must implement %s\FilterInterface or be callable',
-                (is_object($plugin) ? get_class($plugin) : gettype($plugin)),
-                __NAMESPACE__
+        if (! $instance instanceof $this->instanceOf) {
+            throw new InvalidServiceException(sprintf(
+                '%s can only create instances of %s; %s is invalid',
+                get_class($this),
+                $this->instanceOf,
+                (is_object($instance) ? get_class($instance) : gettype($instance))
             ));
+        }
+    }
+
+    /**
+     * Validate the plugin is of the expected type (v2).
+     *
+     * Proxies to `validate()`.
+     *
+     * @param mixed $instance
+     * @throws RuntimeException
+     */
+    public function validatePlugin($instance)
+    {
+        try {
+            $this->validate($instance);
+        } catch (InvalidServiceException $e) {
+            throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

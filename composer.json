@@ -10,7 +10,7 @@
         "zendframework/zend-filter": "^2.2.1",
         "zendframework/zend-validator": "^2.2.1",
         "zendframework/zend-modulemanager": "^2.2.1",
-        "zendframework/zend-servicemanager": "^2.2.1",
+        "zendframework/zend-servicemanager": "^2.5.7",
         "zendframework/zend-eventmanager": "^2.2.1"
     },
     "require-dev": {
@@ -35,12 +35,14 @@
         "psr-4": {
             "MtMail\\": "src/"
         },
-        "psr-0": {
-            "MtMailTest": "test/"
-        },
         "classmap": [
             "./Module.php"
         ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "MtMailTest\\": "test/MtMailTest"
+        }
     },
     "scripts": {
         "check": [

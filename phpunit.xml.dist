@@ -1,13 +1,13 @@
-<phpunit bootstrap="bootstrap.php">
+<phpunit bootstrap="test/bootstrap.php">
     <testsuite name="MtMailTest">
-        <directory>MtMailTest</directory>
+        <directory>test/MtMailTest</directory>
     </testsuite>
     <filter>
         <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">../src</directory>
+            <directory suffix=".php">src</directory>
         </whitelist>
         <blacklist>
-            <directory>../vendor</directory>
+            <directory>vendor</directory>
         </blacklist>
     </filter>
 </phpunit>

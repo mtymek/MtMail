@@ -9,6 +9,7 @@
 
 namespace MtMailTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Factory\ComposerServiceFactory;
 
 class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
@@ -16,7 +17,7 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
         $locator->expects($this->at(0))->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
@@ -35,14 +36,14 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
             );
 
         $factory = new ComposerServiceFactory();
-        $service = $factory->createService($locator);
+        $service = $factory($locator);
         $this->assertInstanceOf('MtMail\Service\Composer', $service);
         $this->assertEquals($renderer, $service->getRenderer());
     }
 
     public function testCreateServiceCanInjectPlugins()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
         $locator->expects($this->at(0))->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
@@ -64,7 +65,7 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
             );
 
         $plugin = $this->getMock('MtMail\ComposerPlugin\PluginInterface');
-        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', ['get']);
+        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', ['get'], [], '', false);
         $pluginManager->expects($this->once())->method('get')->with('SomeMailPlugin')
             ->will($this->returnValue($plugin));
         $locator->expects($this->at(2))->method('get')
@@ -74,7 +75,7 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
 
         $factory = new ComposerServiceFactory();
-        $service = $factory->createService($locator);
+        $service = $factory($locator);
         $this->assertInstanceOf('MtMail\Service\Composer', $service);
         $this->assertEquals($renderer, $service->getRenderer());
     }

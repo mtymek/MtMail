@@ -9,21 +9,22 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Service\Composer;
-use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
-class ComposerServiceFactory implements FactoryInterface
+class ComposerServiceFactory
 {
-
     /**
      * Create service
      *
-     * @param  ServiceLocatorInterface $serviceLocator
+     * @param ContainerInterface|ServiceLocatorInterface $serviceLocator
+     * @param string $requestedName
+     * @param array $options
      * @return Composer
      */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
         $configuration = $serviceLocator->get('Configuration');
         /** @var RendererInterface $renderer */

@@ -8,30 +8,51 @@
  * @license   BSD 2-Clause
  */
 
-return array(
-    'mt_mail' => array(
-        'renderer' => 'MtMail\Renderer\ZendView',
-        'composer_plugin_manager' => array(
-            'invokables' => array(
-                'PlaintextMessage' => 'MtMail\ComposerPlugin\PlaintextMessage',
-            ),
-            'factories' => array(
-                'Layout'          => 'MtMail\Factory\LayoutPluginFactory',
-                'DefaultHeaders'  => 'MtMail\Factory\DefaultHeadersPluginFactory',
-                'MessageEncoding' => 'MtMail\Factory\MessageEncodingPluginFactory',
-            ),
-        ),
-        'composer_plugins' => array(
+use MtMail\ComposerPlugin\DefaultHeaders;
+use MtMail\ComposerPlugin\Layout;
+use MtMail\ComposerPlugin\MessageEncoding;
+use MtMail\ComposerPlugin\PlaintextMessage;
+use MtMail\Factory\DefaultHeadersPluginFactory;
+use MtMail\Factory\LayoutPluginFactory;
+use MtMail\Factory\MessageEncodingPluginFactory;
+use MtMail\Renderer\ZendView;
+use Zend\ServiceManager\Factory\InvokableFactory;
+
+return [
+    'mt_mail' => [
+        'renderer' => ZendView::class,
+        'composer_plugin_manager' => [
+            'aliases' => [
+                'PlaintextMessage' => PlaintextMessage::class,
+                'plaintextMessage' => PlaintextMessage::class,
+                'plaintextmessage' => PlaintextMessage::class,
+                'Layout'           => Layout::class,
+                'layout'           => Layout::class,
+                'DefaultHeaders'   => DefaultHeaders::class,
+                'defaultHeaders'   => DefaultHeaders::class,
+                'defaultheaders'   => DefaultHeaders::class,
+                'MessageEncoding'  => MessageEncoding::class,
+                'messageEncoding'  => MessageEncoding::class,
+                'messageencoding'  => MessageEncoding::class,
+            ],
+            'factories' => [
+                PlaintextMessage::class => InvokableFactory::class,
+                Layout::class           => LayoutPluginFactory::class,
+                DefaultHeaders::class   => DefaultHeadersPluginFactory::class,
+                MessageEncoding::class  => MessageEncodingPluginFactory::class,
+            ],
+        ],
+        'composer_plugins' => [
             'DefaultHeaders'
-        ),
-        'default_headers' => array(),
-        'transport' => 'Zend\Mail\Transport\Sendmail',
-    ),
-    'service_manager' => array(
-        'invokables' => array(
-            'Zend\Mail\Transport\Sendmail' => 'Zend\Mail\Transport\Sendmail',
-        ),
-        'factories' => array(
+        ],
+        'default_headers' => [],
+        'transport' => Zend\Mail\Transport\Sendmail::class,
+    ],
+    'service_manager' => [
+        'invokables' => [
+            Zend\Mail\Transport\Sendmail::class => Zend\Mail\Transport\Sendmail::class,
+        ],
+        'factories' => [
             'MtMail\Renderer\ZendView'             => 'MtMail\Factory\ZendViewRendererFactory',
             'MtMail\Service\Composer'              => 'MtMail\Factory\ComposerServiceFactory',
             'MtMail\Service\Sender'                => 'MtMail\Factory\SenderServiceFactory',
@@ -41,11 +62,11 @@ return array(
             'MtMail\Service\TemplateManager'       => 'MtMail\Factory\TemplateManagerFactory',
             'Zend\Mail\Transport\Smtp'             => 'MtMail\Factory\SmtpTransportFactory',
             'Zend\Mail\Transport\File'             => 'MtMail\Factory\FileTransportFactory',
-        ),
-    ),
-    'controller_plugins' => array(
-        'factories' => array(
+        ],
+    ],
+    'controller_plugins' => [
+        'factories' => [
             'MtMail' => 'MtMail\Factory\MtMailPlugin',
-        )
-    ),
-);
+        ]
+    ],
+];

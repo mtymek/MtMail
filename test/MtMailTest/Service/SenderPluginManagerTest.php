@@ -13,6 +13,7 @@ use MtMail\Exception\RuntimeException;
 use MtMail\Service\SenderPluginManager;
 use PHPUnit_Framework_TestCase;
 use stdClass;
+use Zend\ServiceManager\ServiceManager;
 
 class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -23,7 +24,7 @@ class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->pluginManager = new SenderPluginManager();
+        $this->pluginManager = new SenderPluginManager(new ServiceManager());
     }
 
     /**

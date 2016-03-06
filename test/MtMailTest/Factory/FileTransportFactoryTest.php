@@ -9,14 +9,16 @@
 
 namespace MtMailTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Factory\FileTransportFactory;
+use Zend\Mail\Transport\File;
 
 class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
 {
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
@@ -30,8 +32,8 @@ class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
                 )
             );
         $factory = new FileTransportFactory();
-        $service = $factory->createService($locator);
-        $this->assertInstanceOf('Zend\Mail\Transport\File', $service);
+        $service = $factory($locator);
+        $this->assertInstanceOf(File::class, $service);
 
         // File transport does not provide getOptions method
 //        $this->assertEquals(__DIR__, $service->getOptions()->getPath());

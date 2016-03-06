@@ -20,7 +20,9 @@ class TemplateManagerFactory implements FactoryInterface
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
         $config = $serviceLocator->get('Configuration');
-        $serviceConfig = new Config(isset($config['mt_mail']['template_manager'])?$config['mt_mail']['template_manager']:array());
+        $serviceConfig = new Config(
+            isset($config['mt_mail']['template_manager']) ? $config['mt_mail']['template_manager']:[]
+        );
         $service = new TemplateManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);
 

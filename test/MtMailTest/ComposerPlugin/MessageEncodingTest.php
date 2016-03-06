@@ -26,7 +26,7 @@ class MessageEncodingTest extends \PHPUnit_Framework_TestCase
 
     public function testPluginSetsCorrectEncoding()
     {
-        $message = $this->getMock('Zend\Mail\Message', array('setEncoding'));
+        $message = $this->getMock('Zend\Mail\Message', ['setEncoding']);
         $message->expects($this->once())->method('setEncoding')->with('UTF-8');
         $event = new ComposerEvent();
         $event->setMessage($message);
@@ -39,5 +39,4 @@ class MessageEncodingTest extends \PHPUnit_Framework_TestCase
         $this->plugin->setEncoding('UTF-8');
         $this->assertEquals('UTF-8', $this->plugin->getEncoding());
     }
-
 }

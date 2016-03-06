@@ -63,7 +63,7 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
         $textBody = strip_tags($this->br2nl($htmlBody));
         $textPart = new MimePart($textBody);
         $textPart->type = 'text/plain';
-        $event->getBody()->setParts(array($textPart, $htmlPart));
+        $event->getBody()->setParts([$textPart, $htmlPart]);
 
         // force multipart/alternative content type
         $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/alternative')
@@ -82,6 +82,6 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(ComposerEvent::EVENT_COMPOSE_POST, array($this, 'generateTextBody'));
+        $this->listeners[] = $events->attach(ComposerEvent::EVENT_COMPOSE_POST, [$this, 'generateTextBody']);
     }
 }

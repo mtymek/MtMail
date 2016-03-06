@@ -1,6 +1,11 @@
 CHANGELOG
 =========
 
+1.2.0 (TBD)
+-----------
+* bump required PHP version to 5.5
+* cleanup test suite
+
 1.1.2 (2015-03-17)
 ------------------
 * set charset for text part template (stefanotorresi)

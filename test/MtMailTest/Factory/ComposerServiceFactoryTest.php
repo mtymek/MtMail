@@ -16,19 +16,19 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $locator->expects($this->at(0))->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
-                    array(
-                        'mt_mail' => array(
+                    [
+                        'mt_mail' => [
                             'renderer' => 'Some\Mail\Renderer',
-                        ),
-                    )
+                        ],
+                    ]
                 )
             );
 
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $locator->expects($this->at(1))->method('get')
             ->with('Some\Mail\Renderer')->will(
                 $this->returnValue($renderer)
@@ -42,29 +42,29 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateServiceCanInjectPlugins()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $locator->expects($this->at(0))->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
-                    array(
-                        'mt_mail' => array(
+                    [
+                        'mt_mail' => [
                             'renderer' => 'Some\Mail\Renderer',
-                            'composer_plugins' => array(
+                            'composer_plugins' => [
                                 'SomeMailPlugin',
                                 'SomeMailPlugin',
-                            ),
-                        ),
-                    )
+                            ],
+                        ],
+                    ]
                 )
             );
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $locator->expects($this->at(1))->method('get')
             ->with('Some\Mail\Renderer')->will(
                 $this->returnValue($renderer)
             );
 
         $plugin = $this->getMock('MtMail\ComposerPlugin\PluginInterface');
-        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', array('get'));
+        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', ['get']);
         $pluginManager->expects($this->once())->method('get')->with('SomeMailPlugin')
             ->will($this->returnValue($plugin));
         $locator->expects($this->at(2))->method('get')
@@ -78,5 +78,4 @@ class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('MtMail\Service\Composer', $service);
         $this->assertEquals($renderer, $service->getRenderer());
     }
-
 }

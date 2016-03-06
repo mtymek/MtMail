@@ -16,7 +16,6 @@ use stdClass;
 
 class ComposerPluginManagerTest extends PHPUnit_Framework_TestCase
 {
-
     /**
      * @var ComposerPluginManager
      */

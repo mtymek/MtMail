@@ -39,7 +39,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $event = new ComposerEvent();
         $event->setViewModel($viewModel);
         $this->plugin->injectLayoutViewModel($event);
-        $this->assertEquals(array($viewModel), $event->getViewModel()->getChildren());
+        $this->assertEquals([$viewModel], $event->getViewModel()->getChildren());
     }
 
     public function testInjectLayoutViewModelDoesNotCreateParentIfModelTerminates()
@@ -49,7 +49,7 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $event = new ComposerEvent();
         $event->setViewModel($viewModel);
         $this->plugin->injectLayoutViewModel($event);
-        $this->assertEquals(array(), $event->getViewModel()->getChildren());
+        $this->assertEquals([], $event->getViewModel()->getChildren());
         $this->assertEquals($viewModel, $event->getViewModel());
     }
 
@@ -65,5 +65,4 @@ class LayoutTest extends \PHPUnit_Framework_TestCase
         $this->plugin->injectLayoutViewModel($event);
         $this->assertEquals($template->getLayout(), $event->getViewModel()->getTemplate());
     }
-
 }

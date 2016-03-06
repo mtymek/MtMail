@@ -15,12 +15,20 @@ class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testCreateService()
     {
-        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $serviceLocator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
 
         $serviceLocator->expects($this->at(0))
             ->method('get')
             ->with('Configuration')
-            ->will($this->returnValue(array('mt_mail' => array('sender_plugins' => array('DefaultHeaders', 'DefaultHeaders'), 'transport' => 'transport.file'))));
+            ->will(
+                $this->returnValue(
+                    [
+                        'mt_mail' => [
+                            'sender_plugins' => ['DefaultHeaders', 'DefaultHeaders'], 'transport' => 'transport.file'
+                        ]
+                    ]
+                )
+            );
 
         $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
         $serviceLocator->expects($this->at(1))
@@ -28,7 +36,7 @@ class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
             ->with('transport.file')
             ->will($this->returnValue($transport));
 
-        $pluginManager = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $pluginManager = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
 
         $serviceLocator->expects($this->at(2))
             ->method('get')

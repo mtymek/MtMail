@@ -20,7 +20,7 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     /**
      * @var array
      */
-    protected $headers = array();
+    protected $headers = [];
 
     /**
      * @param ComposerEvent $event
@@ -51,7 +51,7 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
      */
     public function attach(EventManagerInterface $events)
     {
-        $this->listeners[] = $events->attach(ComposerEvent::EVENT_HEADERS_PRE, array($this, 'injectDefaultHeaders'));
+        $this->listeners[] = $events->attach(ComposerEvent::EVENT_HEADERS_PRE, [$this, 'injectDefaultHeaders']);
     }
 
     /**

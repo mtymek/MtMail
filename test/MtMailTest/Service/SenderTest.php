@@ -30,7 +30,7 @@ class SenderTest extends \PHPUnit_Framework_TestCase
     public function testSendPassesMessageToTransportObject()
     {
         $message = new Message();
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', array('send'));
+        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', ['send']);
         $transport->expects($this->once())->method('send')
             ->with($message);
         $service = new Sender($transport);
@@ -46,13 +46,15 @@ class SenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTriggersEvents()
     {
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', array('send'));
+        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', ['send']);
         $transport->expects($this->once())->method('send')
             ->with($this->isInstanceOf('Zend\Mail\Message'));
 
-        $em = $this->getMock('Zend\EventManager\EventManager', array('trigger'));
-        $em->expects($this->at(0))->method('trigger')->with(SenderEvent::EVENT_SEND_PRE, $this->isInstanceOf('MtMail\Event\SenderEvent'));
-        $em->expects($this->at(1))->method('trigger')->with(SenderEvent::EVENT_SEND_POST, $this->isInstanceOf('MtMail\Event\SenderEvent'));
+        $em = $this->getMock('Zend\EventManager\EventManager', ['trigger']);
+        $em->expects($this->at(0))->method('trigger')
+            ->with(SenderEvent::EVENT_SEND_PRE, $this->isInstanceOf('MtMail\Event\SenderEvent'));
+        $em->expects($this->at(1))->method('trigger')
+            ->with(SenderEvent::EVENT_SEND_POST, $this->isInstanceOf('MtMail\Event\SenderEvent'));
 
         $service = new Sender($transport);
         $service->setEventManager($em);

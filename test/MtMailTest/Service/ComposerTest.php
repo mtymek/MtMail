@@ -40,12 +40,12 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     {
         $template = new TextTemplate();
 
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new Composer($renderer);
-        $message = $service->compose(array(), $template, new ViewModel());
+        $message = $service->compose([], $template, new ViewModel());
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
     }
 
@@ -53,12 +53,12 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
     {
         $template = new HtmlTemplate();
 
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
         $service = new Composer($renderer);
-        $message = $service->compose(array('subject' => 'MAIL_SUBJECT'), $template, new ViewModel());
+        $message = $service->compose(['subject' => 'MAIL_SUBJECT'], $template, new ViewModel());
         $this->assertEquals('MAIL_BODY', $message->getBody()->getPartContent(0));
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
@@ -72,29 +72,35 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
     public function testComposeTriggersEvents()
     {
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
-        $em = $this->getMock('Zend\EventManager\EventManager', array('trigger'));
-        $em->expects($this->at(0))->method('trigger')->with(ComposerEvent::EVENT_COMPOSE_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(1))->method('trigger')->with(ComposerEvent::EVENT_HEADERS_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(2))->method('trigger')->with(ComposerEvent::EVENT_HEADERS_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(3))->method('trigger')->with(ComposerEvent::EVENT_HTML_BODY_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(4))->method('trigger')->with(ComposerEvent::EVENT_HTML_BODY_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(5))->method('trigger')->with(ComposerEvent::EVENT_COMPOSE_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em = $this->getMock('Zend\EventManager\EventManager', ['trigger']);
+        $em->expects($this->at(0))->method('trigger')
+            ->with(ComposerEvent::EVENT_COMPOSE_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(1))->method('trigger')
+            ->with(ComposerEvent::EVENT_HEADERS_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(2))->method('trigger')
+            ->with(ComposerEvent::EVENT_HEADERS_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(3))->method('trigger')
+            ->with(ComposerEvent::EVENT_HTML_BODY_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(4))->method('trigger')
+            ->with(ComposerEvent::EVENT_HTML_BODY_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em->expects($this->at(5))->method('trigger')
+            ->with(ComposerEvent::EVENT_COMPOSE_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
 
         $service = new Composer($renderer);
         $service->setEventManager($em);
         $template = new HtmlTemplate();
-        $service->compose(array(), $template, new ViewModel());
+        $service->compose([], $template, new ViewModel());
     }
 
     public function testHtmlBodyPreEventAllowsReplacingViewModel()
     {
         $replacement = new ViewModel();
         $replacement->setTemplate('some_template.phtml');
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', array('render'));
+        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
         $renderer->expects($this->once())->method('render')->with($this->equalTo($replacement))
             ->will($this->returnValue('MAIL_BODY'));
 
@@ -103,9 +109,9 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
 
         $service->getEventManager()->attach(ComposerEvent::EVENT_HTML_BODY_PRE, function ($event) use ($replacement) {
                 $event->setViewModel($replacement);
-            });
+        });
 
-        $service->compose(array(), $template, new ViewModel());
+        $service->compose([], $template, new ViewModel());
     }
 
     public function testTextTemplateHasCorrectCharset()
@@ -116,7 +122,7 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
         $renderer->render(Argument::type('Zend\View\Model\ViewModel'))->willReturn('BODY');
         $service = new Composer($renderer->reveal());
 
-        $message = $service->compose(array(), $template, $viewModel);
+        $message = $service->compose([], $template, $viewModel);
 
         $parts = $message->getBody()->getParts();
         $textPart = $parts[0];

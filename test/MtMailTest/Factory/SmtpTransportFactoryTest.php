@@ -16,23 +16,23 @@ class SmtpTransportFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
-                    array(
-                        'mt_mail' => array(
-                            'transport_options' => array(
+                    [
+                        'mt_mail' => [
+                            'transport_options' => [
                                 'host' => 'some-host.com',
                                 'connection_class' => 'login',
-                                'connection_config' => array(
+                                'connection_config' => [
                                     'username' => 'user',
                                     'password' => 'pass',
                                     'ssl' => 'tls',
-                                ),
-                            ),
-                        ),
-                    )
+                                ],
+                            ],
+                        ],
+                    ]
                 )
             );
         $factory = new SmtpTransportFactory();
@@ -41,14 +41,12 @@ class SmtpTransportFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('some-host.com', $service->getOptions()->getHost());
         $this->assertEquals('login', $service->getOptions()->getConnectionClass());
         $this->assertEquals(
-            array(
+            [
                 'username' => 'user',
                 'password' => 'pass',
                 'ssl' => 'tls',
-            )
-            ,
+            ],
             $service->getOptions()->getConnectionConfig()
         );
     }
-
 }

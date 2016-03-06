@@ -28,17 +28,17 @@ class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
 
     public function testLayoutHeadersIsMutable()
     {
-        $this->plugin->setHeaders(array('from' => 'sender@domain.tld'));
-        $this->assertEquals(array('from' => 'sender@domain.tld'), $this->plugin->getHeaders());
+        $this->plugin->setHeaders(['from' => 'sender@domain.tld']);
+        $this->assertEquals(['from' => 'sender@domain.tld'], $this->plugin->getHeaders());
     }
 
     public function testInjectDefaultHeadersSetsHeaders()
     {
-        $this->plugin->setHeaders(array(
+        $this->plugin->setHeaders([
                 'from' => 'sender@domain.com',
                 'subject' => 'Hello!',
-            ));
-        $headers = $this->getMock('Zend\Mail\Headers', array('addHeaderLine'));
+            ]);
+        $headers = $this->getMock('Zend\Mail\Headers', ['addHeaderLine']);
         $headers->expects($this->at(0))->method('addHeaderLine')->with('from', 'sender@domain.com');
         $headers->expects($this->at(1))->method('addHeaderLine')->with('subject', 'Hello!');
         $message = new Message();
@@ -50,7 +50,7 @@ class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
 
     public function testPluginCanInjectTemplateSpecificHeaders()
     {
-        $headers = $this->getMock('Zend\Mail\Headers', array('addHeaderLine'));
+        $headers = $this->getMock('Zend\Mail\Headers', ['addHeaderLine']);
         $headers->expects($this->at(0))->method('addHeaderLine')->with('subject', 'Default subject');
         $template = new HeadersProviderTemplate();
         $message = new Message();

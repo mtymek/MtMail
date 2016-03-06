@@ -11,8 +11,6 @@ namespace MtMailTest;
 
 use MtMail\Module;
 use PHPUnit_Framework_TestCase;
-use Zend\ServiceManager\Config;
-use Zend\ServiceManager\ServiceManager;
 
 class ModuleTest extends PHPUnit_Framework_TestCase
 {
@@ -28,12 +26,12 @@ class ModuleTest extends PHPUnit_Framework_TestCase
     {
         $config = include __DIR__ . '/../../config/module.config.php';
         $serviceConfig = array_merge(
-            isset($config['service_manager']['factories'])?$config['service_manager']['factories']:array(),
-            isset($config['service_manager']['invokables'])?$config['service_manager']['invokables']:array()
+            isset($config['service_manager']['factories'])?$config['service_manager']['factories']:[],
+            isset($config['service_manager']['invokables'])?$config['service_manager']['invokables']:[]
         );
-        $services = array();
+        $services = [];
         foreach ($serviceConfig as $key => $val) {
-            $services[] = array($key);
+            $services[] = [$key];
         }
         return $services;
     }
@@ -52,12 +50,12 @@ class ModuleTest extends PHPUnit_Framework_TestCase
     {
         $config = include __DIR__ . '/../../config/module.config.php';
         $serviceConfig = array_merge(
-            isset($config['controller_plugins']['factories'])?$config['controller_plugins']['factories']:array(),
-            isset($config['controller_plugins']['invokables'])?$config['controller_plugins']['invokables']:array()
+            isset($config['controller_plugins']['factories'])?$config['controller_plugins']['factories']:[],
+            isset($config['controller_plugins']['invokables'])?$config['controller_plugins']['invokables']:[]
         );
-        $services = array();
+        $services = [];
         foreach ($serviceConfig as $key => $val) {
-            $services[] = array($key);
+            $services[] = [$key];
         }
         return $services;
     }

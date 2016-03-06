@@ -28,8 +28,8 @@ class HeadersProviderTemplate implements HtmlTemplateInterface, HeadersProviderI
      */
     public function getHeaders()
     {
-        return array(
+        return [
             'subject' => 'Default subject'
-        );
+        ];
     }
 }

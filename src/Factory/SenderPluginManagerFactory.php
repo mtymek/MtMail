@@ -21,7 +21,7 @@ class SenderPluginManagerFactory implements FactoryInterface
     {
         $config = $serviceLocator->get('Configuration');
         $serviceConfig = new Config(
-            isset($config['mt_mail']['sender_plugin_manager'])?$config['mt_mail']['sender_plugin_manager']:array()
+            isset($config['mt_mail']['sender_plugin_manager'])?$config['mt_mail']['sender_plugin_manager']:[]
         );
         $service = new SenderPluginManager($serviceConfig);
         $service->setServiceLocator($serviceLocator);

@@ -16,17 +16,17 @@ class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', array('get', 'has'));
+        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
-                    array(
-                        'mt_mail' => array(
-                            'transport_options' => array(
+                    [
+                        'mt_mail' => [
+                            'transport_options' => [
                                 'path' => __DIR__, // directory must exist
-                            )
-                        ),
-                    )
+                            ]
+                        ],
+                    ]
                 )
             );
         $factory = new FileTransportFactory();
@@ -36,5 +36,4 @@ class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
         // File transport does not provide getOptions method
 //        $this->assertEquals(__DIR__, $service->getOptions()->getPath());
     }
-
 }

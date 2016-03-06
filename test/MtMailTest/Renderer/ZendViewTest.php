@@ -16,11 +16,11 @@ class ZendViewTest extends PHPUnit_Framework_TestCase
 {
     public function testRenderSetsViewModelAndCallsZendViewRender()
     {
-        $viewModel = $this->getMock('Zend\View\Model\ViewModel', array('setOption'));
+        $viewModel = $this->getMock('Zend\View\Model\ViewModel', ['setOption']);
         $viewModel->expects($this->once())->method('setOption')
             ->with('has_parent', true);
 
-        $view = $this->getMock('Zend\View\View', array('render'));
+        $view = $this->getMock('Zend\View\View', ['render']);
         $view->expects($this->once())->method('render')
             ->with($viewModel);
 

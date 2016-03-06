@@ -26,7 +26,7 @@ class FileTransportFactory implements FactoryInterface
     {
         $configuration = $serviceLocator->get('Configuration');
         $serviceConfig = isset($configuration['mt_mail']['transport_options'])
-            ? $configuration['mt_mail']['transport_options'] : array();
+            ? $configuration['mt_mail']['transport_options'] : [];
         $options = new FileOptions($serviceConfig);
         $file = new File($options);
 

@@ -1,37 +1,48 @@
 before_commands:
-    - "composer install --prefer-dist"
+  - "composer install --prefer-dist"
 
 tools:
-    php_code_coverage:
-        enabled: true
-        test_command: ./vendor/bin/phpunit -c test/
-    php_code_sniffer:
-        enabled: true
-        config:
-            standard: PSR2
-        filter:
-            paths: ["src/*", "test/*"]
-    php_cpd:
-        enabled: true
-        excluded_dirs: ["doc", "test", "vendor"]
-    php_cs_fixer:
-        enabled: true
-        config:
-            level: all
-        filter:
-            paths: ["src/*", "test/*"]
-    php_loc:
-        enabled: true
-        excluded_dirs: ["doc", "test", "vendor"]
-    php_mess_detector:
-        enabled: true
-        filter:
-            paths: ["src/*"]
-    php_pdepend:
-        enabled: true
-        excluded_dirs: ["doc", "test", "vendor"]
-    php_analyzer: true
-    php_analyzer:
-        filter:
-            paths: ["src/*", "test/*"]
-    sensiolabs_security_checker: true
+  php_code_coverage:
+    enabled: true
+    test_command: composer test
+  php_code_sniffer:
+    enabled: true
+    config:
+        standard: PSR2
+    filter:
+        paths: ["src/*", "test/*"]
+  php_cpd:
+    enabled: true
+    excluded_dirs: ["doc", "test", "vendor"]
+  php_cs_fixer:
+    enabled: true
+    config:
+      level: all
+    filter:
+      paths: ["src/*", "test/*"]
+  php_loc:
+    enabled: true
+    excluded_dirs: ["doc", "test", "vendor"]
+  php_mess_detector:
+    enabled: true
+    filter:
+      paths: ["src/*"]
+  php_pdepend:
+    enabled: true
+    excluded_dirs: ["doc", "test", "vendor"]
+  php_analyzer: true
+  php_analyzer:
+    filter:
+      paths: ["src/*", "test/*"]
+  sensiolabs_security_checker: true
+
+build:
+  environment:
+    php: '5.5.25'
+  tests:
+    override:
+      -
+        command: './vendor/bin/phpunit --coverage-clover=clover.xml'
+        coverage:
+          file: 'test/clover.xml'
+          format: 'php-clover'

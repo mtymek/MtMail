@@ -14,6 +14,7 @@ use MtMail\Template\HeadersProviderInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\Mail\Header\HeaderInterface;
+use Zend\Mail\Message;
 
 class DefaultHeaders extends AbstractListenerAggregate implements PluginInterface
 {
@@ -29,21 +30,25 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     public function injectDefaultHeaders(ComposerEvent $event)
     {
         $message = $event->getMessage();
-        foreach ($this->headers as $header => $value) {
+        $this->addHeaders($message, $this->headers);
+
+        if ($event->getTemplate() instanceof HeadersProviderInterface) {
+            $this->addHeaders($message, $event->getTemplate()->getHeaders());
+        }
+    }
+
+    /**
+     * @param $message
+     * @param $header
+     * @param $value
+     */
+    private function addHeaders(Message $message, $headers)
+    {
+        foreach ($headers as $header => $value) {
             if ($value instanceof HeaderInterface) {
                 $message->getHeaders()->addHeader($value);
             } else {
                 $message->getHeaders()->addHeaderLine($header, $value);
-            }
-        }
-
-        if ($event->getTemplate() instanceof HeadersProviderInterface) {
-            foreach ($event->getTemplate()->getHeaders() as $header => $value) {
-                if ($value instanceof HeaderInterface) {
-                    $message->getHeaders()->addHeader($value);
-                } else {
-                    $message->getHeaders()->addHeaderLine($header, $value);
-                }
             }
         }
     }

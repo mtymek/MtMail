@@ -38,9 +38,8 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     }
 
     /**
-     * @param $message
-     * @param $header
-     * @param $value
+     * @param Message $message
+     * @param HeaderInterface[]|string[] $headers
      */
     private function addHeaders(Message $message, $headers)
     {

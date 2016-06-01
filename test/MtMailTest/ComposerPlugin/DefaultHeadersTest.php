@@ -11,9 +11,11 @@ namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
 use MtMail\ComposerPlugin\DefaultHeaders;
+use MtMailTest\Test\HeaderObjectProviderTemplate;
 use MtMailTest\Test\HeadersProviderTemplate;
 use PHPUnit\Framework\TestCase;
 use Zend\Mail\Headers;
+use Zend\Mail\Header\Subject;
 use Zend\Mail\Message;
 
 class DefaultHeadersTest extends TestCase
@@ -59,6 +61,35 @@ class DefaultHeadersTest extends TestCase
         $template = new HeadersProviderTemplate();
         $message = new Message();
         $message->setHeaders($headers->reveal());
+        $event = new ComposerEvent();
+        $event->setMessage($message);
+        $event->setTemplate($template);
+        $this->plugin->injectDefaultHeaders($event);
+    }
+
+    public function testPluginCanInjectHeaderObjects()
+    {
+        $subject = (new Subject())->setSubject('Hello!');
+        $this->plugin->setHeaders([
+            'subject' => $subject,
+        ]);
+
+        $headers = $this->getMock('Zend\Mail\Headers', ['addHeader']);
+        $headers->expects($this->at(0))->method('addHeader')->with($subject);
+        $message = new Message();
+        $message->setHeaders($headers);
+        $event = new ComposerEvent();
+        $event->setMessage($message);
+        $this->plugin->injectDefaultHeaders($event);
+    }
+
+    public function testPluginCanInjectTemplateSpecificHeaderObjects()
+    {
+        $headers = $this->getMock('Zend\Mail\Headers', ['addHeader']);
+        $headers->expects($this->at(0))->method('addHeader')->with((new Subject())->setSubject('Default subject'));
+        $template = new HeaderObjectProviderTemplate();
+        $message = new Message();
+        $message->setHeaders($headers);
         $event = new ComposerEvent();
         $event->setMessage($message);
         $event->setTemplate($template);

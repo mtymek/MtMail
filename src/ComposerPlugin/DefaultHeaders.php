@@ -13,6 +13,7 @@ use MtMail\Event\ComposerEvent;
 use MtMail\Template\HeadersProviderInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\EventManager\AbstractListenerAggregate;
+use Zend\Mail\Header\HeaderInterface;
 
 class DefaultHeaders extends AbstractListenerAggregate implements PluginInterface
 {
@@ -29,12 +30,20 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
     {
         $message = $event->getMessage();
         foreach ($this->headers as $header => $value) {
-            $message->getHeaders()->addHeaderLine($header, $value);
+            if ($value instanceof HeaderInterface) {
+                $message->getHeaders()->addHeader($value);
+            } else {
+                $message->getHeaders()->addHeaderLine($header, $value);
+            }
         }
 
         if ($event->getTemplate() instanceof HeadersProviderInterface) {
             foreach ($event->getTemplate()->getHeaders() as $header => $value) {
-                $message->getHeaders()->addHeaderLine($header, $value);
+                if ($value instanceof HeaderInterface) {
+                    $message->getHeaders()->addHeader($value);
+                } else {
+                    $message->getHeaders()->addHeaderLine($header, $value);
+                }
             }
         }
     }

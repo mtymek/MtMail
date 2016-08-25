@@ -49,7 +49,7 @@ class DefaultHeaders extends AbstractListenerAggregate implements PluginInterfac
      *
      * @return void
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_HEADERS_PRE, [$this, 'injectDefaultHeaders']);
     }

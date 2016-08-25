@@ -41,7 +41,7 @@ class MessageEncoding extends AbstractListenerAggregate implements PluginInterfa
      *
      * @return void
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_COMPOSE_PRE, [$this, 'setMessageEncoding']);
     }

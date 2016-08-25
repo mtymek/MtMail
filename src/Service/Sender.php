@@ -92,8 +92,10 @@ class Sender implements EventManagerAwareInterface
         $em = $this->getEventManager();
         $event = $this->getEvent();
         $event->setMessage($message);
-        $em->trigger(SenderEvent::EVENT_SEND_PRE, $event);
+        $event->setName(SenderEvent::EVENT_SEND_PRE);
+        $em->triggerEvent($event);
         $this->transport->send($message);
-        $em->trigger(SenderEvent::EVENT_SEND_POST, $event);
+        $event->setName(SenderEvent::EVENT_SEND_POST);
+        $em->triggerEvent($event);
     }
 }

@@ -37,7 +37,7 @@ class ComposerServiceFactory
             && is_array($configuration['mt_mail']['composer_plugins'])
         ) {
             foreach (array_unique($configuration['mt_mail']['composer_plugins']) as $plugin) {
-                $service->getEventManager()->attachAggregate($pluginManager->get($plugin));
+                $pluginManager->get($plugin)->attach($service->getEventManager());
             }
         }
 

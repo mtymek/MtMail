@@ -127,14 +127,17 @@ class Composer implements EventManagerAwareInterface
         $em = $this->getEventManager();
 
         // 1. Trigger pre event
-        $em->trigger(ComposerEvent::EVENT_COMPOSE_PRE, $event);
+        $event->setName(ComposerEvent::EVENT_COMPOSE_PRE);
+        $em->triggerEvent($event);
 
         // 2. inject headers
-        $em->trigger(ComposerEvent::EVENT_HEADERS_PRE, $event);
+        $event->setName(ComposerEvent::EVENT_HEADERS_PRE);
+        $em->triggerEvent($event);
         foreach ($headers as $name => $value) {
             $event->getMessage()->getHeaders()->addHeaderLine($name, $value);
         }
-        $em->trigger(ComposerEvent::EVENT_HEADERS_POST, $event);
+        $event->setName(ComposerEvent::EVENT_HEADERS_POST);
+        $em->triggerEvent($event);
 
         // prepare placeholder for message body
         $body = new MimeMessage();
@@ -145,14 +148,16 @@ class Composer implements EventManagerAwareInterface
             $textViewModel->setTemplate($template->getTextTemplateName());
             $event->setViewModel($textViewModel);
 
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_PRE, $event);
+            $event->setName(ComposerEvent::EVENT_TEXT_BODY_PRE);
+            $em->triggerEvent($event);
 
             $text = new MimePart($this->renderer->render($event->getViewModel()));
             $text->type = 'text/plain';
             $text->charset = $event->getMessage()->getHeaders()->getEncoding();
             $body->addPart($text);
 
-            $em->trigger(ComposerEvent::EVENT_TEXT_BODY_POST, $event);
+            $event->setName(ComposerEvent::EVENT_TEXT_BODY_POST);
+            $em->triggerEvent($event);
         }
 
         // 4. Render HTML template
@@ -161,14 +166,16 @@ class Composer implements EventManagerAwareInterface
             $htmlViewModel->setTemplate($template->getHtmlTemplateName());
             $event->setViewModel($htmlViewModel);
 
-            $em->trigger(ComposerEvent::EVENT_HTML_BODY_PRE, $event);
+            $event->setName(ComposerEvent::EVENT_HTML_BODY_PRE);
+            $em->triggerEvent($event);
 
             $html = new MimePart($this->renderer->render($event->getViewModel()));
             $html->type = 'text/html';
             $html->charset = $event->getMessage()->getHeaders()->getEncoding();
             $body->addPart($html);
 
-            $em->trigger(ComposerEvent::EVENT_HTML_BODY_POST, $event);
+            $event->setName(ComposerEvent::EVENT_HTML_BODY_POST);
+            $em->triggerEvent($event);
         }
 
         // 5. inject body into message
@@ -181,7 +188,8 @@ class Composer implements EventManagerAwareInterface
                 ->addParameter('boundary', $body->getMime()->boundary());
         }
 
-        $em->trigger(ComposerEvent::EVENT_COMPOSE_POST, $event);
+        $event->setName(ComposerEvent::EVENT_COMPOSE_POST);
+        $em->triggerEvent($event);
 
         return $event->getMessage();
     }

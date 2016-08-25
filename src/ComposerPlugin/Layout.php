@@ -56,7 +56,7 @@ class Layout extends AbstractListenerAggregate implements PluginInterface
      *
      * @return void
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_HTML_BODY_PRE, [$this, 'injectLayoutViewModel']);
     }

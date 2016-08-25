@@ -80,7 +80,7 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
      *
      * @return void
      */
-    public function attach(EventManagerInterface $events)
+    public function attach(EventManagerInterface $events, $priority = 1)
     {
         $this->listeners[] = $events->attach(ComposerEvent::EVENT_COMPOSE_POST, [$this, 'generateTextBody']);
     }

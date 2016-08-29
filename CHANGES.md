@@ -4,6 +4,7 @@ CHANGELOG
 1.2.0 (TBD)
 -----------
 * bump required PHP version to 5.5
+* compatibility with zend-servicemanager v3 and zend-eventmanager v3
 * cleanup test suite
 
 1.1.2 (2015-03-17)

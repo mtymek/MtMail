@@ -21,6 +21,11 @@ class SenderTest extends \PHPUnit_Framework_TestCase
      */
     protected $service;
 
+    /**
+     * @var array
+     */
+    protected $senderEventsTriggered = [];  
+
     public function setUp()
     {
         $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
@@ -50,15 +55,36 @@ class SenderTest extends \PHPUnit_Framework_TestCase
         $transport->expects($this->once())->method('send')
             ->with($this->isInstanceOf('Zend\Mail\Message'));
 
-        $em = $this->getMock('Zend\EventManager\EventManager', ['trigger']);
-        $em->expects($this->at(0))->method('trigger')
-            ->with(SenderEvent::EVENT_SEND_PRE, $this->isInstanceOf('MtMail\Event\SenderEvent'));
-        $em->expects($this->at(1))->method('trigger')
-            ->with(SenderEvent::EVENT_SEND_POST, $this->isInstanceOf('MtMail\Event\SenderEvent'));
+        $em = new EventManager();
+        $listener = function ($event) {
+            $this->assertInstanceOf(
+                SenderEvent::class,
+                $event,
+                'Failed asserting event instance of ' . get_class($event) . 'is of type ' . SenderEvent::class
+            );
+            $this->senderEventsTriggered[] = $event->getName();
+        };
+
+        $em->attach(
+            SenderEvent::EVENT_SEND_PRE,
+            $listener
+        );
+        $em->attach(
+            SenderEvent::EVENT_SEND_POST,
+            $listener
+        );
 
         $service = new Sender($transport);
         $service->setEventManager($em);
         $message = new Message();
         $service->send($message);
+
+        $this->assertEquals(
+            [
+                SenderEvent::EVENT_SEND_PRE,
+                SenderEvent::EVENT_SEND_POST,
+            ],
+            $this->senderEventsTriggered
+        );
     }
 }

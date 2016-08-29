@@ -24,6 +24,11 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
      */
     protected $service;
 
+    /**
+     * @var array
+     */
+    protected $composeEventsTriggered = [];
+
     public function setUp()
     {
         $renderer = $this->getMock('MtMail\Renderer\RendererInterface');
@@ -76,24 +81,57 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
         $renderer->expects($this->once())->method('render')->with($this->isInstanceOf('Zend\View\Model\ModelInterface'))
             ->will($this->returnValue('MAIL_BODY'));
 
-        $em = $this->getMock('Zend\EventManager\EventManager', ['trigger']);
-        $em->expects($this->at(0))->method('trigger')
-            ->with(ComposerEvent::EVENT_COMPOSE_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(1))->method('trigger')
-            ->with(ComposerEvent::EVENT_HEADERS_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(2))->method('trigger')
-            ->with(ComposerEvent::EVENT_HEADERS_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(3))->method('trigger')
-            ->with(ComposerEvent::EVENT_HTML_BODY_PRE, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(4))->method('trigger')
-            ->with(ComposerEvent::EVENT_HTML_BODY_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
-        $em->expects($this->at(5))->method('trigger')
-            ->with(ComposerEvent::EVENT_COMPOSE_POST, $this->isInstanceOf('MtMail\Event\ComposerEvent'));
+        $em = new EventManager();
+        $listener = function ($event) {
+            $this->assertInstanceof(
+                ComposerEvent::class, 
+                $event, 
+                'Failed asserting event instance of ' . get_class($event) . ' is of type ' . ComposerEvent::class
+            );
+            $this->composeEventsTriggered[] = $event->getName();
+        };
+
+        $em->attach(
+            ComposerEvent::EVENT_COMPOSE_PRE,
+            $listener
+        );
+        $em->attach(
+            ComposerEvent::EVENT_HEADERS_PRE,
+            $listener
+        );
+        $em->attach(
+            ComposerEvent::EVENT_HEADERS_POST,
+            $listener
+        );
+        $em->attach(
+            ComposerEvent::EVENT_HTML_BODY_PRE,
+            $listener
+        );
+        $em->attach(
+            ComposerEvent::EVENT_HTML_BODY_POST,
+            $listener
+        );
+        $em->attach(
+            ComposerEvent::EVENT_COMPOSE_POST,
+            $listener
+        );
 
         $service = new Composer($renderer);
         $service->setEventManager($em);
         $template = new HtmlTemplate();
         $service->compose([], $template, new ViewModel());
+
+        $this->assertEquals(
+            [
+                ComposerEvent::EVENT_COMPOSE_PRE,
+                ComposerEvent::EVENT_HEADERS_PRE,
+                ComposerEvent::EVENT_HEADERS_POST,
+                ComposerEvent::EVENT_HTML_BODY_PRE,
+                ComposerEvent::EVENT_HTML_BODY_POST,
+                ComposerEvent::EVENT_COMPOSE_POST,
+            ],
+            $this->composeEventsTriggered
+        );
     }
 
     public function testHtmlBodyPreEventAllowsReplacingViewModel()

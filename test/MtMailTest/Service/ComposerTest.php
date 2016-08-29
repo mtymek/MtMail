@@ -84,8 +84,8 @@ class ComposerTest extends \PHPUnit_Framework_TestCase
         $em = new EventManager();
         $listener = function ($event) {
             $this->assertInstanceof(
-                ComposerEvent::class, 
-                $event, 
+                ComposerEvent::class,
+                $event,
                 'Failed asserting event instance of ' . get_class($event) . ' is of type ' . ComposerEvent::class
             );
             $this->composeEventsTriggered[] = $event->getName();

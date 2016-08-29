@@ -24,7 +24,7 @@ class SenderTest extends \PHPUnit_Framework_TestCase
     /**
      * @var array
      */
-    protected $senderEventsTriggered = [];  
+    protected $senderEventsTriggered = [];
 
     public function setUp()
     {

@@ -25,7 +25,7 @@ class SenderServiceFactory
         ) {
             $pluginManager = $serviceLocator->get('MtMail\Service\SenderPluginManager');
             foreach (array_unique($configuration['mt_mail']['sender_plugins']) as $plugin) {
-				$pluginManager->get($plugin)->attach($service->getEventManager());
+                $pluginManager->get($plugin)->attach($service->getEventManager());
             }
         }
 

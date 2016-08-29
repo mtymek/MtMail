@@ -39,7 +39,9 @@ class Bootstrap
             $config = require __DIR__ . '/../TestConfiguration.php.dist';
         }
 
-        $serviceManager = new ServiceManager(new ServiceManagerConfig());
+        $smConfig = new ServiceManagerConfig();
+        $serviceManager = new ServiceManager();
+        $smConfig->configureServiceManager($serviceManager);
         $serviceManager->setService('ApplicationConfig', $config);
         $serviceManager->get('ModuleManager')->loadModules();
 

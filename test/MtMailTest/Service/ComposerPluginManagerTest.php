@@ -13,6 +13,7 @@ use MtMail\Exception\RuntimeException;
 use MtMail\Service\ComposerPluginManager;
 use PHPUnit_Framework_TestCase;
 use stdClass;
+use Zend\ServiceManager\ServiceManager;
 
 class ComposerPluginManagerTest extends PHPUnit_Framework_TestCase
 {
@@ -23,7 +24,7 @@ class ComposerPluginManagerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->pluginManager = new ComposerPluginManager();
+        $this->pluginManager = new ComposerPluginManager(new ServiceManager());
     }
 
     /**

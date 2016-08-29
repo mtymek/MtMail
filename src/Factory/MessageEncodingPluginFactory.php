@@ -9,22 +9,17 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\ComposerPlugin\MessageEncoding;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
 
-class MessageEncodingPluginFactory implements FactoryInterface
+class MessageEncodingPluginFactory
 {
-
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return MessageEncoding
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
-        $config = $serviceLocator->getServiceLocator()->get('Configuration');
+        if (!method_exists($serviceLocator, 'configure')) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
+        $config = $serviceLocator->get('Configuration');
         $plugin = new MessageEncoding();
         if (isset($config['mt_mail']['message_encoding'])) {
             $plugin->setEncoding($config['mt_mail']['message_encoding']);

@@ -9,14 +9,15 @@
 
 namespace MtMailTest\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Factory\SmtpTransportFactory;
+use Zend\Mail\Transport\Smtp;
 
 class SmtpTransportFactoryTest extends \PHPUnit_Framework_TestCase
 {
-
     public function testCreateService()
     {
-        $locator = $this->getMock('Zend\ServiceManager\ServiceLocatorInterface', ['get', 'has']);
+        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
         $locator->expects($this->once())->method('get')
             ->with('Configuration')->will(
                 $this->returnValue(
@@ -36,8 +37,8 @@ class SmtpTransportFactoryTest extends \PHPUnit_Framework_TestCase
                 )
             );
         $factory = new SmtpTransportFactory();
-        $service = $factory->createService($locator);
-        $this->assertInstanceOf('Zend\Mail\Transport\Smtp', $service);
+        $service = $factory($locator);
+        $this->assertInstanceOf(Smtp::class, $service);
         $this->assertEquals('some-host.com', $service->getOptions()->getHost());
         $this->assertEquals('login', $service->getOptions()->getConnectionClass());
         $this->assertEquals(

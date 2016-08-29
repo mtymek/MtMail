@@ -11,6 +11,7 @@ namespace MtMailTest\Template;
 
 use MtMail\Exception\RuntimeException;
 use MtMail\Service\TemplateManager;
+use Zend\ServiceManager\ServiceManager;
 
 class ManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +22,7 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->manager = new TemplateManager();
+        $this->manager = new TemplateManager(new ServiceManager());
     }
 
     /**

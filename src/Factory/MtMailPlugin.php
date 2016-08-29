@@ -9,23 +9,19 @@
 
 namespace MtMail\Factory;
 
+use Interop\Container\ContainerInterface;
 use MtMail\Controller\Plugin\MtMail;
-use Zend\ServiceManager\FactoryInterface;
-use Zend\ServiceManager\ServiceLocatorInterface;
+use MtMail\Service\Mail;
 
-class MtMailPlugin implements FactoryInterface
+class MtMailPlugin
 {
-
-    /**
-     * Create service
-     *
-     * @param  ServiceLocatorInterface $serviceLocator
-     * @return MtMail
-     */
-    public function createService(ServiceLocatorInterface $serviceLocator)
+    public function __invoke(ContainerInterface $serviceLocator)
     {
+        if (!method_exists($serviceLocator, 'configure')) {
+            $serviceLocator = $serviceLocator->getServiceLocator();
+        }
         $service = new MtMail(
-            $serviceLocator->getServiceLocator()->get('MtMail\Service\Mail')
+            $serviceLocator->get(Mail::class)
         );
 
         return $service;

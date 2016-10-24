@@ -44,7 +44,7 @@ Creating message from controller:
 $mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
 
 $headers = array(
-    'to' => 'johndoe@domain.com',
+    'to' => 'johndoe@domain.com, Jade DOE<jade.doe@domain.net>',
     'from' => 'contact@mywebsite.com',
 );
 $variables = array(

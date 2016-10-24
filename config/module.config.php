@@ -34,12 +34,16 @@ return [
                 'MessageEncoding'  => MessageEncoding::class,
                 'messageEncoding'  => MessageEncoding::class,
                 'messageencoding'  => MessageEncoding::class,
+                'embeddingimages'  => EmbeddingImages::class,
+                'embeddingImages'  => EmbeddingImages::class,
+                'EmbeddingImages'  => EmbeddingImages::class,
             ],
             'factories' => [
                 PlaintextMessage::class => InvokableFactory::class,
                 Layout::class           => LayoutPluginFactory::class,
                 DefaultHeaders::class   => DefaultHeadersPluginFactory::class,
                 MessageEncoding::class  => MessageEncodingPluginFactory::class,
+                EmbeddingImages::class  => InvokableFactory::class,
             ],
         ],
         'composer_plugins' => [

@@ -287,7 +287,6 @@ class Composer implements EventManagerAwareInterface
                     $at->type           = $this->getType($pathParts['extension']);
                     $at->filename       = $pathParts['filename'];
                     $at->disposition    = Mime::DISPOSITION_ATTACHMENT;
-//                    $at->encoding       = Mime::TYPE_OCTETSTREAM;
 
                     $message->getBody()->addPart($at);
                 }
@@ -318,6 +317,8 @@ class Composer implements EventManagerAwareInterface
                 return 'application/text';
             case "zip":
                 return 'application/zip';
+            default:
+                return Mime::TYPE_OCTETSTREAM;
         }
     }
 }

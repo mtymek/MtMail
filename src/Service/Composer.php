@@ -134,7 +134,54 @@ class Composer implements EventManagerAwareInterface
         $event->setName(ComposerEvent::EVENT_HEADERS_PRE);
         $em->triggerEvent($event);
         foreach ($headers as $name => $value) {
-            $event->getMessage()->getHeaders()->addHeaderLine($name, $value);
+            switch ($name) {
+                case "to":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addTo($item);
+                    }
+                    break;
+                case "from":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addFrom($item);
+                    }
+                    break;
+                case "bcc" :
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addBcc($item);
+                    }
+                    break;
+                case "cc" :
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addCc($item);
+                    }
+                    break;
+                default:
+                    $event->getMessage()->getHeaders()->addHeaderLine($name, $value);
+            }
         }
         $event->setName(ComposerEvent::EVENT_HEADERS_POST);
         $em->triggerEvent($event);

@@ -19,6 +19,8 @@ from templates, and sending them through transport adapters.
 * rendering templates with layouts
 * plugins for various common tasks: from setting default headers to generating plaintext version of HTML message
 * plugin support via dedicated plugin managers
+* plugin for integrate image in email (EmbeddingImages)
+* new service to add attachments to your email
 
 Installation
 ------------

@@ -304,21 +304,31 @@ class Composer implements EventManagerAwareInterface
     private function getType($ext) {
         switch (strtolower($ext)) {
             case "pdf":
-                return 'application/pdf';
+                $type = 'application/pdf';
+                break;
             case "doc":
-                return "application/msword";
+                $type = "application/msword";
+                break;
             case "docx":
-                return "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                $type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                break;
             case "odt":
-                return "application/vnd.oasis.opendocument.text";
+                $type =  "application/vnd.oasis.opendocument.text";
+                break;
             case "gzip":
-                return 'application/gzip';
+                $type =  'application/gzip';
+                break;
             case "txt":
-                return 'application/text';
+                $type= 'application/text';
+                break;
             case "zip":
-                return 'application/zip';
+                $type = 'application/zip';
+                break;
             default:
-                return Mime::TYPE_OCTETSTREAM;
+                $type = Mime::TYPE_OCTETSTREAM;
         }
+
+        return $type;
+    }
     }
 }

@@ -46,8 +46,10 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
         $doc = new \DOMDocument();
         $doc->loadHTML($htmlBody);
         $elements = $doc->getElementsByTagName('img');
+        $elements =  (array) $elements;
 
         if (count($elements ) > 0) {
+            $attachement = [];
             foreach ($elements as $key => $element) {
                 // traitement du nom de fichiers pour apprécier le contexte
                 $file = $element->getAttribute("src");
@@ -69,30 +71,32 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
                 }
             }
 
-            $textPart           = new MimePart($textBody);
-            $textPart->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
-            $textPart->type     = "text/plain; charset=UTF-8";
+            if (sizeof($attachement) > 0) {
+                $textPart           = new MimePart($textBody);
+                $textPart->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
+                $textPart->type     = "text/plain; charset=UTF-8";
 
-            $htmlPart           = new MimePart($htmlBody);
-            $htmlPart->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
-            $htmlPart->type     = "text/html; charset=UTF-8";
+                $htmlPart           = new MimePart($htmlBody);
+                $htmlPart->encoding = Mime::ENCODING_QUOTEDPRINTABLE;
+                $htmlPart->type     = "text/html; charset=UTF-8";
 
-            $content = new MimeMessage();
-            $content->addPart($textPart);
-            $content->addPart($htmlPart);
+                $content = new MimeMessage();
+                $content->addPart($textPart);
+                $content->addPart($htmlPart);
 
-            $contentPart = new Part($content->generateMessage());
-            $contentPart->type = "multipart/alternative;\n boundary=\"" . $content->getMime()->boundary() . '"';
+                $contentPart = new Part($content->generateMessage());
+                $contentPart->type = "multipart/alternative;\n boundary=\"" . $content->getMime()->boundary() . '"';
 
-            $event->getBody()->setParts([$contentPart]);
+                $event->getBody()->setParts([$contentPart]);
 
-            foreach ($attachement as $at) {
-                $event->getBody()->addPart($at);
+                foreach ($attachement as $at) {
+                    $event->getBody()->addPart($at);
+                }
+
+                // force multipart/alternative content type
+                $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/related')
+                    ->addParameter('boundary', $event->getBody()->getMime()->boundary());
             }
-
-            // force multipart/alternative content type
-            $event->getMessage()->getHeaders()->get('content-type')->setType('multipart/related')
-                ->addParameter('boundary', $event->getBody()->getMime()->boundary());
         }
     }
 

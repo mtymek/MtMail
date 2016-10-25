@@ -1,5 +1,5 @@
 {
-    "name": "mtymek/mt-mail",
+    "name": "celtic34fr/mt-mail",
     "description": "ZF2 e-mail module. Using this library can easily create e-mail messages from PHTML templates (with optional layouts) and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
     "keywords": ["zf2", "module", "email", "e-mail", "mail transport", "mail template"],
     "require": {
@@ -28,7 +28,12 @@
         {
             "name": "Mateusz Tymek",
             "email": "mtymek@gmail.com"
+        },
+        {
+            "name": "Gilbert Armengaud",
+            "email": "gilbert.armengaud@gmail.com"
         }
+
     ],
     "minimum-stability": "stable",
     "autoload": {

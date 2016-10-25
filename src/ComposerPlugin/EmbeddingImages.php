@@ -53,12 +53,16 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
             foreach ($elements as $key => $element) {
                 // traitement du nom de fichiers pour apprécier le contexte
                 $file = $element->getAttribute("src");
+                $filename = $file;
                 $pos = strpos($file , "~");
                 if ($pos !== false) {
                     $finUser = strpos($file , "/", $pos);
                     $filename = $_SERVER["CONTEXT_DOCUMENT_ROOT"].substr($file, $finUser);
                 } else {
-                        $filename = $_SERVER["DOCUMENT_ROOT"].$file;
+                    $pos = strpos($file, $_SERVER['HTTP_HOST']);
+                    if ($pos !== false) {
+                        $filename = $_SERVER["DOCUMENT_ROOT"].substr($file, $pos + strlen($_SERVER['HTTP_HOST']));
+                    }
                 }
                 if (is_readable($filename)) {
                     $at = new MimePart(file_get_contents($filename));

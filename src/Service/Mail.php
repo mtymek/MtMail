@@ -82,4 +82,9 @@ class Mail
 
         return $this->composer->compose($headers, $template, $viewModel);
     }
+
+    public function attachments(Message $message, array $attachments)
+    {
+        return $this->composer->attachments($message, $attachments);
+    }
 }

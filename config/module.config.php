@@ -14,6 +14,7 @@ return array(
         'composer_plugin_manager' => array(
             'invokables' => array(
                 'PlaintextMessage' => 'MtMail\ComposerPlugin\PlaintextMessage',
+                'EmbeddingImages'  => 'MtMail\ComposerPlugin\EmbeddingImages',
             ),
             'factories' => array(
                 'Layout'          => 'MtMail\Factory\LayoutPluginFactory',

@@ -48,15 +48,15 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
         $elements = $doc->getElementsByTagName('img');
         $elements =  (array) $elements;
 
-        if (count($elements ) > 0) {
+        if (count($elements) > 0) {
             $attachement = [];
             foreach ($elements as $key => $element) {
                 // traitement du nom de fichiers pour apprécier le contexte
                 $file = $element->getAttribute("src");
                 $filename = $file;
-                $pos = strpos($file , "~");
+                $pos = strpos($file, "~");
                 if ($pos !== false) {
-                    $finUser = strpos($file , "/", $pos);
+                    $finUser = strpos($file, "/", $pos);
                     $filename = $_SERVER["CONTEXT_DOCUMENT_ROOT"].substr($file, $finUser);
                 } else {
                     $pos = strpos($file, $_SERVER['HTTP_HOST']);
@@ -106,7 +106,7 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
 
     private function mimeByExtension($filename)
     {
-        if (is_readable($filename) ) {
+        if (is_readable($filename)) {
             $extension = pathinfo($filename, PATHINFO_EXTENSION);
             switch ($extension) {
                 case 'gif':

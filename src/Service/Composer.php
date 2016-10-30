@@ -299,8 +299,9 @@ class Composer implements EventManagerAwareInterface
         return $message;
     }
 
-    private function getType($ext) {
-        switch (strtolower($ext)) 
+    private function getType($ext)
+    {
+        switch (strtolower($ext))
         {
             case "pdf":
                 $type = 'application/pdf';

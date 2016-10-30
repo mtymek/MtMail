@@ -1,11 +1,7 @@
 E-mail module for Zend Framework 2
 ==================================
 
-[![Build Status](https://travis-ci.org/mtymek/MtMail.png?branch=master)](https://travis-ci.org/mtymek/MtMail)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/mtymek/MtMail/badges/quality-score.png?s=f03d22161755c845d0ce06ab90a67cf4e3e340e0)](https://scrutinizer-ci.com/g/mtymek/MtMail/)
-[![Code Coverage](https://scrutinizer-ci.com/g/mtymek/MtMail/badges/coverage.png?s=d4b2ac636d43b3dd8042675dd32ac8fe2cf4e390)](https://scrutinizer-ci.com/g/mtymek/MtMail/)
-[![Latest Stable Version](https://poser.pugx.org/mtymek/mt-mail/v/stable.png)](https://packagist.org/packages/mtymek/mt-mail)
-[![Total Downloads](https://poser.pugx.org/mtymek/mt-mail/downloads.png)](https://packagist.org/packages/mtymek/mt-mail)
+It's a fork of mtymek/mt-mail package
 
 Introduction
 ------------
@@ -19,6 +15,8 @@ from templates, and sending them through transport adapters.
 * rendering templates with layouts
 * plugins for various common tasks: from setting default headers to generating plaintext version of HTML message
 * plugin support via dedicated plugin managers
+* plugin for integrate image in email (EmbeddingImages)
+* new service to add attachments to your email
 
 Installation
 ------------
@@ -44,7 +42,7 @@ Creating message from controller:
 $mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
 
 $headers = array(
-    'to' => 'johndoe@domain.com',
+    'to' => 'johndoe@domain.com, Jade DOE<jade.doe@domain.net>',
     'from' => 'contact@mywebsite.com',
 );
 $variables = array(

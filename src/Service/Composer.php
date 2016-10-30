@@ -134,7 +134,54 @@ class Composer implements EventManagerAwareInterface
         $event->setName(ComposerEvent::EVENT_HEADERS_PRE);
         $em->triggerEvent($event);
         foreach ($headers as $name => $value) {
-            $event->getMessage()->getHeaders()->addHeaderLine($name, $value);
+            switch ($name) {
+                case "to":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addTo($item);
+                    }
+                    break;
+                case "from":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addFrom($item);
+                    }
+                    break;
+                case "bcc":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addBcc($item);
+                    }
+                    break;
+                case "cc":
+                    $value = explode(",", $value);
+                    if (!is_array($value)) {
+                        $tmp = $value;
+                        $value = [];
+                        $value[] = $tmp;
+                    }
+                    foreach ($value as $item) {
+                        $event->getMessage()->addCc($item);
+                    }
+                    break;
+                default:
+                    $event->getMessage()->getHeaders()->addHeaderLine($name, $value);
+            }
         }
         $event->setName(ComposerEvent::EVENT_HEADERS_POST);
         $em->triggerEvent($event);
@@ -192,5 +239,93 @@ class Composer implements EventManagerAwareInterface
         $em->triggerEvent($event);
 
         return $event->getMessage();
+    }
+
+    public function attachments(Message $message, array $attachments)
+    {
+        if (sizeof($attachments) > 0) {
+            $type = $message->getHeaders()->get('content-type')->getType();
+            if ($type != 'multipart/related') {
+                $parts = $message->getBody()->getParts();
+                $htmlPart = null;
+                $textPart = null;
+
+                // locate HTML body
+                foreach ($parts as $part) {
+                    foreach ($part->getHeadersArray() as $header) {
+                        if ($header[0] == 'Content-Type' && strpos($header[1], 'text/html') === 0) {
+                            $htmlPart = $part;
+                        } elseif ($header[0] == 'Content-Type' && strpos($header[1], 'text/plain') === 0) {
+                            $textPart = $part;
+                        }
+                    }
+                }
+
+                if (!empty($textPart) && !empty($htmlPart)) {
+                    $content = new MimeMessage();
+                    $content->addPart($textPart);
+                    $content->addPart($htmlPart);
+                    $contentPart = new MimePart($content->generateMessage());
+                    $contentPart->type = "multipart/alternative;\n boundary=\"" .
+                        $content->getMime()->boundary() . '"';
+                    $message->getBody()->setParts([$contentPart]);
+                } else {
+                    if (empty($textPart)) {
+                        $message->getBody()->setParts([$htmlPart]);
+                    } else {
+                        $message->getBody()->setParts([$textPart]);
+                    }
+                }
+            }
+
+            foreach ($attachments as $attachment) {
+                if (is_readable($attachment)) {
+                    $pathParts          = pathinfo($attachment);
+                    $at = new MimePart(file_get_contents($attachment));
+                    $at->type           = $this->getType($pathParts['extension']);
+                    $at->filename       = $pathParts['filename'];
+                    $at->disposition    = Mime::DISPOSITION_ATTACHMENT;
+
+                    $message->getBody()->addPart($at);
+                }
+            }
+
+            // force multipart/alternative content type
+            if ($type != 'multipart/related') {
+                $message->getHeaders()->get('content-type')->setType('multipart/related')
+                    ->addParameter('boundary', $event->getBody()->getMime()->boundary());
+            }
+        }
+        return $message;
+    }
+
+    private function getType($ext)
+    {
+        switch (strtolower($ext)) {
+            case "pdf":
+                $type = 'application/pdf';
+                break;
+            case "doc":
+                $type = "application/msword";
+                break;
+            case "docx":
+                $type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+                break;
+            case "odt":
+                $type =  "application/vnd.oasis.opendocument.text";
+                break;
+            case "gzip":
+                $type =  'application/gzip';
+                break;
+            case "txt":
+                $type= 'application/text';
+                break;
+            case "zip":
+                $type = 'application/zip';
+                break;
+            default:
+                $type = Mime::TYPE_OCTETSTREAM;
+        }
+        return $type;
     }
 }

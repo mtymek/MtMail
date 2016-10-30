@@ -12,6 +12,7 @@ use MtMail\ComposerPlugin\DefaultHeaders;
 use MtMail\ComposerPlugin\Layout;
 use MtMail\ComposerPlugin\MessageEncoding;
 use MtMail\ComposerPlugin\PlaintextMessage;
+use MtMail\ComposerPlugin\EmbeddingImages;
 use MtMail\Factory\DefaultHeadersPluginFactory;
 use MtMail\Factory\LayoutPluginFactory;
 use MtMail\Factory\MessageEncodingPluginFactory;

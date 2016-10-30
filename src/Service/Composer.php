@@ -330,5 +330,4 @@ class Composer implements EventManagerAwareInterface
 
         return $type;
     }
-    }
 }

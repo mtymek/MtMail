@@ -157,7 +157,7 @@ class Composer implements EventManagerAwareInterface
                         $event->getMessage()->addFrom($item);
                     }
                     break;
-                case "bcc" :
+                case "bcc":
                     $value = explode(",", $value);
                     if (!is_array($value)) {
                         $tmp = $value;
@@ -168,7 +168,7 @@ class Composer implements EventManagerAwareInterface
                         $event->getMessage()->addBcc($item);
                     }
                     break;
-                case "cc" :
+                case "cc":
                     $value = explode(",", $value);
                     if (!is_array($value)) {
                         $tmp = $value;
@@ -240,7 +240,6 @@ class Composer implements EventManagerAwareInterface
 
         return $event->getMessage();
     }
-    
 
     public function attachments(Message $message, array $attachments)
     {
@@ -277,7 +276,6 @@ class Composer implements EventManagerAwareInterface
                         $message->getBody()->setParts([$textPart]);
                     }
                 }
-
             }
 
             foreach ($attachments as $attachment) {
@@ -302,7 +300,8 @@ class Composer implements EventManagerAwareInterface
     }
 
     private function getType($ext) {
-        switch (strtolower($ext)) {
+        switch (strtolower($ext)) 
+        {
             case "pdf":
                 $type = 'application/pdf';
                 break;
@@ -327,7 +326,6 @@ class Composer implements EventManagerAwareInterface
             default:
                 $type = Mime::TYPE_OCTETSTREAM;
         }
-
         return $type;
     }
 }

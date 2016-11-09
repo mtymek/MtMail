@@ -40,4 +40,18 @@ class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
         $mock = $this->getMock('MtMail\SenderPlugin\PluginInterface');
         $this->pluginManager->validatePlugin($mock);
     }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testValidateThrowsExceptionIfPluginIsInvalid()
+    {
+        $this->pluginManager->validate(new stdClass());
+    }
+
+    public function testValidateDoesNothingIfPluginIsValid()
+    {
+        $mock = $this->getMock('MtMail\SenderPlugin\PluginInterface');
+        $this->pluginManager->validate($mock);
+    }
 }

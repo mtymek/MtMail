@@ -38,4 +38,18 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
         $mock = $this->getMock('MtMail\Template\TemplateInterface');
         $this->manager->validatePlugin($mock);
     }
+
+    /**
+     * @expectedException RuntimeException
+     */
+    public function testValidateThrowsExceptionWhenClassIsInvalid()
+    {
+        $this->manager->validate(new \stdClass());
+    }
+
+    public function testValidateDoesNothingIfPluginIsValid()
+    {
+        $mock = $this->getMock('MtMail\Template\TemplateInterface');
+        $this->manager->validate($mock);
+    }
 }

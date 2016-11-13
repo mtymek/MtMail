@@ -34,4 +34,14 @@ class TemplateManager extends AbstractPluginManager
             throw new RuntimeException("E-mail template must implement TemplateInterface, '$class' was given.");
         }
     }
+
+    /**
+     * sm v3
+     * @param  mixed   $plugin
+     * @return void
+     */
+    public function validate($plugin)
+    {
+        $this->validatePlugin($plugin);
+    }
 }

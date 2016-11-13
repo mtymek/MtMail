@@ -47,6 +47,16 @@ class SenderPluginManager extends AbstractPluginManager
     }
 
     /**
+     * sm v3
+     * @param  mixed   $plugin
+     * @return void
+     */
+    public function validate($plugin)
+    {
+        $this->validatePlugin($plugin);
+    }
+
+    /**
      * Canonicalize name
      *
      * @param  string $name

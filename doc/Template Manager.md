@@ -31,14 +31,14 @@ Example - multiple layouts
 Start with simple layout configuration:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'Layout'
-        ),
+        ],
         'layout' => 'mail/layout.phtml',
-    ),
-);
+    ],
+];
 ```
 
 Create your template:
@@ -70,15 +70,15 @@ class FooBarTemplate implements HtmlTemplateInterface, LayoutProviderInterface
 Configure template manager:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'template_manager' => array(
-            'invokables' => array(
-                'FooBarTemplate' => 'FooModule\EmailTemplate\FooBarTemplate'
-            ),
-        ),
-    ),
-);
+return [
+    'mt_mail' => [
+        'template_manager' => [
+            'invokables' => [
+                'FooBarTemplate' => \FooModule\EmailTemplate\FooBarTemplate::class,
+            ],
+        ],
+    ],
+];
 ```
 
 Finally, usage:

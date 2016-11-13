@@ -11,13 +11,13 @@ to create a message:
 ```php
 $mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
 
-$headers = array(
+$headers = [
     'to' => 'johndoe@domain.com',
     'from' => 'contact@mywebsite.com',
-);
-$variables = array(
+];
+$variables = [
     'userName' => 'John Doe',
-);
+];
 $message = $mailService->compose($headers, 'application/mail/welcome.phtml', $variables);
 /** @var \Zend\Mail\Message $message */
 ```

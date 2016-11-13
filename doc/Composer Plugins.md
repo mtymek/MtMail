@@ -32,14 +32,14 @@ be achieved using `DefaultHeaders` plugin. It is enabled by default, so only thi
 is to add headers of your choice to application config:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'default_headers' => array(
+return [
+    'mt_mail' => [
+        'default_headers' => [
             'from' => 'My Website <information-no-reply@mywebsite.com>',
             'reply-to' => 'Contact <contact@mywebsite.com>',
-        ),
-    ),
-);
+        ],
+    ],
+];
 ```
 
 `DefaultHeaders` is hooked to `headers.pre` event.
@@ -51,14 +51,14 @@ MtMail supports this feature via `Layout` plugin. You have to enable it in confi
 template to be used:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'Layout',
-        ),
+        ],
         'layout' => 'application/mail/layout.phtml',
-    ),
-);
+    ],
+];
 ```
 
 `layout.phtml` can be build just as your main application layout - at very minimum it has to echo `$this->content`
@@ -85,14 +85,14 @@ When working with localized e-mails, you'll usually need to indicate that messag
 are encoded in UTF-8. Enable `MessageEncoding` plugin and configure it:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'MessageEncoding',
-        ),
+        ],
         'message_encoding' => 'UTF-8',
-    ),
-);
+    ],
+];
 ```
 
 `MessageEncoding` is hooked to `compose.pre` event.
@@ -107,13 +107,13 @@ and stripping remaining tags.
 It doesn't require any configuration options - simply enable it in in application config:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'PlaintextMessage',
-        ),
-    ),
-);
+        ],
+    ],
+];
 ```
 
 
@@ -136,33 +136,33 @@ class MyPlugin extends AbstractListenerAggregate implements PluginInterface
 After plugin is defined, you need to tell plugin manager how to create it:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'renderer' => 'MtMail\Renderer\ZendView',
-        'plugin_manager' => array(
-            'invokables' => array(
+return [
+    'mt_mail' => [
+        'renderer' => \MtMail\Renderer\ZendView::class,
+        'plugin_manager' => [
+            'invokables' => [
                 // use invokable...
-                'MyPlugin' => 'MyModule\MailPlugin\MyPlugin',
-            ),
-            'factories' => array(
+                'MyPlugin' => \MyModule\MailPlugin\MyPlugin::class,
+            ],
+            'factories' => [
                 // ...or factory
-                'MyOtherPlugin' => 'MyModule\MailPlugin\MyOtherPlugin',
-            ),
-        ),
-    ),
-);
+                'MyOtherPlugin' => \MyModule\MailPlugin\MyOtherPlugin::class,
+            ],
+        ],
+    ],
+];
 ```
 
 Finally, you can enable it:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'MyPlugin'
-        ),
-    ),
-);
+        ],
+    ],
+];
 ```
 
 For some examples please look at `src/MtMail/ComposerPlugin` directory.

@@ -41,17 +41,16 @@ templates accessible by your application.
 Creating message from controller:
 
 ```php
-$mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
+$mailService = $this->getServiceLocator()->get(\MtMail\Service\Mail::class);
 
-$headers = array(
+$headers = [
     'to' => 'johndoe@domain.com',
     'from' => 'contact@mywebsite.com',
-);
-$variables = array(
+];
+$variables = [
     'userName' => 'John Doe',
-);
+];
 $message = $mailService->compose($headers, 'application/mail/welcome.phtml', $variables);
-/** @var \Zend\Mail\Message $message */
 ```
 
 This snippet will create a message, compose it with `$headers` and HTML body
@@ -64,14 +63,14 @@ In order to give your e-mails common layout, you have to enable "Layout" plugin 
 to look for layout template:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'composer_plugins' => array(
+return [
+    'mt_mail' => [
+        'composer_plugins' => [
             'Layout',
-        ),
+        ],
         'layout' => 'application/mail/layout.phtml',
-    ),
-);
+    ],
+];
 ```
 
 For more info about composing e-mail messages, check [the documentation](doc/Composing messages.md).
@@ -85,20 +84,20 @@ Sending e-mails
 Update your application config:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'transport' => 'Zend\Mail\Transport\Smtp',
-        'transport_options' => array(
+return [
+    'mt_mail' => [
+        'transport' => \Zend\Mail\Transport\Smtp::class,
+        'transport_options' => [
             'host' => 'some-host.com',
             'connection_class' => 'login',
-            'connection_config' => array(
+            'connection_config' => [
                 'username' => 'user',
                 'password' => 'pass',
                 'ssl' => 'tls',
-            ),
-        ),
-    ),
-),
+            ],
+        ],
+    ],
+];
 ```
 ### Usage
 ---------
@@ -112,7 +111,7 @@ $message->addTo('johndoe@domain.com');
 // ...
 
 // send!
-$mailService = $this->getServiceLocator()->get('MtMail\Service\Mail');
+$mailService = $this->getServiceLocator()->get(\MtMail\Service\Mail::class);
 $mailService->send($message);
 ```
 

@@ -6,20 +6,20 @@ MtMail provides factories for Zend Framework's built-in transport classes, allow
 using application configuration:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'transport' => 'Zend\Mail\Transport\Smtp',
-        'transport_options' => array(
+return [
+    'mt_mail' => [
+        'transport' => \Zend\Mail\Transport\Smtp::class,
+        'transport_options' => [
             'host' => 'some-host.com',
             'connection_class' => 'login',
-            'connection_config' => array(
+            'connection_config' => [
                 'username' => 'user',
                 'password' => 'pass',
                 'ssl' => 'tls',
-            ),
-        ),
-    ),
-),
+            ],
+        ],
+    ],
+];
 ```
 
 `transport` can be any service that is accessible from `ServiceManager` and implements `Zend\Mail\Transport\TransportInterface`.
@@ -28,14 +28,14 @@ You can use this if you want to benefit from non-standard transports (for instan
 Here's another example - configuring file transport:
 
 ```php
-return array(
-    'mt_mail' => array(
-        'transport' => 'Zend\Mail\Transport\File',
-        'transport_options' => array(
+return [
+    'mt_mail' => [
+        'transport' => \Zend\Mail\Transport\File::class,
+        'transport_options' => [
             'path' => 'data/mail'
-        ),
-    ),
-),
+        ],
+    ],
+];
 ```
 
 Sending messages
@@ -45,7 +45,7 @@ Once e-mail transport is configured, `MtMail\Service\Mail` becomes ready to be p
 Usage (from controller):
 
 ```php
-$sender = $this->getServiceLocator()->get('MtMail\Service\Mail');
+$sender = $this->getServiceLocator()->get(\MtMail\Service\Mail::class);
 $sender->send($message);
 ```
 

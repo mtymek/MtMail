@@ -24,7 +24,7 @@ Plugins included by default
 * [`Layout`](#layout) - gives common HTML layout for all messages
 * [`MessageEncoding`](#message-encoding) - applies specyfic encoding to message headers
 * [`PlaintextMessage`](#plaintext-message) - automatically generates plaintext version of HTML message
-* [`EmbeddingImage`](#embedding-image) - automatically add images to the mail from HTML message
+* [`EmbeddingImages`](#embedding-images) - automatically add images to the mail from HTML message
 
 ### Default headers
 

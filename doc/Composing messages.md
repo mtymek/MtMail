@@ -27,6 +27,15 @@ $message = $mailService->compose($headers, 'application/mail/welcome.phtml', $va
 ```php
 $message = $this->mtMail()->compose($headers, 'application/mail/welcome.phtml', $variables);
 ```
+However, it may be necessary to send an email to several recipients, to do this we must adopt the following syntax in the declaration of the table $ header:
+
+```php
+...
+'to' => 'email_address@recipient_1, recipient's name<email_address@recipient_2>',
+...
+```
+
+And this as much as necessary.
 
 Theory of operation
 -------------------

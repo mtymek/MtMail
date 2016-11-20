@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: gilbert
- * Date: 21/10/16
- * Time: 14:05
- */
 
 namespace MtMail\ComposerPlugin;
 
@@ -51,7 +45,7 @@ class EmbeddingImages extends AbstractListenerAggregate implements PluginInterfa
         if (count($elements) > 0) {
             $attachement = [];
             foreach ($elements as $key => $element) {
-                // traitement du nom de fichiers pour apprécier le contexte
+                // File name processing to evaluate the context
                 $file = $element->getAttribute("src");
                 $filename = $file;
                 $pos = strpos($file, "~");

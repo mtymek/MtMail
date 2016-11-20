@@ -25,19 +25,19 @@ class PlaintextMessage extends AbstractListenerAggregate implements PluginInterf
      */
     private function br2nl($string)
     {
-        /* suppression de la balise title */
+        /* Remove title tag */
         $posStyle = strpos(strtolower($string), "<title");
         $posEndStyle = strpos(strtolower($string), "</title>", $posStyle + 1);
         $string = substr($string, 0, $posStyle - 1) . substr($string, $posEndStyle + 8);
 
         while ($posStyle = strpos(strtolower($string), "<style")) {
-            /* suppression des balises style présente dans le souce html */
+            /* Removing style tags from the html source */
             $posEndStyle = strpos(strtolower($string), "</style>", $posStyle + 1);
             $string = substr($string, 0, $posStyle - 1) . substr($string, $posEndStyle + 8);
         }
 
         $string =  preg_replace('/\<br(\s*)?\/?\>/i', "\n", $string);
-        /* suppression des espace en début et fin de source convertis */
+        /* Deleting spaces at the beginning and end of the converted source string */
         $string = trim(strip_tags($string));
 
         return $string;

@@ -116,6 +116,23 @@ return array(
 );
 ```
 
+Embedding Images
+----------------
+
+`EmbeddingImages` plugin helps you to include all the image that youe email need.
+
+It doesn't require any configuration options - simply enable it in in application config:
+
+```php
+return array(
+    'mt_mail' => array(
+        'composer_plugins' => array(
+            'EmbeddingImages',
+        ),
+    ),
+);
+```
+
 
 Writing custom plugins
 ======================

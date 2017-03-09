@@ -8,6 +8,10 @@ cache:
     - $HOME/.local
     - vendor
 
+env:
+  global:
+    - LEGACY_DEPS="phpunit/phpunit"
+
 matrix:
   fast_finish: true
   include:
@@ -44,6 +48,7 @@ before_install:
 
 install:
   - travis_retry composer install --no-interaction --ignore-platform-reqs --prefer-dist --no-scripts
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
 
 script:
   - composer test

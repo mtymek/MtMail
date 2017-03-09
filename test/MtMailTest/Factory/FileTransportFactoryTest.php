@@ -19,14 +19,14 @@ class FileTransportFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $locator = $this->prophesize(ContainerInterface::class);
         $locator->get('Configuration')->willReturn(
-                [
-                    'mt_mail' => [
-                        'transport_options' => [
-                            'path' => __DIR__, // directory must exist
-                        ]
-                    ],
-                ]
-            );
+            [
+                'mt_mail' => [
+                    'transport_options' => [
+                        'path' => __DIR__, // directory must exist
+                    ]
+                ],
+            ]
+        );
         $factory = new FileTransportFactory();
         $service = $factory($locator->reveal());
         $this->assertInstanceOf(File::class, $service);

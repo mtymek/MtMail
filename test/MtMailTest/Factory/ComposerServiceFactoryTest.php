@@ -23,12 +23,12 @@ class ComposerServiceFactoryTest extends \PHPUnit\Framework\TestCase
         $pluginManager = $this->prophesize(ComposerPluginManager::class);
         $locator = $this->prophesize(ContainerInterface::class);
         $locator->get('Configuration')->willReturn(
-                [
-                    'mt_mail' => [
-                        'renderer' => 'Some\Mail\Renderer',
-                    ],
-                ]
-            );
+            [
+                'mt_mail' => [
+                    'renderer' => 'Some\Mail\Renderer',
+                ],
+            ]
+        );
 
         $renderer = $this->prophesize(RendererInterface::class);
         $locator->get('Some\Mail\Renderer')->willReturn($renderer->reveal());

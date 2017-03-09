@@ -44,10 +44,10 @@ class MailTest extends \PHPUnit\Framework\TestCase
         $template = $this->prophesize(TemplateInterface::class);
         $composer = $this->prophesize(Composer::class);
         $composer->compose(
-                ['to' => 'johndoe@domain.com'],
-                $template,
-                Argument::type(ModelInterface::class)
-            )->shouldBeCalled();
+            ['to' => 'johndoe@domain.com'],
+            $template,
+            Argument::type(ModelInterface::class)
+        )->shouldBeCalled();
         $templateManager = $this->prophesize(TemplateManager::class);
         $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());
         $service->compose(['to' => 'johndoe@domain.com'], $template->reveal());
@@ -70,10 +70,10 @@ class MailTest extends \PHPUnit\Framework\TestCase
         $sender = $this->prophesize(Sender::class);
         $composer = $this->prophesize(Composer::class);
         $composer->compose(
-                ['to' => 'johndoe@domain.com'],
-                Argument::type(SimpleHtml::class),
-                Argument::type(ModelInterface::class)
-            );
+            ['to' => 'johndoe@domain.com'],
+            Argument::type(SimpleHtml::class),
+            Argument::type(ModelInterface::class)
+        );
         $templateManager = $this->prophesize(TemplateManager::class);
         $templateManager->has('FooTemplate')->willReturn(false);
         $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());

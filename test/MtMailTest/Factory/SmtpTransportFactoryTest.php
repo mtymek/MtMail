@@ -19,20 +19,20 @@ class SmtpTransportFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $locator = $this->prophesize(ContainerInterface::class);
         $locator->get('Configuration')->willReturn(
-                [
-                    'mt_mail' => [
-                        'transport_options' => [
-                            'host' => 'some-host.com',
-                            'connection_class' => 'login',
-                            'connection_config' => [
-                                'username' => 'user',
-                                'password' => 'pass',
-                                'ssl' => 'tls',
-                            ],
+            [
+                'mt_mail' => [
+                    'transport_options' => [
+                        'host' => 'some-host.com',
+                        'connection_class' => 'login',
+                        'connection_config' => [
+                            'username' => 'user',
+                            'password' => 'pass',
+                            'ssl' => 'tls',
                         ],
                     ],
-                ]
-            );
+                ],
+            ]
+        );
         $factory = new SmtpTransportFactory();
         $service = $factory($locator->reveal());
         $this->assertInstanceOf(Smtp::class, $service);

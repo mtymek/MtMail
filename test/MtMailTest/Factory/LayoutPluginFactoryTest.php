@@ -20,12 +20,12 @@ class LayoutPluginFactoryTest extends \PHPUnit\Framework\TestCase
     {
         $locator = $this->prophesize(ComposerPluginManager::class);
         $locator->get('Configuration')->willReturn(
-                [
-                    'mt_mail' => [
-                        'layout' => 'mail/layout.phtml',
-                    ],
-                ]
-            );
+            [
+                'mt_mail' => [
+                    'layout' => 'mail/layout.phtml',
+                ],
+            ]
+        );
         $serviceManager = $this->prophesize(ServiceManager::class);
         $locator->getServiceLocator()->willReturn($serviceManager->reveal());
 

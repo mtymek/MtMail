@@ -24,8 +24,9 @@ Installation
 ------------
 Installation is supported via Composer:
 
-1. Add `"mtymek/mt-mail":"1.1.*"` to your `composer.json` file and run `php composer.phar update`.
-2. Add MtMail to your `config/application.config.php` file under the modules key.
+```bash
+$ composer require mtymek/mt-mail
+```
 
 
 Creating e-mails
@@ -33,7 +34,7 @@ Creating e-mails
 
 ### Configuration
 
-By default MtMail doesn't require any extra configuration. By default it will use `Zend\View` to render
+By default MtMail doesn't require any extra configuration. It will use `Zend\View` to render
 templates accessible by your application.
 
 ### Usage

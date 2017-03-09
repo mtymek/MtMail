@@ -3,10 +3,10 @@ sudo: false
 language: php
 
 cache:
-#  directories:
-#    - $HOME/.composer/cache
-#    - $HOME/.local
-#    - vendor
+  directories:
+    - $HOME/.composer/cache
+    - $HOME/.local
+    - vendor
 
 env:
   global:

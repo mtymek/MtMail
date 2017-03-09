@@ -53,20 +53,20 @@ return [
             Zend\Mail\Transport\Sendmail::class => Zend\Mail\Transport\Sendmail::class,
         ],
         'factories' => [
-            'MtMail\Renderer\ZendView'             => 'MtMail\Factory\ZendViewRendererFactory',
-            'MtMail\Service\Composer'              => 'MtMail\Factory\ComposerServiceFactory',
-            'MtMail\Service\Sender'                => 'MtMail\Factory\SenderServiceFactory',
-            'MtMail\Service\Mail'                  => 'MtMail\Factory\MailServiceFactory',
-            'MtMail\Service\ComposerPluginManager' => 'MtMail\Factory\ComposerPluginManagerFactory',
-            'MtMail\Service\SenderPluginManager'   => 'MtMail\Factory\SenderPluginManagerFactory',
-            'MtMail\Service\TemplateManager'       => 'MtMail\Factory\TemplateManagerFactory',
-            'Zend\Mail\Transport\Smtp'             => 'MtMail\Factory\SmtpTransportFactory',
-            'Zend\Mail\Transport\File'             => 'MtMail\Factory\FileTransportFactory',
+            MtMail\Renderer\ZendView::class             => MtMail\Factory\ZendViewRendererFactory::class,
+            MtMail\Service\Composer::class              => MtMail\Factory\ComposerServiceFactory::class,
+            MtMail\Service\Sender::class                => MtMail\Factory\SenderServiceFactory::class,
+            MtMail\Service\Mail::class                  => MtMail\Factory\MailServiceFactory::class,
+            MtMail\Service\ComposerPluginManager::class => MtMail\Factory\ComposerPluginManagerFactory::class,
+            MtMail\Service\SenderPluginManager::class   => MtMail\Factory\SenderPluginManagerFactory::class,
+            MtMail\Service\TemplateManager::class       => MtMail\Factory\TemplateManagerFactory::class,
+            Zend\Mail\Transport\Smtp::class             => MtMail\Factory\SmtpTransportFactory::class,
+            Zend\Mail\Transport\File::class             => MtMail\Factory\FileTransportFactory::class,
         ],
     ],
     'controller_plugins' => [
         'factories' => [
-            'MtMail' => 'MtMail\Factory\MtMailPlugin',
+            'MtMail' => MtMail\Factory\MtMailPlugin::class,
         ]
     ],
 ];

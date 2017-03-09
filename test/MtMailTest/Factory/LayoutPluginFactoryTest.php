@@ -11,29 +11,26 @@ namespace MtMailTest\Factory;
 
 use MtMail\ComposerPlugin\Layout;
 use MtMail\Factory\LayoutPluginFactory;
+use MtMail\Service\ComposerPluginManager;
 use Zend\ServiceManager\ServiceManager;
 
-class LayoutPluginFactoryTest extends \PHPUnit_Framework_TestCase
+class LayoutPluginFactoryTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCreateService()
     {
-        $locator = $this->getMock('MtMail\ComposerPlugin\Manager', ['get']);
-        $locator->expects($this->any())->method('get')
-            ->with('Configuration')->will(
-                $this->returnValue(
-                    [
-                        'mt_mail' => [
-                            'layout' => 'mail/layout.phtml',
-                        ],
-                    ]
-                )
+        $locator = $this->prophesize(ComposerPluginManager::class);
+        $locator->get('Configuration')->willReturn(
+                [
+                    'mt_mail' => [
+                        'layout' => 'mail/layout.phtml',
+                    ],
+                ]
             );
-        $pluginManager = $this->getMock(ServiceManager::class, ['get', 'has', 'getServiceLocator']);
-        $pluginManager->expects($this->any(1))->method('getServiceLocator')->will($this->returnValue($locator));
+        $serviceManager = $this->prophesize(ServiceManager::class);
+        $locator->getServiceLocator()->willReturn($serviceManager->reveal());
 
         $factory = new LayoutPluginFactory();
-        $service = $factory($pluginManager);
+        $service = $factory($locator->reveal());
         $this->assertInstanceOf(Layout::class, $service);
         $this->assertEquals('mail/layout.phtml', $service->getLayoutTemplate());
     }

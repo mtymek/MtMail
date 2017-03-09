@@ -11,8 +11,10 @@ namespace MtMailTest\Plugin;
 
 use MtMail\Event\ComposerEvent;
 use MtMail\ComposerPlugin\MessageEncoding;
+use PHPUnit\Framework\TestCase;
+use Zend\Mail\Message;
 
-class MessageEncodingTest extends \PHPUnit_Framework_TestCase
+class MessageEncodingTest extends TestCase
 {
     /**
      * @var MessageEncoding
@@ -26,12 +28,13 @@ class MessageEncodingTest extends \PHPUnit_Framework_TestCase
 
     public function testPluginSetsCorrectEncoding()
     {
-        $message = $this->getMock('Zend\Mail\Message', ['setEncoding']);
-        $message->expects($this->once())->method('setEncoding')->with('UTF-8');
+        $message = $this->prophesize(Message::class);
+        $message->setEncoding('UTF-8');
         $event = new ComposerEvent();
-        $event->setMessage($message);
+        $event->setMessage($message->reveal());
         $this->plugin->setEncoding('UTF-8');
         $this->plugin->setMessageEncoding($event);
+        $this->assertEquals('UTF-8', $this->plugin->getEncoding());
     }
 
     public function testEncodingIsMutable()

@@ -11,10 +11,12 @@ namespace MtMailTest\Service;
 
 use MtMail\Event\SenderEvent;
 use MtMail\Service\Sender;
+use Prophecy\Argument;
 use Zend\EventManager\EventManager;
 use Zend\Mail\Message;
+use Zend\Mail\Transport\TransportInterface;
 
-class SenderTest extends \PHPUnit_Framework_TestCase
+class SenderTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Sender
@@ -28,17 +30,16 @@ class SenderTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
-        $this->service = new Sender($transport);
+        $transport = $this->prophesize(TransportInterface::class);
+        $this->service = new Sender($transport->reveal());
     }
 
     public function testSendPassesMessageToTransportObject()
     {
         $message = new Message();
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', ['send']);
-        $transport->expects($this->once())->method('send')
-            ->with($message);
-        $service = new Sender($transport);
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport->send($message)->shouldBeCalled();
+        $service = new Sender($transport->reveal());
         $service->send($message);
     }
 
@@ -51,9 +52,8 @@ class SenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendTriggersEvents()
     {
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface', ['send']);
-        $transport->expects($this->once())->method('send')
-            ->with($this->isInstanceOf('Zend\Mail\Message'));
+        $transport = $this->prophesize(TransportInterface::class);
+        $transport->send(Argument::type(Message::class))->shouldBeCalled();
 
         $em = new EventManager();
         $listener = function ($event) {
@@ -74,7 +74,7 @@ class SenderTest extends \PHPUnit_Framework_TestCase
             $listener
         );
 
-        $service = new Sender($transport);
+        $service = new Sender($transport->reveal());
         $service->setEventManager($em);
         $message = new Message();
         $service->send($message);

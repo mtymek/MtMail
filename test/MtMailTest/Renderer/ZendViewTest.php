@@ -10,21 +10,20 @@
 namespace MtMailTest\Renderer;
 
 use MtMail\Renderer\ZendView;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
+use Zend\View\Model\ViewModel;
 
-class ZendViewTest extends PHPUnit_Framework_TestCase
+class ZendViewTest extends TestCase
 {
     public function testRenderSetsViewModelAndCallsZendViewRender()
     {
-        $viewModel = $this->getMock('Zend\View\Model\ViewModel', ['setOption']);
-        $viewModel->expects($this->once())->method('setOption')
-            ->with('has_parent', true);
+        $viewModel = $this->prophesize(ViewModel::class);
+        $viewModel->setOption('has_parent', true)->shouldBeCalled();
 
-        $view = $this->getMock('Zend\View\View', ['render']);
-        $view->expects($this->once())->method('render')
-            ->with($viewModel);
+        $view = $this->prophesize(\Zend\View\View::class);
+        $view->render($viewModel->reveal());
 
-        $renderer = new ZendView($view);
-        $renderer->render($viewModel);
+        $renderer = new ZendView($view->reveal());
+        $renderer->render($viewModel->reveal());
     }
 }

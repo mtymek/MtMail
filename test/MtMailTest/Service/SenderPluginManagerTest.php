@@ -10,12 +10,13 @@
 namespace MtMailTest\Service;
 
 use MtMail\Exception\RuntimeException;
+use MtMail\SenderPlugin\PluginInterface;
 use MtMail\Service\SenderPluginManager;
-use PHPUnit_Framework_TestCase;
+use PHPUnit\Framework\TestCase;
 use stdClass;
 use Zend\ServiceManager\ServiceManager;
 
-class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
+class SenderPluginManagerTest extends TestCase
 {
     /**
      * @var SenderPluginManager
@@ -37,8 +38,9 @@ class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
 
     public function testValidatePluginDoesNothingIfPluginIsValid()
     {
-        $mock = $this->getMock('MtMail\SenderPlugin\PluginInterface');
-        $this->pluginManager->validatePlugin($mock);
+        $mock = $this->prophesize(PluginInterface::class);
+        $this->pluginManager->validatePlugin($mock->reveal());
+        $this->assertTrue(true);
     }
 
     /**
@@ -51,7 +53,8 @@ class SenderPluginManagerTest extends PHPUnit_Framework_TestCase
 
     public function testValidateDoesNothingIfPluginIsValid()
     {
-        $mock = $this->getMock('MtMail\SenderPlugin\PluginInterface');
-        $this->pluginManager->validate($mock);
+        $mock = $this->prophesize(PluginInterface::class);
+        $this->pluginManager->validate($mock->reveal());
+        $this->assertTrue(true);
     }
 }

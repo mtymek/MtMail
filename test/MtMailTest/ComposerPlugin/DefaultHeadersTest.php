@@ -12,9 +12,11 @@ namespace MtMailTest\Plugin;
 use MtMail\Event\ComposerEvent;
 use MtMail\ComposerPlugin\DefaultHeaders;
 use MtMailTest\Test\HeadersProviderTemplate;
+use PHPUnit\Framework\TestCase;
+use Zend\Mail\Headers;
 use Zend\Mail\Message;
 
-class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
+class DefaultHeadersTest extends TestCase
 {
     /**
      * @var DefaultHeaders
@@ -38,11 +40,12 @@ class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
                 'from' => 'sender@domain.com',
                 'subject' => 'Hello!',
             ]);
-        $headers = $this->getMock('Zend\Mail\Headers', ['addHeaderLine']);
-        $headers->expects($this->at(0))->method('addHeaderLine')->with('from', 'sender@domain.com');
-        $headers->expects($this->at(1))->method('addHeaderLine')->with('subject', 'Hello!');
+        $headers = $this->prophesize(Headers::class);
+        $headers->setEncoding("ASCII")->shouldBeCalled();
+        $headers->addHeaderLine('from', 'sender@domain.com')->shouldBeCalled();
+        $headers->addHeaderLine('subject', 'Hello!')->shouldBeCalled();
         $message = new Message();
-        $message->setHeaders($headers);
+        $message->setHeaders($headers->reveal());
         $event = new ComposerEvent();
         $event->setMessage($message);
         $this->plugin->injectDefaultHeaders($event);
@@ -50,11 +53,12 @@ class DefaultHeadersTest extends \PHPUnit_Framework_TestCase
 
     public function testPluginCanInjectTemplateSpecificHeaders()
     {
-        $headers = $this->getMock('Zend\Mail\Headers', ['addHeaderLine']);
-        $headers->expects($this->at(0))->method('addHeaderLine')->with('subject', 'Default subject');
+        $headers = $this->prophesize(Headers::class);
+        $headers->setEncoding("ASCII")->shouldBeCalled();
+        $headers->addHeaderLine('subject', 'Default subject')->shouldBeCalled();
         $template = new HeadersProviderTemplate();
         $message = new Message();
-        $message->setHeaders($headers);
+        $message->setHeaders($headers->reveal());
         $event = new ComposerEvent();
         $event->setMessage($message);
         $event->setTemplate($template);

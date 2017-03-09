@@ -11,7 +11,7 @@ namespace MtMailTest\Template;
 
 use MtMail\Template\SimpleHtml;
 
-class SimpleHtmlTest extends \PHPUnit_Framework_TestCase
+class SimpleHtmlTest extends \PHPUnit\Framework\TestCase
 {
     public function testGetHtmlTemplateReturnsTemplatePassedToConstructor()
     {

@@ -11,9 +11,10 @@ namespace MtMailTest\Template;
 
 use MtMail\Exception\RuntimeException;
 use MtMail\Service\TemplateManager;
+use MtMail\Template\TemplateInterface;
 use Zend\ServiceManager\ServiceManager;
 
-class ManagerTest extends \PHPUnit_Framework_TestCase
+class ManagerTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var TemplateManager
@@ -35,8 +36,9 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testValidatePluginDoesNothingIfPluginIsValid()
     {
-        $mock = $this->getMock('MtMail\Template\TemplateInterface');
-        $this->manager->validatePlugin($mock);
+        $mock = $this->prophesize(TemplateInterface::class);
+        $this->manager->validatePlugin($mock->reveal());
+        $this->assertTrue(true);
     }
 
     /**
@@ -49,7 +51,8 @@ class ManagerTest extends \PHPUnit_Framework_TestCase
 
     public function testValidateDoesNothingIfPluginIsValid()
     {
-        $mock = $this->getMock('MtMail\Template\TemplateInterface');
-        $this->manager->validate($mock);
+        $mock = $this->prophesize(TemplateInterface::class);
+        $this->manager->validate($mock->reveal());
+        $this->assertTrue(true);
     }
 }

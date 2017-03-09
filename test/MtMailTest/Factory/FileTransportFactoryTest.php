@@ -13,29 +13,22 @@ use Interop\Container\ContainerInterface;
 use MtMail\Factory\FileTransportFactory;
 use Zend\Mail\Transport\File;
 
-class FileTransportFactoryTest extends \PHPUnit_Framework_TestCase
+class FileTransportFactoryTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCreateService()
     {
-        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
-        $locator->expects($this->once())->method('get')
-            ->with('Configuration')->will(
-                $this->returnValue(
-                    [
-                        'mt_mail' => [
-                            'transport_options' => [
-                                'path' => __DIR__, // directory must exist
-                            ]
-                        ],
-                    ]
-                )
+        $locator = $this->prophesize(ContainerInterface::class);
+        $locator->get('Configuration')->willReturn(
+                [
+                    'mt_mail' => [
+                        'transport_options' => [
+                            'path' => __DIR__, // directory must exist
+                        ]
+                    ],
+                ]
             );
         $factory = new FileTransportFactory();
-        $service = $factory($locator);
+        $service = $factory($locator->reveal());
         $this->assertInstanceOf(File::class, $service);
-
-        // File transport does not provide getOptions method
-//        $this->assertEquals(__DIR__, $service->getOptions()->getPath());
     }
 }

@@ -10,73 +10,62 @@
 namespace MtMailTest\Factory;
 
 use Interop\Container\ContainerInterface;
+use MtMail\ComposerPlugin\PluginInterface;
 use MtMail\Factory\ComposerServiceFactory;
+use MtMail\Renderer\RendererInterface;
+use MtMail\Service\Composer;
+use MtMail\Service\ComposerPluginManager;
 
-class ComposerServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class ComposerServiceFactoryTest extends \PHPUnit\Framework\TestCase
 {
-
     public function testCreateService()
     {
-        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
-        $locator->expects($this->at(0))->method('get')
-            ->with('Configuration')->will(
-                $this->returnValue(
-                    [
-                        'mt_mail' => [
-                            'renderer' => 'Some\Mail\Renderer',
-                        ],
-                    ]
-                )
+        $pluginManager = $this->prophesize(ComposerPluginManager::class);
+        $locator = $this->prophesize(ContainerInterface::class);
+        $locator->get('Configuration')->willReturn(
+                [
+                    'mt_mail' => [
+                        'renderer' => 'Some\Mail\Renderer',
+                    ],
+                ]
             );
 
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
-        $locator->expects($this->at(1))->method('get')
-            ->with('Some\Mail\Renderer')->will(
-                $this->returnValue($renderer)
-            );
+        $renderer = $this->prophesize(RendererInterface::class);
+        $locator->get('Some\Mail\Renderer')->willReturn($renderer->reveal());
+        $locator->get(ComposerPluginManager::class)->willReturn($pluginManager->reveal());
 
         $factory = new ComposerServiceFactory();
-        $service = $factory($locator);
-        $this->assertInstanceOf('MtMail\Service\Composer', $service);
-        $this->assertEquals($renderer, $service->getRenderer());
+        $service = $factory($locator->reveal());
+        $this->assertInstanceOf(Composer::class, $service);
+        $this->assertEquals($renderer->reveal(), $service->getRenderer());
     }
 
     public function testCreateServiceCanInjectPlugins()
     {
-        $locator = $this->getMock(ContainerInterface::class, ['get', 'has']);
-        $locator->expects($this->at(0))->method('get')
-            ->with('Configuration')->will(
-                $this->returnValue(
-                    [
-                        'mt_mail' => [
-                            'renderer' => 'Some\Mail\Renderer',
-                            'composer_plugins' => [
-                                'SomeMailPlugin',
-                                'SomeMailPlugin',
-                            ],
-                        ],
-                    ]
-                )
-            );
-        $renderer = $this->getMock('MtMail\Renderer\RendererInterface', ['render']);
-        $locator->expects($this->at(1))->method('get')
-            ->with('Some\Mail\Renderer')->will(
-                $this->returnValue($renderer)
-            );
+        $plugin = $this->prophesize(PluginInterface::class);
+        $pluginManager = $this->prophesize(ComposerPluginManager::class);
+        $pluginManager->get('SomeMailPlugin')
+            ->willReturn($plugin->reveal());
 
-        $plugin = $this->getMock('MtMail\ComposerPlugin\PluginInterface');
-        $pluginManager = $this->getMock('MtMail\Service\ComposerPluginManager', ['get'], [], '', false);
-        $pluginManager->expects($this->once())->method('get')->with('SomeMailPlugin')
-            ->will($this->returnValue($plugin));
-        $locator->expects($this->at(2))->method('get')
-            ->with('MtMail\Service\ComposerPluginManager')->will(
-                $this->returnValue($pluginManager)
-            );
-
+        $locator = $this->prophesize(ContainerInterface::class);
+        $locator->get('Configuration')->willReturn(
+            [
+                'mt_mail' => [
+                    'renderer' => 'Some\Mail\Renderer',
+                    'composer_plugins' => [
+                        'SomeMailPlugin',
+                        'SomeMailPlugin',
+                    ],
+                ],
+            ]
+        );
+        $renderer = $this->prophesize(RendererInterface::class);
+        $locator->get('Some\Mail\Renderer')->willReturn($renderer->reveal());
+        $locator->get(ComposerPluginManager::class)->willReturn($pluginManager->reveal());
 
         $factory = new ComposerServiceFactory();
-        $service = $factory($locator);
-        $this->assertInstanceOf('MtMail\Service\Composer', $service);
-        $this->assertEquals($renderer, $service->getRenderer());
+        $service = $factory($locator->reveal());
+        $this->assertInstanceOf(Composer::class, $service);
+        $this->assertEquals($renderer->reveal(), $service->getRenderer());
     }
 }

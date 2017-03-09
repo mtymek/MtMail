@@ -11,49 +11,42 @@ namespace MtMailTest\Factory;
 
 use Interop\Container\ContainerInterface;
 use MtMail\Factory\SenderServiceFactory;
+use MtMail\SenderPlugin\PluginInterface;
 use MtMail\Service\Sender;
+use MtMail\Service\SenderPluginManager;
+use Zend\Mail\Transport\TransportInterface;
 
-class SenderServiceFactoryTest extends \PHPUnit_Framework_TestCase
+class SenderServiceFactoryTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreateService()
     {
-        $serviceLocator = $this->getMock(ContainerInterface::class, ['get', 'has']);
+        $serviceLocator = $this->prophesize(ContainerInterface::class);
 
-        $serviceLocator->expects($this->at(0))
-            ->method('get')
-            ->with('Configuration')
-            ->will(
-                $this->returnValue(
-                    [
-                        'mt_mail' => [
-                            'sender_plugins' => ['DefaultHeaders', 'DefaultHeaders'], 'transport' => 'transport.file'
-                        ]
+        $serviceLocator->get('Configuration')
+            ->willReturn(
+                [
+                    'mt_mail' => [
+                        'sender_plugins' => ['DefaultHeaders', 'DefaultHeaders'], 'transport' => 'transport.file'
                     ]
-                )
+                ]
             );
 
-        $transport = $this->getMock('Zend\Mail\Transport\TransportInterface');
-        $serviceLocator->expects($this->at(1))
-            ->method('get')
-            ->with('transport.file')
-            ->will($this->returnValue($transport));
+        $transport = $this->prophesize(TransportInterface::class);
+        $serviceLocator->get('transport.file')
+            ->willReturn($transport);
 
-        $pluginManager = $this->getMock(ContainerInterface::class, ['get', 'has']);
+        $pluginManager = $this->prophesize(ContainerInterface::class);
 
-        $serviceLocator->expects($this->at(2))
-            ->method('get')
-            ->with('MtMail\Service\SenderPluginManager')
-            ->will($this->returnValue($pluginManager));
+        $serviceLocator->get(SenderPluginManager::class)
+            ->willReturn($pluginManager->reveal());
 
-        $plugin = $this->getMock('MtMail\SenderPlugin\PluginInterface');
+        $plugin = $this->prophesize(PluginInterface::class);
 
-        $pluginManager->expects($this->once())
-            ->method('get')
-            ->with('DefaultHeaders')
-            ->will($this->returnValue($plugin));
+        $pluginManager->get('DefaultHeaders')
+            ->willReturn($plugin->reveal());
 
         $factory = new SenderServiceFactory;
 
-        $this->assertInstanceOf(Sender::class, $factory($serviceLocator));
+        $this->assertInstanceOf(Sender::class, $factory($serviceLocator->reveal()));
     }
 }

@@ -12,6 +12,7 @@ namespace MtMail\Factory;
 use Interop\Container\ContainerInterface;
 use MtMail\Renderer\RendererInterface;
 use MtMail\Service\Composer;
+use MtMail\Service\ComposerPluginManager;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
 class ComposerServiceFactory
@@ -31,7 +32,7 @@ class ComposerServiceFactory
         $renderer = $serviceLocator->get($configuration['mt_mail']['renderer']);
         $service = new Composer($renderer);
 
-        $pluginManager = $serviceLocator->get('MtMail\Service\ComposerPluginManager');
+        $pluginManager = $serviceLocator->get(ComposerPluginManager::class);
 
         if (isset($configuration['mt_mail']['composer_plugins'])
             && is_array($configuration['mt_mail']['composer_plugins'])

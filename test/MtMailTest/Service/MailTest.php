@@ -9,10 +9,17 @@
 
 namespace MtMailTest\Service;
 
+use MtMail\Service\Composer;
 use MtMail\Service\Mail;
+use MtMail\Service\Sender;
+use MtMail\Service\TemplateManager;
+use MtMail\Template\SimpleHtml;
+use MtMail\Template\TemplateInterface;
+use Prophecy\Argument;
 use Zend\Mail\Message;
+use Zend\View\Model\ModelInterface;
 
-class MailTest extends \PHPUnit_Framework_TestCase
+class MailTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Mail
@@ -22,57 +29,55 @@ class MailTest extends \PHPUnit_Framework_TestCase
     public function testSendProxiesToSender()
     {
         $message = new Message();
-        $sender = $this->getMock('MtMail\Service\Sender', ['send'], [], '', false);
-        $sender->expects($this->once())->method('send')->with($message);
-        $composer = $this->getMock('MtMail\Service\Composer', [], [], '', false);
-        $templateManager = $this->getMock('MtMail\Service\TemplateManager', [], [], '', false);
-        $service = new Mail($composer, $sender, $templateManager);
+        $sender = $this->prophesize(Sender::class);
+        $sender->send($message)->shouldBeCalled();
+
+        $composer = $this->prophesize(Composer::class);
+        $templateManager = $this->prophesize(TemplateManager::class);
+        $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());
         $service->send($message);
     }
 
     public function testComposeProxiesToComposer()
     {
-        $sender = $this->getMock('MtMail\Service\Sender', [], [], '', false);
-        $template = $this->getMock('MtMail\Template\TemplateInterface');
-        $composer = $this->getMock('MtMail\Service\Composer', ['compose'], [], '', false);
-        $composer->expects($this->once())->method('compose')
-            ->with(
+        $sender = $this->prophesize(Sender::class);
+        $template = $this->prophesize(TemplateInterface::class);
+        $composer = $this->prophesize(Composer::class);
+        $composer->compose(
                 ['to' => 'johndoe@domain.com'],
                 $template,
-                $this->isInstanceOf('Zend\View\Model\ModelInterface')
-            );
-        $templateManager = $this->getMock('MtMail\Service\TemplateManager', [], [], '', false);
-        $service = new Mail($composer, $sender, $templateManager);
-        $service->compose(['to' => 'johndoe@domain.com'], $template);
+                Argument::type(ModelInterface::class)
+            )->shouldBeCalled();
+        $templateManager = $this->prophesize(TemplateManager::class);
+        $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());
+        $service->compose(['to' => 'johndoe@domain.com'], $template->reveal());
     }
 
     public function testComposeTriesPullsTemplateFromManager()
     {
-        $sender = $this->getMock('MtMail\Service\Sender', [], [], '', false);
-        $composer = $this->getMock('MtMail\Service\Composer', [], [], '', false);
-        $templateManager = $this->getMock('MtMail\Service\TemplateManager', ['has', 'get'], [], '', false);
-        $templateManager->expects($this->once())->method('has')
-            ->with('FooTemplate')->will($this->returnValue(true));
-        $templateManager->expects($this->once())->method('get')
-            ->with('FooTemplate')->will($this->returnValue($this->getMock('MtMail\Template\TemplateInterface')));
-        $service = new Mail($composer, $sender, $templateManager);
+        $sender = $this->prophesize(Sender::class);
+        $composer = $this->prophesize(Composer::class);
+        $templateManager = $this->prophesize(TemplateManager::class);
+        $templateManager->has('FooTemplate')->willReturn(true);
+        $templateManager->get('FooTemplate')->willReturn($this->prophesize(TemplateInterface::class)->reveal());
+        $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());
         $service->compose(['to' => 'johndoe@domain.com'], 'FooTemplate');
+        $this->assertTrue(true);
     }
 
     public function testComposeFallsBackToDefaultHtmlTemplate()
     {
-        $sender = $this->getMock('MtMail\Service\Sender', [], [], '', false);
-        $composer = $this->getMock('MtMail\Service\Composer', ['compose'], [], '', false);
-        $composer->expects($this->once())->method('compose')
-            ->with(
+        $sender = $this->prophesize(Sender::class);
+        $composer = $this->prophesize(Composer::class);
+        $composer->compose(
                 ['to' => 'johndoe@domain.com'],
-                $this->isInstanceOf('MtMail\Template\SimpleHtml'),
-                $this->isInstanceOf('Zend\View\Model\ModelInterface')
+                Argument::type(SimpleHtml::class),
+                Argument::type(ModelInterface::class)
             );
-        $templateManager = $this->getMock('MtMail\Service\TemplateManager', ['has'], [], '', false);
-        $templateManager->expects($this->once())->method('has')
-            ->with('FooTemplate')->will($this->returnValue(false));
-        $service = new Mail($composer, $sender, $templateManager);
+        $templateManager = $this->prophesize(TemplateManager::class);
+        $templateManager->has('FooTemplate')->willReturn(false);
+        $service = new Mail($composer->reveal(), $sender->reveal(), $templateManager->reveal());
         $service->compose(['to' => 'johndoe@domain.com'], 'FooTemplate', []);
+        $this->assertTrue(true);
     }
 }

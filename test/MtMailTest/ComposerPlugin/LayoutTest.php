@@ -15,7 +15,7 @@ use MtMail\Service\Composer;
 use MtMailTest\Test\LayoutProviderTemplate;
 use Zend\View\Model\ViewModel;
 
-class LayoutTest extends \PHPUnit_Framework_TestCase
+class LayoutTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Layout

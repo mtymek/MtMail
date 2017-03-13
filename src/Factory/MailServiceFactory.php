@@ -10,16 +10,19 @@
 namespace MtMail\Factory;
 
 use Interop\Container\ContainerInterface;
+use MtMail\Service\Composer;
 use MtMail\Service\Mail;
+use MtMail\Service\Sender;
+use MtMail\Service\TemplateManager;
 
 class MailServiceFactory
 {
     public function __invoke(ContainerInterface $serviceLocator)
     {
         $service = new Mail(
-            $serviceLocator->get('MtMail\Service\Composer'),
-            $serviceLocator->get('MtMail\Service\Sender'),
-            $serviceLocator->get('MtMail\Service\TemplateManager')
+            $serviceLocator->get(Composer::class),
+            $serviceLocator->get(Sender::class),
+            $serviceLocator->get(TemplateManager::class)
         );
 
         return $service;

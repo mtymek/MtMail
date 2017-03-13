@@ -11,6 +11,7 @@ namespace MtMail\Factory;
 
 use Interop\Container\ContainerInterface;
 use MtMail\Service\Sender;
+use MtMail\Service\SenderPluginManager;
 
 class SenderServiceFactory
 {
@@ -23,7 +24,7 @@ class SenderServiceFactory
         if (isset($configuration['mt_mail']['sender_plugins'])
             && is_array($configuration['mt_mail']['sender_plugins'])
         ) {
-            $pluginManager = $serviceLocator->get('MtMail\Service\SenderPluginManager');
+            $pluginManager = $serviceLocator->get(SenderPluginManager::class);
             foreach (array_unique($configuration['mt_mail']['sender_plugins']) as $plugin) {
                 $pluginManager->get($plugin)->attach($service->getEventManager());
             }

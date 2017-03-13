@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.4.0 (TBD)
+-----------
+* Replaced remaining string class names with `::class` constant
+
 1.3.0 (2017-03-09)
 ------------------
 * Modernized test suite: compatibility with PHPUnit v5.7

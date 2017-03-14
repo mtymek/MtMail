@@ -11,11 +11,16 @@ cache:
 env:
   global:
     - COMPOSER_ARGS="--no-interaction"
-    - LEGACY_DEPS="phpunit/phpunit"
+    - LEGACY_DEPS="phpunit/phpunit zendframework/zend-stdlib zendframework/zend-eventmanager  zendframework/zend-servicemanager"
 
 matrix:
   fast_finish: true
   include:
+    - php: 5.5
+    - php: 5.5
+      env:
+        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
+        - ZEND_EVENTMANAGER_VERSION="^2.2.1"
     - php: 5.6
       env:
         - EXECUTE_CS_CHECK=true
@@ -33,6 +38,8 @@ matrix:
       env:
         - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
         - ZEND_EVENTMANAGER_VERSION="^2.2.1"
+  allow_failures:
+    - php: 5.5
 
 before_install:
   - composer self-update
@@ -44,7 +51,7 @@ before_install:
 
 install:
   - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs --prefer-dist --no-scripts
-  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then travis_retry composer require phpunit/phpunit:^4.8 --with-dependencies && composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
 
 script:
   - composer test

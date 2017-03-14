@@ -7,9 +7,25 @@
  * @license   BSD 2-Clause
  */
 
-namespace MtMailTest;
+namespace MtMailTest {
 
-error_reporting(E_ALL | E_STRICT);
-chdir(__DIR__);
+    error_reporting(E_ALL | E_STRICT);
+    chdir(__DIR__);
 
-Bootstrap::init();
+    Bootstrap::init();
+}
+
+/**
+ * Following namespace is a hack to re-establish support for PHP5.5 without
+ * rewriting unit tests. New tests should be extending using "namespaced"
+ * TestCase class.
+ */
+namespace PHPUnit\Framework {
+
+    if (!class_exists('PHPUnit\Framework\TestCase')) {
+        abstract class TestCase extends \PHPUnit_Framework_TestCase
+        {
+        }
+    }
+
+}

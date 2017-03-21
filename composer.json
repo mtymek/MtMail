@@ -57,7 +57,7 @@
     },
     "extra": {
         "zf": {
-            "component": "MtMail\\Module"
+            "component": "MtMail"
         }
     }
 }

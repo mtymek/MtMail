@@ -54,5 +54,10 @@
         "cs-fix": "phpcbf",
         "test": "phpunit",
         "test-coverage": "phpunit --coverage-clover clover.xml"
+    },
+    "extra": {
+        "zf": {
+            "component": "MtMail\\Module"
+        }
     }
 }

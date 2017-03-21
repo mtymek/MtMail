@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.5.0 (TBD)
+-----------
+* Add support for `zend-component-installer`
+
 1.4.0 (2017-03-21)
 ------------------
 * Allow injecting `Zend\Mail\Header\HeaderInterface` ()next to array format) with `DefaultHeaders` plugin (jaapio)  

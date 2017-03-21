@@ -15,7 +15,7 @@ Available interfaces
 * **HtmlTemplateInterface** - template provides view script to be rendered as `text/html` message part
 * **TextTemplateInterface** - template provides view script to be rendered as `text/plain` message part
 * **LayoutProviderInterface** - template has a separate layout (see example below)
-* **HeadersProviderInterface** - template provides specific headers (`Subject:`)
+* [**HeadersProviderInterface**](#HeadersProviderInterface) - template provides specific headers (`Subject:`)
 
 MtMail uses templates internally. When passing view script name, as in this example:
 
@@ -86,4 +86,32 @@ Finally, usage:
 ```php
 $headers = array(...);
 $mail = $this->mtMail()->compose($headers, 'FooBarTemplate');
+```
+
+### HeadersProviderInterface
+ 
+This interface allows the template to provide default headers to be set when the template is used. This can be either an
+object or simple configuration as shown in the example below.
+
+```php
+namespace FooModule\EmailTemplate;
+
+use MtMail\Template\HtmlTemplateInterface;
+use MtMail\Template\LayoutProviderInterface;
+use MtMail\Template\HeadersProviderInterface;
+
+class FooBarTemplate implements HtmlTemplateInterface, LayoutProviderInterface, HeadersProviderInterface
+{
+    /* .. */
+
+    public function getHeaders()
+    {
+        $subject = (new Subject())->setSubject('Hello!');
+        
+        return array(
+           'from' => 'My Website <information-no-reply@mywebsite.com>',
+           'subject' => $subject,
+        )
+    }
+}
 ```

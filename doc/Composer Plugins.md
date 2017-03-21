@@ -44,6 +44,14 @@ return [
 
 `DefaultHeaders` is hooked to `headers.pre` event.
 
+In some situations the `GenericHeader` class of zend-mail will not fit your needs. For example when a subject contains
+utf-8 characters. In this case it is not possible to use the configuration to add default headers. You can either call
+the `setHeaders` method of the `DefaultHeaders` plugin. Be aware of the fact that this will overwrite the default
+plugins from the configuration!
+
+A better approach would be to create a custom [Template](Template Manager.md) which implements the
+`HeadersProviderInterface`
+
 ### Layout
 
 A common requirement for e-mail system is a layout shared between all messages.

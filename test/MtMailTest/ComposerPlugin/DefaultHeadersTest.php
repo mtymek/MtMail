@@ -74,10 +74,10 @@ class DefaultHeadersTest extends TestCase
             'subject' => $subject,
         ]);
 
-        $headers = $this->getMock('Zend\Mail\Headers', ['addHeader']);
-        $headers->expects($this->at(0))->method('addHeader')->with($subject);
+        $headers = $this->prophesize(Headers::class);
+        $headers->addHeader($subject);
         $message = new Message();
-        $message->setHeaders($headers);
+        $message->setHeaders($headers->reveal());
         $event = new ComposerEvent();
         $event->setMessage($message);
         $this->plugin->injectDefaultHeaders($event);
@@ -85,11 +85,11 @@ class DefaultHeadersTest extends TestCase
 
     public function testPluginCanInjectTemplateSpecificHeaderObjects()
     {
-        $headers = $this->getMock('Zend\Mail\Headers', ['addHeader']);
-        $headers->expects($this->at(0))->method('addHeader')->with((new Subject())->setSubject('Default subject'));
+        $headers = $this->prophesize(Headers::class);
+        $headers->addHeader((new Subject())->setSubject('Default subject'));
         $template = new HeaderObjectProviderTemplate();
         $message = new Message();
-        $message->setHeaders($headers);
+        $message->setHeaders($headers->reveal());
         $event = new ComposerEvent();
         $event->setMessage($message);
         $event->setTemplate($template);

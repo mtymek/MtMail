@@ -1,6 +1,6 @@
 {
     "name": "mtymek/mt-mail",
-    "description": "ZF2 e-mail module. Using this library can easily create e-mail messages from PHTML templates (with optional layouts) and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
+    "description": "Zend Framework e-mail module. Using this library can easily create e-mail messages from PHTML templates (with optional layouts) and send them using configurable transports. Pluggable, EventManager-driven architecture allows you to customize every aspect of the process.",
     "keywords": ["zf2", "module", "email", "e-mail", "mail transport", "mail template"],
     "require": {
         "php": "^5.5 || ^7.0",
@@ -10,7 +10,7 @@
         "zendframework/zend-filter": "^2.2.1",
         "zendframework/zend-validator": "^2.2.1",
         "zendframework/zend-modulemanager": "^2.2.1",
-        "zendframework/zend-servicemanager": "^2.5.7 || ^3.0.3",
+        "zendframework/zend-servicemanager": "^2.7.5 || ^3.0.3",
         "zendframework/zend-eventmanager": "^2.6.0 || ^3.0.1"
     },
     "require-dev": {

@@ -17,41 +17,56 @@ matrix:
   fast_finish: true
   include:
     - php: 5.5
-    - php: 5.5
-      env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-        - ZEND_EVENTMANAGER_VERSION="^2.2.1"
     - php: 5.6
       env:
-        - EXECUTE_CS_CHECK=true
+        - DEPS=lowest
     - php: 5.6
       env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-        - ZEND_EVENTMANAGER_VERSION="^2.2.1"
-    - php: 7
+        - DEPS=locked
+    - php: 5.6
+      env:
+        - DEPS=latest
     - php: 7
       env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-        - ZEND_EVENTMANAGER_VERSION="^2.2.1"
-    - php: hhvm
+        - DEPS=lowest
+    - php: 7
+      env:
+        - DEPS=locked
+        - CS_CHECK=true
+    - php: 7
+      env:
+        - DEPS=latest
+    - php: 7.1
+      env:
+        - DEPS=lowest
+    - php: 7.1
+      env:
+        - DEPS=locked
+    - php: 7.1
+      env:
+        - DEPS=latest
     - php: hhvm
       env:
-        - ZEND_SERVICEMANAGER_VERSION="^2.7.5"
-        - ZEND_EVENTMANAGER_VERSION="^2.2.1"
+        - DEPS=lowest
+    - php: hhvm
+      env:
+        - DEPS=locked
+    - php: hhvm
+      env:
+        - DEPS=latest
   allow_failures:
     - php: 5.5
 
 before_install:
   - composer self-update
-  - if [[ $ZEND_SERVICEMANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:$ZEND_SERVICEMANAGER_VERSION" ; fi
-  - if [[ $ZEND_SERVICEMANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-servicemanager:^3.0.3" ; fi
-  - if [[ $ZEND_EVENTMANAGER_VERSION != '' ]]; then composer require --dev --no-update "zendframework/zend-eventmanager:$ZEND_EVENTMANAGER_VERSION" ; fi
-  - if [[ $ZEND_EVENTMANAGER_VERSION == '' ]]; then composer require --dev --no-update "zendframework/zend-eventmanager:^3.0.1" ; fi
-
 
 install:
-  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs --prefer-dist --no-scripts
+  - travis_retry composer install $COMPOSER_ARGS --ignore-platform-reqs
+  - if [[ $TRAVIS_PHP_VERSION =~ ^5.6 ]]; then travis_retry composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - if [[ $DEPS == 'latest' ]]; then travis_retry composer update $COMPOSER_ARGS ; fi
+  - if [[ $DEPS == 'lowest' ]]; then travis_retry composer update --prefer-lowest --prefer-stable $COMPOSER_ARGS ; fi
   - if [[ ${TRAVIS_PHP_VERSION:0:3} == "5.5" ]]; then travis_retry composer require phpunit/phpunit:^4.8 --with-dependencies && composer update $COMPOSER_ARGS --with-dependencies $LEGACY_DEPS ; fi
+  - composer show
 
 script:
   - composer test

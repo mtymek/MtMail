@@ -1,14 +1,17 @@
 CHANGELOG
 =========
 
-1.4.0 (TBD)
------------
-* Replaced remaining string class names with `::class` constant
+1.4.0 (2017-03-21)
+------------------
+* Allow injecting `Zend\Mail\Header\HeaderInterface` ()next to array format) with `DefaultHeaders` plugin (jaapio)  
+* Replace remaining string class names with `::class` constant
+* Improve test matrix by adding testing with lowest dependency versions
+* Restore partial support for PHP 5.5 (library will work but some tests can fail). 
 
 1.3.0 (2017-03-09)
 ------------------
-* Modernized test suite: compatibility with PHPUnit v5.7
-* Replaced multiple string class names with `::class` constant
+* Modernize test suite: compatibility with PHPUnit v5.7
+* Replace multiple string class names with `::class` constant
 * Bump required PHP version to 5.6
 
 1.2.0 (2016-11-13)
@@ -28,7 +31,7 @@ CHANGELOG
 
 1.1.0 (2014-06-19)
 ------------------
-* Added autoload config in module class (ojhaujjwal)
+* Add autoload config in module class (ojhaujjwal)
 * Sendmail is now default transport (ojhaujjwal)
 * Allow replacing Message object during e-mail composition (ojhaujjwal)
 * Automatically set Content-Type header to "multipart/alternative" when both HTML and plaintext versions

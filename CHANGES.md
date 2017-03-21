@@ -6,6 +6,7 @@ CHANGELOG
 * Allow injecting `Zend\Mail\Header\HeaderInterface` ()next to array format) with `DefaultHeaders` plugin (jaapio)  
 * Replace remaining string class names with `::class` constant
 * Improve test matrix by adding testing with lowest dependency versions
+* Restore partial support for PHP 5.5 (library will work but some tests can fail). 
 
 1.3.0 (2017-03-09)
 ------------------

@@ -1,8 +1,8 @@
 CHANGELOG
 =========
 
-1.5.0 (TBD)
------------
+1.5.0 (2017-05-28)
+------------------
 * Add support for `zend-component-installer`
 * Update license year
 * Add license check

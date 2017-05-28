@@ -21,7 +21,8 @@
         "zendframework/zend-log": "^2.2.1",
         "zendframework/zend-i18n": "^2.2.1",
         "zendframework/zend-console": "^2.2.1",
-        "zendframework/zend-http": "^2.2.1"
+        "zendframework/zend-http": "^2.2.1",
+        "malukenho/docheader": "^0.1.6"
     },
     "license": "BSD 2-Clause",
     "authors": [
@@ -53,7 +54,8 @@
         "cs": "phpcs",
         "cs-fix": "phpcbf",
         "test": "phpunit",
-        "test-coverage": "phpunit --coverage-clover clover.xml"
+        "test-coverage": "phpunit --coverage-clover clover.xml",
+        "license-check": "vendor/bin/docheader check src/ test/"
     },
     "extra": {
         "zf": {

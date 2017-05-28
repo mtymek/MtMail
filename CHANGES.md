@@ -5,6 +5,7 @@ CHANGELOG
 -----------
 * Add support for `zend-component-installer`
 * Update license year
+* Add license check
 
 1.4.0 (2017-03-21)
 ------------------

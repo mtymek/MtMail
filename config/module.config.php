@@ -1,7 +1,7 @@
 <?php
 
 /**
- * MtMail - e-mail module for Zend Framework 2
+ * MtMail - e-mail module for Zend Framework
  *
  * @link      http://github.com/mtymek/MtMail
  * @copyright Copyright (c) 2013-2017 Mateusz Tymek

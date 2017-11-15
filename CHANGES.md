@@ -1,6 +1,10 @@
 CHANGELOG
 =========
 
+1.5.1 (2017-11-15)
+------------------
+* Add support for PHPv7.2
+
 1.5.0 (2017-05-28)
 ------------------
 * Add support for `zend-component-installer`

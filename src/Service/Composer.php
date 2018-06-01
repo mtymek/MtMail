@@ -16,7 +16,6 @@ use MtMail\Template\HtmlTemplateInterface;
 use MtMail\Template\TemplateInterface;
 use MtMail\Template\TextTemplateInterface;
 use Zend\EventManager\EventManager;
-use Zend\EventManager\EventManagerAwareInterface;
 use Zend\EventManager\EventManagerInterface;
 use Zend\Mail\Message;
 use Zend\View\Model\ModelInterface;
@@ -24,7 +23,7 @@ use Zend\Mime\Message as MimeMessage;
 use Zend\Mime\Part as MimePart;
 use Zend\View\Model\ViewModel;
 
-class Composer implements EventManagerAwareInterface
+class Composer
 {
     /**
      * @var RendererInterface
@@ -44,19 +43,6 @@ class Composer implements EventManagerAwareInterface
     public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
-    }
-
-    /**
-     * Inject an EventManager instance
-     *
-     * @param  EventManagerInterface $eventManager
-     * @return self
-     */
-    public function setEventManager(EventManagerInterface $eventManager)
-    {
-        $this->eventManager = $eventManager;
-
-        return $this;
     }
 
     /**

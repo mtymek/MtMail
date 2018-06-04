@@ -70,20 +70,15 @@ class ComposerTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('MAIL_SUBJECT', $message->getSubject());
     }
 
-    public function testServiceIsEventManagerAware()
-    {
-        $em = new EventManager();
-        $this->service->setEventManager($em);
-        $this->assertEquals($em, $this->service->getEventManager());
-    }
-
     public function testComposeTriggersEvents()
     {
         $renderer = $this->prophesize(RendererInterface::class);
         $renderer->render(Argument::type(ModelInterface::class))
             ->willReturn('MAIL_BODY');
 
-        $em = new EventManager();
+        $service = new Composer($renderer->reveal());
+        $em = $service->getEventManager();
+        
         $listener = function ($event) {
             $this->assertInstanceof(
                 ComposerEvent::class,
@@ -118,8 +113,7 @@ class ComposerTest extends \PHPUnit\Framework\TestCase
             $listener
         );
 
-        $service = new Composer($renderer->reveal());
-        $service->setEventManager($em);
+
         $template = new HtmlTemplate();
         $service->compose([], $template, new ViewModel());
 
